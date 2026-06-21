@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en" data-duration="24">
+<head>
+  <meta charset="utf-8" />
+  <title>Pearl Wallet — App Showcase</title>
+  <style>
+    :root { --bg:#050d1a; --fg:#deeaf8; --muted:#4a6a8a; --accent:#00d4d4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { width:100%; height:100%; overflow:hidden; background:#050d1a; }
+    body { width:1920px; height:1080px; overflow:hidden; position:relative; transform-origin:0 0; background:var(--bg); color:var(--fg); font-family:-apple-system,'SF Pro Display','Segoe UI',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    .bg { position:absolute; inset:0; background:
+        radial-gradient(ellipse 80% 55% at 50% 90%, rgba(0,90,110,0.38) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 38% at 16% 22%, rgba(0,40,80,0.32) 0%, transparent 60%), #050d1a; }
+    .stars { position:absolute; inset:0; background-image:
+        radial-gradient(1px 1px at 96px 72px, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 310px 180px, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 540px 430px, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1px 1px at 760px 90px, rgba(255,255,255,0.28) 0%, transparent 100%),
+        radial-gradient(1px 1px at 980px 310px, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 1180px 70px, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1420px 240px, rgba(255,255,255,0.28) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1640px 490px, rgba(255,255,255,0.30) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 1790px 140px, rgba(255,255,255,0.48) 0%, transparent 100%),
+        radial-gradient(1px 1px at 180px 640px, rgba(255,255,255,0.26) 0%, transparent 100%),
+        radial-gradient(1px 1px at 440px 790px, rgba(255,255,255,0.30) 0%, transparent 100%),
+        radial-gradient(1px 1px at 870px 890px, rgba(255,255,255,0.22) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1280px 740px, rgba(255,255,255,0.33) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1680px 840px, rgba(255,255,255,0.26) 0%, transparent 100%); }
+
+    .headline-wrap { position:absolute; top:68px; left:0; right:0; text-align:center; z-index:20; will-change:transform,opacity; }
+    .headline { font-size:80px; font-weight:800; letter-spacing:-0.022em; text-transform:uppercase; color:var(--fg); line-height:1; }
+    .headline-rule { height:1px; width:680px; margin:22px auto 0; background:linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%); transform-origin:left center; }
+
+    .phones-stage { position:absolute; inset:0; perspective:1600px; perspective-origin:50% 52%; }
+    .phone-wrap { position:absolute; top:50%; left:50%; width:220px; height:418px; transform-style:preserve-3d; will-change:transform,opacity; }
+    .phone-frame { position:absolute; inset:0; border-radius:40px; background:#000; box-shadow:0 0 0 2.5px #233040, 0 0 0 4.5px #0e1d2b, 0 80px 130px rgba(0,0,0,0.92), 0 28px 48px rgba(0,0,0,0.62), inset 0 0 0 1px rgba(255,255,255,0.05); transition:filter 0.25s; }
+    .phone-island { position:absolute; top:13px; left:50%; transform:translateX(-50%); width:88px; height:22px; background:#000; border-radius:14px; z-index:5; }
+    .phone-screen { position:absolute; top:10px; left:9px; right:9px; bottom:10px; border-radius:31px; overflow:hidden; background:#0a1422; }
+    .phone-screen img { position:absolute; inset:16px 13px; width:calc(100% - 26px); height:calc(100% - 32px); object-fit:cover; object-position:top center; display:block; border-radius:3px; }
+    .phone-bar { position:absolute; bottom:9px; left:50%; transform:translateX(-50%); width:106px; height:4px; background:rgba(255,255,255,0.22); border-radius:3px; z-index:10; }
+    .phone-glow { position:absolute; inset:-36px; border-radius:72px; background:radial-gradient(ellipse at 50% 50%, rgba(0,212,212,0.20) 0%, transparent 68%); pointer-events:none; opacity:0; }
+    @keyframes glowpulse { 0%,100%{opacity:.32;} 50%{opacity:.66;} }
+    .phone-glow.pulse { animation:glowpulse 2.4s ease-in-out infinite; }
+
+    .scr { position:absolute; inset:16px 13px; border-radius:3px; display:none; flex-direction:column; background:#0a1422; color:#dbeaf8; overflow:hidden; font-family:ui-monospace,'SF Mono','Cascadia Code',monospace; }
+    .scr-splash { align-items:center; justify-content:center; gap:9px; }
+    .sp-ring { width:64px; height:64px; border-radius:50%; border:2px solid #1c2a3a; border-top-color:#caa53a; display:flex; align-items:center; justify-content:center; margin-bottom:6px; }
+    .sp-badge { width:38px; height:38px; border-radius:50%; background:radial-gradient(circle at 40% 35%, #cdf3ff, #2aa3d6 72%); box-shadow:0 0 14px rgba(120,220,255,.8); }
+    .sp-name { font-size:19px; font-weight:700; color:#eaf4ff; }
+    .sp-pct { font-size:14px; color:#2fd0e6; }
+    .sp-ver { font-size:11px; color:#9fb1c6; }
+    .sp-eng { font-size:10px; color:#67809a; }
+    .sp-cr { font-size:8px; color:#3f5570; margin-top:10px; }
+    .scr-home, .scr-otc { padding:9px 8px; gap:6px; }
+    .hm-top { display:flex; justify-content:center; align-items:center; gap:5px; font-size:12px; font-weight:700; color:#eaf4ff; letter-spacing:.05em; }
+    .hm-card { border:1px solid #18324a; border-radius:7px; padding:7px 8px; background:rgba(20,40,60,.22); }
+    .hm-lab { font-size:8px; text-align:center; color:#67809a; letter-spacing:.12em; }
+    .hm-big { font-size:18px; font-weight:700; text-align:center; color:#eaf4ff; }
+    .hm-net { font-size:8px; color:#9fb3c8; margin-bottom:6px; } .hm-net b { color:#43d17a; }
+    .hm-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px 3px; }
+    .hm-grid div { text-align:center; } .hm-grid b { display:block; font-size:10px; color:#2fd0e6; } .hm-grid i { font-size:7px; color:#67809a; font-style:normal; }
+    .hm-trade { margin-top:6px; font-size:8px; color:#cfeff5; display:flex; justify-content:space-between; } .hm-trade b { color:#2fd0e6; }
+    .hm-unlock { background:#79e6ee; color:#04222b; font-size:11px; font-weight:700; text-align:center; border-radius:6px; padding:7px; }
+    .hm-nav { display:flex; justify-content:space-between; font-size:7px; color:#5a7390; margin-top:auto; padding-top:4px; } .hm-nav b { color:#2fd0e6; }
+    .ot-h { font-size:8px; color:#9fb3c8; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+    .ot-tabs b { color:#2fd0e6; border:1px solid #2fd0e6; border-radius:3px; padding:0 2px; }
+    .ot-svg { width:100%; height:54px; display:block; }
+    .ot-svg polyline { fill:none; stroke:#3fe0d0; stroke-width:1.6; }
+    .ot-price { font-size:9px; color:#9fb3c8; display:flex; justify-content:space-between; margin-top:5px; } .ot-price b { color:#2fd0e6; }
+    .ot-book-h { font-size:8px; color:#9fb3c8; display:flex; justify-content:space-between; margin-bottom:5px; } .ot-book-h b { color:#2fd0e6; }
+    .ot-row { display:flex; align-items:center; gap:5px; font-size:8px; margin-bottom:4px; }
+    .ot-row span { color:#5fe0a0; width:34px; } .ot-row em { margin-left:auto; color:#9fb3c8; font-style:normal; }
+    .ot-row i { height:7px; background:rgba(70,200,130,.45); border-radius:2px; }
+
+    /* Callouts — shrink-wrapped to their text (tight hit area), vertical connector */
+    .callout { position:absolute; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; opacity:0; z-index:30; }
+    .callout-text { font-size:18px; font-weight:600; line-height:1.4; letter-spacing:0.04em; text-transform:uppercase; color:var(--accent); max-width:360px; }
+    .callout-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; box-shadow:0 0 8px rgba(0,212,212,0.9); }
+    .callout-vline { width:1px; height:0; background:var(--accent); flex-shrink:0; transition:height 0.4s; }
+    .callout.hot .callout-text { color:#eafdff; text-shadow:0 0 14px rgba(0,212,212,0.55); }
+
+    .disclaimer { position:absolute; left:0; right:0; bottom:26px; text-align:center; font-size:14px; font-weight:400; letter-spacing:0.05em; color:var(--muted); opacity:0; z-index:35; will-change:opacity; }
+    .hint, .zoomhint { position:absolute; left:0; right:0; text-align:center; font-size:14px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); opacity:0; z-index:55; pointer-events:none; transition:opacity 0.5s; }
+    .hint { bottom:64px; } .zoomhint { top:104px; }
+
+    .explain { position:absolute; left:50%; bottom:70px; transform:translateX(-50%) translateY(14px); width:760px; max-width:86%; background:rgba(8,18,32,0.94); border:1px solid rgba(0,212,212,0.35); border-radius:14px; padding:20px 24px; opacity:0; pointer-events:none; z-index:70; transition:opacity 0.28s, transform 0.28s; box-shadow:0 26px 64px rgba(0,0,0,0.62); }
+    .explain.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    .explain-title { font-size:18px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+    .explain-body { font-size:16px; line-height:1.5; color:var(--fg); font-weight:400; }
+    .vignette { margin-top:16px; display:none; align-items:center; gap:18px; }
+    .vignette.show { display:flex; }
+    .vig-frame { position:relative; width:210px; height:104px; border:1px solid rgba(0,212,212,0.5); border-radius:8px; overflow:hidden; background:rgba(0,30,42,0.55); flex-shrink:0; }
+    .vig-words { padding:14px 16px; font-size:13px; letter-spacing:0.08em; color:#9fd6e0; line-height:1.7; filter:blur(1.1px); }
+    .vig-scan { position:absolute; left:0; right:0; height:20px; top:-20px; background:linear-gradient(180deg, transparent, rgba(0,212,212,0.55), transparent); animation:vigscan 2.2s linear infinite; }
+    @keyframes vigscan { 0%{top:-20px;} 100%{top:104px;} }
+    .vig-cap { font-size:14px; color:var(--muted); } .vig-badge { color:#5fe0a0; font-weight:600; }
+
+    .site-nav { position:absolute; top:0; left:0; right:0; height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 72px; background:linear-gradient(180deg, rgba(5,13,26,0.88) 0%, transparent 100%); z-index:60; opacity:0; will-change:transform,opacity; }
+    .snav-logo { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:700; letter-spacing:0.06em; color:var(--fg); }
+    .snav-logo img { width:28px; height:28px; border-radius:7px; }
+    .snav-links { display:flex; gap:38px; }
+    .snav-links span { font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); cursor:pointer; }
+    .snav-links span:hover { color:var(--fg); }
+    .logo-outro { position:absolute; right:96px; bottom:88px; display:flex; align-items:center; gap:22px; z-index:40; opacity:0; will-change:transform,opacity; }
+    .logo-badge { width:80px; height:80px; border-radius:18px; }
+    .logo-text { display:flex; flex-direction:column; gap:6px; }
+    .logo-name { font-size:44px; font-weight:800; letter-spacing:0.12em; color:var(--fg); line-height:1; }
+    .logo-sub { font-size:16px; font-weight:400; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase; }
+    .shimmer { position:absolute; top:46px; left:-280px; width:260px; height:150px; background:linear-gradient(90deg, transparent 0%, rgba(0,212,212,0.26) 50%, transparent 100%); pointer-events:none; z-index:25; opacity:0; }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="stars"></div>
+
+  <div class="headline-wrap" id="hw">
+    <h1 class="headline">THE MINER'S ANDROID WALLET</h1>
+    <div class="headline-rule" id="hrule"></div>
+  </div>
+
+  <div class="phones-stage">
+    <div class="phone-wrap" id="pL" style="opacity:0">
+      <div class="phone-glow" id="gL"></div>
+      <div class="phone-frame"><div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jmp-1-splash.png" alt="Pearl Wallet launch" loading="eager" onerror="this.style.display='none';var s=this.parentNode.querySelector('.scr');if(s)s.style.display='flex';">
+          <div class="scr scr-splash">
+            <div class="sp-ring"><div class="sp-badge"></div></div>
+            <div class="sp-name">Pearl Wallet</div><div class="sp-pct">17%</div>
+            <div class="sp-ver">v1.80.90337</div><div class="sp-eng">oyster engine 2.0.0</div>
+            <div class="sp-cr">© 2026 Robin L. M. Cheung, MBA</div>
+          </div>
+        </div><div class="phone-bar"></div>
+      </div>
+    </div>
+
+    <div class="phone-wrap" id="pC" style="opacity:0">
+      <div class="phone-glow" id="gC"></div>
+      <div class="phone-frame"><div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jna-2-wallet-home.png" alt="Pearl Wallet portfolio" loading="eager" onerror="this.style.display='none';var s=this.parentNode.querySelector('.scr');if(s)s.style.display='flex';">
+          <div class="scr scr-home">
+            <div class="hm-top"><span>◉</span> PEARL <span>◔</span></div>
+            <div class="hm-card"><div class="hm-lab">BALANCE</div><div class="hm-big">0.00 PRL</div></div>
+            <div class="hm-card">
+              <div class="hm-net">NETWORK / MINING <b>● Synced</b></div>
+              <div class="hm-grid">
+                <div><b>72,805</b><i>Height</i></div><div><b>2611.98</b><i>Subsidy</i></div><div><b>18.29M</b><i>Difficulty</i></div>
+                <div><b>30.56 EH/s</b><i>Hashrate</i></div><div><b>48</b><i>Mempool</i></div><div><b>173.5 s</b><i>Block Time</i></div>
+              </div>
+              <div class="hm-trade">Trade your mined PRL <b>Exchange →</b></div>
+            </div>
+            <div class="hm-unlock">🔒 Unlock wallet</div>
+            <div class="hm-nav"><b>Wallet</b><span>Activity</span><span>Transact</span><span>Settings</span></div>
+          </div>
+        </div><div class="phone-bar"></div>
+      </div>
+    </div>
+
+    <div class="phone-wrap" id="pR" style="opacity:0">
+      <div class="phone-glow" id="gR"></div>
+      <div class="phone-frame"><div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jok-4-otc-market.png" alt="Pearl OTC market" loading="eager" onerror="this.style.display='none';var s=this.parentNode.querySelector('.scr');if(s)s.style.display='flex';">
+          <div class="scr scr-otc">
+            <div class="hm-top"><span>◉</span> PEARL <span>◔</span></div>
+            <div class="hm-card">
+              <div class="ot-h">PERFORMANCE <span class="ot-tabs">1D <b>1W</b> 1M 1Y</span></div>
+              <svg class="ot-svg" viewBox="0 0 200 54" preserveAspectRatio="none"><polyline points="0,44 14,38 26,41 38,28 50,33 62,22 74,29 86,18 98,26 110,14 122,24 134,11 146,20 158,9 170,17 182,7 196,13"></polyline></svg>
+              <div class="ot-price">OTC PRICE <b>$0.5000 USD →</b></div>
+            </div>
+            <div class="hm-card">
+              <div class="ot-book-h">LORD OF PEARLS OTC <b>Update Rate →</b></div>
+              <div class="ot-row"><span>0.3500</span><i style="width:58%"></i><em>3,000</em></div>
+              <div class="ot-row"><span>0.3400</span><i style="width:20%"></i><em>1,000</em></div>
+              <div class="ot-row"><span>0.3350</span><i style="width:38%"></i><em>2,000</em></div>
+              <div class="ot-row"><span>0.3300</span><i style="width:38%"></i><em>2,000</em></div>
+            </div>
+            <div class="hm-nav"><b>Wallet</b><span>Activity</span><span>Transact</span><span>Settings</span></div>
+          </div>
+        </div><div class="phone-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Callouts: staggered home positions, shrink-wrapped to text -->
+  <div class="callout" id="cL1" style="left:545px; top:206px; transform:translateX(-50%);">
+    <div class="callout-text">don't copy-paste your seed —<br>write your backup on paper</div>
+    <div class="callout-dot"></div><div class="callout-vline" id="vL1"></div>
+  </div>
+  <div class="callout" id="cL2" style="left:560px; top:768px; transform:translateX(-50%);">
+    <div class="callout-vline" id="vL2"></div><div class="callout-dot"></div>
+    <div class="callout-text">point your phone at the words —<br>we OCR it, nothing stored</div>
+  </div>
+  <div class="callout" id="cC1" style="left:960px; top:250px; transform:translateX(-50%);">
+    <div class="callout-text">don't chase explorer tabs —<br>the numbers live in your wallet</div>
+    <div class="callout-dot"></div><div class="callout-vline" id="vC1"></div>
+  </div>
+  <div class="callout" id="cC2" style="left:952px; top:736px; transform:translateX(-50%);">
+    <div class="callout-vline" id="vC2"></div><div class="callout-dot"></div>
+    <div class="callout-text">height, difficulty, hashrate,<br>block time — synced live</div>
+  </div>
+  <div class="callout" id="cR1" style="left:1358px; top:212px; transform:translateX(-50%);">
+    <div class="callout-text">don't fly blind on price —<br>the reference wallet shows none</div>
+    <div class="callout-dot"></div><div class="callout-vline" id="vR1"></div>
+  </div>
+  <div class="callout" id="cR2" style="left:1362px; top:772px; transform:translateX(-50%);">
+    <div class="callout-vline" id="vR2"></div><div class="callout-dot"></div>
+    <div class="callout-text">hold, or cash in? the live<br>OTC rate is here — your call</div>
+  </div>
+
+  <div class="logo-outro" id="logo">
+    <img class="logo-badge" src="mqgpvfye-pearlogo.png" alt="Pearl">
+    <div class="logo-text"><div class="logo-name">PEARL</div><div class="logo-sub">Native Crypto Wallet</div></div>
+  </div>
+  <div class="shimmer" id="shim"></div>
+  <div class="disclaimer" id="disc">OTC rate &amp; order book shown for information only, sourced from Lord of Pearls OTC — an independent desk reached by referral. Pearl is not an exchange and never holds or settles funds.</div>
+
+  <div class="hint" id="hint">Hover a phone · click to open it · hover a label to learn more</div>
+  <div class="zoomhint" id="zoomhint">Click anywhere to close</div>
+  <div class="explain" id="explain">
+    <div class="explain-title" id="explainTitle"></div>
+    <div class="explain-body" id="explainBody"></div>
+    <div class="vignette" id="vignette">
+      <div class="vig-frame"><div class="vig-words">ocean · ridge · velvet<br>copper · maple · drift<br>harbor · quartz · ember</div><div class="vig-scan"></div></div>
+      <div class="vig-cap">reading the words live…<br><span class="vig-badge">✓ 0 photos saved</span></div>
+    </div>
+  </div>
+
+  <nav class="site-nav" id="snav">
+    <div class="snav-logo"><img src="mqgpvfye-pearlogo.png" alt="Pearl"> Pearl Wallet</div>
+    <div class="snav-links"><span>Download</span><span>Architecture</span><span>Miners</span><span>Blueprint</span><span>Blog</span><span>Changelog</span><span>FAQ</span></div>
+  </nav>
+
+  <script>
+    function c01(t){ return t<0?0:t>1?1:t; }
+    function lerp(a,b,t){ return a+(b-a)*t; }
+    function prog(t,s,e){ return c01((t-s)/(e-s)); }
+    function expo(t){ return t>=1?1:1-Math.pow(2,-10*t); }
+    function cubic(t){ var u=1-t; return 1-u*u*u; }
+    function sine(t){ return -(Math.cos(Math.PI*t)-1)/2; }
+    function $(id){ return document.getElementById(id); }
+
+    var hw=$('hw'), hrule=$('hrule');
+    var pL=$('pL'), pC=$('pC'), pR=$('pR'), gL=$('gL'), gC=$('gC'), gR=$('gR');
+    var cL1=$('cL1'), cL2=$('cL2'), cC1=$('cC1'), cC2=$('cC2'), cR1=$('cR1'), cR2=$('cR2');
+    var vL1=$('vL1'), vL2=$('vL2'), vC1=$('vC1'), vC2=$('vC2'), vR1=$('vR1'), vR2=$('vR2');
+    var logo=$('logo'), shim=$('shim'), disc=$('disc');
+    var hint=$('hint'), zoomhint=$('zoomhint');
+    var explain=$('explain'), explainTitle=$('explainTitle'), explainBody=$('explainBody'), vignette=$('vignette');
+
+    function tf(x,y,ry,sc,tz,rz){ return 'translate('+(-110+x)+'px,'+(-209+y)+'px) translateZ('+(tz||0)+'px) rotateY('+ry+'deg)'+(rz?' rotateZ('+rz+'deg)':'')+' scale('+sc+')'; }
+    function reveal(el,vl,a,dim,h){ el.style.opacity=a*dim; vl.style.height=(a*h)+'px'; }
+
+    // ── Audio engine ──
+    var AC=null, prevT=-1;
+    var snd={amb:0,wL:0,wC:0,wR:0,fL:0,fC:0,fR:0,shim:0};
+    function getAC(){ if(AC)return AC; try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} return AC; }
+    function resetSnd(){ snd={amb:0,wL:0,wC:0,wR:0,fL:0,fC:0,fR:0,shim:0}; }
+    function startAmbient(ctx){ var m=ctx.createGain(); m.gain.setValueAtTime(0,ctx.currentTime); m.gain.linearRampToValueAtTime(0.032,ctx.currentTime+5); m.connect(ctx.destination);
+      [[55,0,0.55],[110,0.4,0.35],[165,-0.3,0.18],[220,0.5,0.10],[330,-0.6,0.06]].forEach(function(p){ var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=p[0]+p[1]; var g=ctx.createGain(); g.gain.value=p[2]; o.connect(g); g.connect(m); o.start(); });
+      var lfo=ctx.createOscillator(); lfo.frequency.value=0.12; var lg=ctx.createGain(); lg.gain.value=0.006; lfo.connect(lg); lg.connect(m.gain); lfo.start(); }
+    function playWhoosh(ctx,f1,f2,dur,vol){ try{ var n=Math.floor(ctx.sampleRate*dur), buf=ctx.createBuffer(1,n,ctx.sampleRate), d=buf.getChannelData(0); for(var i=0;i<n;i++)d[i]=Math.random()*2-1; var src=ctx.createBufferSource(); src.buffer=buf; var f=ctx.createBiquadFilter(); f.type='bandpass'; f.Q.value=2.5; f.frequency.setValueAtTime(f1,ctx.currentTime); f.frequency.linearRampToValueAtTime(f2,ctx.currentTime+dur); var g=ctx.createGain(); g.gain.setValueAtTime(0,ctx.currentTime); g.gain.linearRampToValueAtTime(vol,ctx.currentTime+dur*0.12); g.gain.linearRampToValueAtTime(0,ctx.currentTime+dur); src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(); src.stop(ctx.currentTime+dur);}catch(e){} }
+    function playChime(ctx,freq,dur,vol){ try{ [1,2,3].forEach(function(h){ var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=freq*h; var g=ctx.createGain(); g.gain.setValueAtTime(0,ctx.currentTime); g.gain.linearRampToValueAtTime(vol/(h*1.6),ctx.currentTime+0.012); g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+dur/h); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+dur+0.05); });}catch(e){} }
+    function playShimmer(ctx,dur,vol){ try{ var n=Math.floor(ctx.sampleRate*dur), buf=ctx.createBuffer(2,n,ctx.sampleRate), L=buf.getChannelData(0), R=buf.getChannelData(1); for(var i=0;i<n;i++){ var v=Math.random()*2-1, p=i/n; L[i]=v*(1-p)*0.9; R[i]=v*p*0.9; } var src=ctx.createBufferSource(); src.buffer=buf; var f=ctx.createBiquadFilter(); f.type='bandpass'; f.Q.value=1.5; f.frequency.setValueAtTime(5000,ctx.currentTime); f.frequency.linearRampToValueAtTime(10000,ctx.currentTime+dur); var g=ctx.createGain(); g.gain.setValueAtTime(0,ctx.currentTime); g.gain.linearRampToValueAtTime(vol,ctx.currentTime+0.08); g.gain.linearRampToValueAtTime(0,ctx.currentTime+dur); src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(); src.stop(ctx.currentTime+dur+0.05);}catch(e){} }
+
+    // Per-screen zoom ambience: a soft pad that fits each screen's character
+    var zoomVoices=null;
+    function startZoomAmbience(i){ var ctx=getAC(); if(!ctx)return; stopZoomAmbience();
+      var g=ctx.createGain(); g.gain.setValueAtTime(0,ctx.currentTime); g.gain.linearRampToValueAtTime(0.05,ctx.currentTime+0.6); g.connect(ctx.destination);
+      var sets=[[66,99,132],[88,132,176],[131,196,262]];      // 0 vault-warm · 1 mining-pulse · 2 market-bright
+      var lfoRate=[0.14,0.5,0.3][i], vols=[0.6,0.28,0.14];
+      var oscs=sets[i].map(function(f,idx){ var o=ctx.createOscillator(); o.type=idx===0?'sine':'triangle'; o.frequency.value=f; var og=ctx.createGain(); og.gain.value=vols[idx]; o.connect(og); og.connect(g); o.start(); return o; });
+      var lfo=ctx.createOscillator(); lfo.frequency.value=lfoRate; var lg=ctx.createGain(); lg.gain.value=0.014; lfo.connect(lg); lg.connect(g.gain); lfo.start();
+      zoomVoices={g:g,oscs:oscs,lfo:lfo}; }
+    function stopZoomAmbience(){ if(!zoomVoices)return; var ctx=getAC(), z=zoomVoices; zoomVoices=null; try{ z.g.gain.cancelScheduledValues(ctx.currentTime); z.g.gain.setValueAtTime(z.g.gain.value||0.05,ctx.currentTime); z.g.gain.linearRampToValueAtTime(0,ctx.currentTime+0.4); setTimeout(function(){ z.oscs.forEach(function(o){try{o.stop();}catch(e){}}); try{z.lfo.stop();}catch(e){} },480); }catch(e){} }
+
+    // ── Reel ──
+    function seek(t){
+      if (interactive) return;
+      var hp=expo(prog(t,0,2.0)); hw.style.opacity=hp; hw.style.transform='translateY('+lerp(48,0,hp)+'px)';
+      var rp=cubic(prog(t,1.8,3.4)); hrule.style.transform='scaleX('+rp+')'; hrule.style.opacity=rp>0.01?1:0;
+
+      { var rev=cubic(prog(t,1.0,5.0)), fade=c01(prog(t,1.0,2.4)), fi=sine(prog(t,5.0,6.6)), fo=sine(prog(t,8.6,9.4));
+        var bob=(t>=18.2&&t<21.4)?6*Math.sin(2*Math.PI*0.6*(t-18.2)):0; var x,ry,sc,y,rz,op,gl;
+        if(t<5.0){ x=lerp(-720,-390,rev); ry=lerp(-22,-17,rev); sc=lerp(0.74,0.91,rev); y=lerp(38,18,rev); op=fade; gl=0; }
+        else if(t<=9.4){ var v=t>=8.6?fo:0; x=lerp(lerp(-390,-300,fi),-390,v); ry=lerp(lerp(-17,0,fi),-17,v); sc=lerp(lerp(0.91,1.04,fi),0.91,v); y=lerp(lerp(18,0,fi),18,v); op=1; gl=lerp(lerp(0,1,fi),0,v); }
+        else { var f=sine(prog(t,21.4,23.5)); x=lerp(-390,-410,f); y=lerp(18+bob,52,f); ry=lerp(-17,-13,f); sc=lerp(0.91,0.87,f); rz=lerp(0,-6,f); op=1; gl=0; }
+        var dim=1.0;
+        if(t>9.4&&t<13.8){ var a=sine(prog(t,9.4,10.4)),b=sine(prog(t,12.8,13.8)); dim=t<12.8?lerp(1,0.52,a):lerp(0.52,1,b); }
+        if(t>13.8&&t<18.2){ var a2=sine(prog(t,13.8,14.8)),b2=sine(prog(t,17.2,18.2)); dim=t<17.2?lerp(1,0.52,a2):lerp(0.52,1,b2); }
+        pL.style.transform=tf(x,y,ry,sc,0,rz); pL.style.opacity=op*dim; gL.style.opacity=gl; }
+
+      { var rev2=cubic(prog(t,1.5,5.5)), fade2=c01(prog(t,1.5,2.8)), fi2=sine(prog(t,9.4,11.0)), fo2=sine(prog(t,13.0,13.8));
+        var bob2=(t>=18.2&&t<21.4)?6*Math.sin(2*Math.PI*0.6*(t-18.2)+Math.PI*2/3):0; var tz,sc,y,op,gl;
+        if(t<9.4){ tz=lerp(-430,0,rev2); sc=lerp(0.64,1.0,rev2); y=0; op=fade2; gl=0; }
+        else if(t<=13.8){ var v=t>=13.0?fo2:0; sc=lerp(lerp(1.0,1.04,fi2),1.0,v); y=lerp(lerp(0,-10,fi2),0,v); tz=0; op=1; gl=lerp(lerp(0,1,fi2),0,v); }
+        else { var f=sine(prog(t,21.4,23.5)); sc=lerp(1.0,1.04,f); y=lerp(bob2,-24,f); tz=lerp(0,40,f); op=1; gl=0; }
+        var dim=1.0;
+        if(t>5.0&&t<9.4){ var a=sine(prog(t,5.0,6.0)),b=sine(prog(t,8.4,9.4)); dim=t<8.4?lerp(1,0.52,a):lerp(0.52,1,b); }
+        if(t>13.8&&t<18.2){ var a2=sine(prog(t,13.8,14.8)),b2=sine(prog(t,17.2,18.2)); dim=t<17.2?lerp(1,0.52,a2):lerp(0.52,1,b2); }
+        pC.style.transform=tf(0,y,0,sc,tz,0); pC.style.opacity=op*dim; gC.style.opacity=gl; }
+
+      { var rev3=cubic(prog(t,2.0,6.0)), fade3=c01(prog(t,2.0,3.3)), fi3=sine(prog(t,13.8,15.4)), fo3=sine(prog(t,17.4,18.2));
+        var bob3=(t>=18.2&&t<21.4)?6*Math.sin(2*Math.PI*0.6*(t-18.2)+Math.PI*4/3):0; var x,ry,sc,y,rz,op,gl;
+        if(t<6.0){ x=lerp(720,390,rev3); ry=lerp(22,17,rev3); sc=lerp(0.74,0.91,rev3); y=lerp(38,18,rev3); op=fade3; gl=0; }
+        else if(t<=18.2){ if(t<13.8){ x=390; ry=17; sc=0.91; y=18; op=1; gl=0; } else { var v=t>=17.4?fo3:0; x=lerp(lerp(390,300,fi3),390,v); ry=lerp(lerp(17,0,fi3),17,v); sc=lerp(lerp(0.91,1.04,fi3),0.91,v); y=lerp(lerp(18,0,fi3),18,v); op=1; gl=lerp(lerp(0,1,fi3),0,v); } }
+        else { var f=sine(prog(t,21.4,23.5)); x=lerp(390,410,f); y=lerp(18+bob3,52,f); ry=lerp(17,13,f); sc=lerp(0.91,0.87,f); rz=lerp(0,6,f); op=1; gl=0; }
+        var dim=1.0;
+        if(t>5.0&&t<9.4){ var a=sine(prog(t,5.0,6.0)),b=sine(prog(t,8.4,9.4)); dim=t<8.4?lerp(1,0.52,a):lerp(0.52,1,b); }
+        if(t>9.4&&t<13.8){ var a2=sine(prog(t,9.4,10.4)),b2=sine(prog(t,12.8,13.8)); dim=t<12.8?lerp(1,0.52,a2):lerp(0.52,1,b2); }
+        pR.style.transform=tf(x,y,ry,sc,0,rz); pR.style.opacity=op*dim; gR.style.opacity=gl; }
+
+      var cdimL=t>9.4?lerp(1,0.30,sine(prog(t,9.4,10.8))):1;
+      reveal(cL1,vL1,c01(prog(t,5.8,6.8)),cdimL,58);
+      reveal(cL2,vL2,c01(prog(t,7.0,8.0)),cdimL,44);
+      var cdimC=t>13.8?lerp(1,0.30,sine(prog(t,13.8,15.0))):1;
+      reveal(cC1,vC1,c01(prog(t,10.0,11.0)),cdimC,40);
+      reveal(cC2,vC2,c01(prog(t,11.2,12.2)),cdimC,60);
+      reveal(cR1,vR1,c01(prog(t,14.4,15.4)),1,54);
+      reveal(cR2,vR2,c01(prog(t,15.6,16.6)),1,46);
+
+      disc.style.opacity=c01(prog(t,6.0,7.2));
+      { var lp=cubic(prog(t,21.2,23.2)); logo.style.opacity=lp; logo.style.transform='translateY('+lerp(30,0,lp)+'px)'; }
+      { var sp=prog(t,22.4,24.0); if(sp>0&&sp<1){ shim.style.opacity=1; shim.style.left=lerp(-280,1980,sp)+'px'; } else shim.style.opacity=0; }
+      { var snav=$('snav'); var np=cubic(prog(t,21.4,23.5)); snav.style.opacity=np; snav.style.transform='translateY('+lerp(-20,0,np)+'px)'; }
+
+      var ctx=getAC();
+      if(ctx){ if(t<prevT-0.3)resetSnd();
+        if(!snd.amb&&t>=1.0){snd.amb=1;startAmbient(ctx);}
+        if(!snd.wL&&t>=1.0){snd.wL=1;playWhoosh(ctx,900,220,0.55,0.07);}
+        if(!snd.wC&&t>=1.5){snd.wC=1;playWhoosh(ctx,1100,260,0.65,0.055);}
+        if(!snd.wR&&t>=2.0){snd.wR=1;playWhoosh(ctx,850,200,0.50,0.065);}
+        if(!snd.fL&&t>=6.6){snd.fL=1;playChime(ctx,440,1.8,0.055);}
+        if(!snd.fC&&t>=11.0){snd.fC=1;playChime(ctx,528,2.0,0.048);}
+        if(!snd.fR&&t>=15.4){snd.fR=1;playChime(ctx,659,2.2,0.042);}
+        if(!snd.shim&&t>=22.4){snd.shim=1;playShimmer(ctx,1.7,0.09);}
+        prevT=t; }
+    }
+    window.seek=seek; window.DURATION=24;
+
+    function scaleToFit(){ var s=Math.min(window.innerWidth/1920, window.innerHeight/1080); var tx=(window.innerWidth-1920*s)/2, ty=(window.innerHeight-1080*s)/2; document.body.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')'; }
+    window.addEventListener('resize',scaleToFit); scaleToFit();
+
+    // ════ Interactive gallery ════
+    var interactive=false, reelEnded=false, reelDone=false, userPresent=false, zoomedIdx=-1;
+    var phones=[pL,pC,pR], glows=[gL,gC,gR], hovered=[false,false,false];
+    var basePose=[[-390,10,0,0.95,0,0],[0,0,0,1.00,0,0],[390,10,0,0.95,0,0]];
+    var allC=[cL1,cL2,cC1,cC2,cR1,cR2];
+    // [centerLeft, top, vlineHeight]
+    var homePos={ cL1:[545,206,58], cL2:[560,768,44], cC1:[960,250,40], cC2:[952,736,60], cR1:[1358,212,54], cR2:[1362,772,46] };
+    var refOf={ cL1:[cL1,vL1], cL2:[cL2,vL2], cC1:[cC1,vC1], cC2:[cC2,vC2], cR1:[cR1,vR1], cR2:[cR2,vR2] };
+    var phoneCallouts=[ {caution:cL1,payoff:cL2,cv:vL1,pv:vL2}, {caution:cC1,payoff:cC2,cv:vC1,pv:vC2}, {caution:cR1,payoff:cR2,cv:vR1,pv:vR2} ];
+
+    var explainData={
+      cL1:{t:'Paper is the air-gap', b:"A hand-written backup can't be screenshotted, cloud-synced, or pulled off the phone by malware. Ink on paper is the one copy nothing online can reach."},
+      cL2:{t:'Read, never stored', b:"The camera recognises the words as you hold them in frame, then discards the image. Nothing is written to the camera roll — so there's nothing to leak, back up, or recover.", v:true},
+      cC1:{t:'No explorer detour', b:"A normal wallet shows a balance. Pearl surfaces the chain itself, so a miner never has to leave the app for a block explorer or pool dashboard."},
+      cC2:{t:'Straight from your node', b:"Height 72,805 · difficulty 18.29M · hashrate 30.56 EH/s · block time 173.5s — the live figures a miner actually watches, updated as blocks land."},
+      cR1:{t:'The reference wallet is price-blind', b:"The desktop / reference wallet shows no price at all. On mobile you can see where PRL is trading before you decide anything."},
+      cR2:{t:'Decide, then we introduce you', b:"The live OTC rate ($0.50) and the Lord of Pearls order book let you choose: hold or cash in. A referral link then hands you to that independent desk — Pearl never quotes, brokers, or settles."}
+    };
+
+    function applyPhone(i){ var p=basePose[i].slice(); if(zoomedIdx===-1&&hovered[i]){ p[1]-=16; p[3]+=0.05; } phones[i].style.transform=tf(p[0],p[1],p[2],p[3],p[4],p[5]); }
+    function showExplain(key){ var d=explainData[key]; if(!d)return; explainTitle.textContent=d.t; explainBody.textContent=d.b; if(d.v)vignette.classList.add('show'); else vignette.classList.remove('show'); explain.classList.add('show'); if(hint)hint.style.opacity='0'; }
+    function hideExplain(){ explain.classList.remove('show'); vignette.classList.remove('show'); if(interactive&&zoomedIdx===-1&&hint)hint.style.opacity='1'; }
+
+    function enterInteractive(){
+      if(interactive)return; interactive=true; reelDone=true;
+      phones.forEach(function(ph){ ph.style.transition='transform 0.6s cubic-bezier(.22,1,.36,1), opacity 0.4s'; ph.style.opacity='1'; });
+      glows.forEach(function(g){ g.style.transition='opacity 0.3s'; });
+      allC.forEach(function(c){ c.style.transition='left .55s cubic-bezier(.22,1,.36,1), top .55s cubic-bezier(.22,1,.36,1), opacity 0.4s'; c.style.opacity='0.62'; });
+      Object.keys(homePos).forEach(function(k){ refOf[k][1].style.height=homePos[k][2]+'px'; });
+      for(var i=0;i<3;i++){ hovered[i]=false; applyPhone(i); }
+      if(hint)hint.style.opacity='1';
+    }
+
+    function flyCallout(el,vl,left,top,delay){ el.style.transitionDelay=(delay||0)+'s'; el.style.left=left+'px'; el.style.top=top+'px'; vl.style.height='0px'; }
+    function restoreHomes(){ Object.keys(homePos).forEach(function(k){ var h=homePos[k], r=refOf[k]; r[0].style.transitionDelay='0s'; r[0].style.left=h[0]+'px'; r[0].style.top=h[1]+'px'; r[1].style.height=h[2]+'px'; }); }
+
+    function zoomPhone(i){
+      zoomedIdx=i;
+      phones.forEach(function(ph,j){ if(j===i){ ph.style.zIndex='60'; ph.style.opacity='1'; ph.style.transform=tf(0,0,0,2.2,160,0); glows[j].style.opacity=''; glows[j].classList.add('pulse'); }
+        else { ph.style.zIndex=''; ph.style.opacity='0.08'; var p=basePose[j]; ph.style.transform=tf(p[0]*1.25,p[1]+50,p[2],p[3]*0.78,0,p[5]); glows[j].classList.remove('pulse'); glows[j].style.opacity='0'; } });
+      allC.forEach(function(c){ c.style.opacity='0'; c.style.pointerEvents='none'; c.classList.remove('hot'); });
+      // fly this phone's two USP flyouts to flank the enlarged screen (staggered arrival)
+      var pc=phoneCallouts[i];
+      flyCallout(pc.caution,pc.cv,468,300,0);
+      flyCallout(pc.payoff,pc.pv,1452,648,0.12);
+      pc.caution.style.opacity='1'; pc.payoff.style.opacity='1';
+      pc.caution.classList.add('hot'); pc.payoff.classList.add('hot');
+      hideExplain(); if(hint)hint.style.opacity='0'; if(zoomhint)zoomhint.style.opacity='1';
+      var ctx=getAC(); if(ctx){ if(ctx.state==='suspended')ctx.resume(); playChime(ctx,[392,330,494][i],1.4,0.05); }
+      startZoomAmbience(i);
+    }
+    function exitZoom(){
+      zoomedIdx=-1;
+      phones.forEach(function(ph,j){ ph.style.zIndex=''; ph.style.opacity='1'; glows[j].classList.remove('pulse'); glows[j].style.opacity='0'; });
+      for(var i=0;i<3;i++)applyPhone(i);
+      restoreHomes();
+      allC.forEach(function(c){ c.style.opacity='0.62'; c.style.pointerEvents='auto'; c.classList.remove('hot'); });
+      if(zoomhint)zoomhint.style.opacity='0'; if(hint)hint.style.opacity='1';
+      stopZoomAmbience();
+    }
+
+    phones.forEach(function(ph,i){
+      ph.style.cursor='pointer'; var frame=ph.querySelector('.phone-frame');
+      ph.addEventListener('mouseenter',function(){ frame.style.filter='brightness(1.16)'; if(interactive&&zoomedIdx===-1){ hovered[i]=true; applyPhone(i); glows[i].style.opacity='0.5'; } });
+      ph.addEventListener('mouseleave',function(){ frame.style.filter=''; if(interactive&&zoomedIdx===-1){ hovered[i]=false; applyPhone(i); glows[i].style.opacity='0'; } });
+      ph.addEventListener('click',function(e){ e.stopPropagation(); var ctx=getAC(); if(ctx&&ctx.state==='suspended')ctx.resume(); if(!interactive){ enterInteractive(); zoomPhone(i); return; } if(zoomedIdx===i)exitZoom(); else zoomPhone(i); });
+    });
+
+    [{el:cL1,k:'cL1'},{el:cL2,k:'cL2'},{el:cC1,k:'cC1'},{el:cC2,k:'cC2'},{el:cR1,k:'cR1'},{el:cR2,k:'cR2'}].forEach(function(o){
+      o.el.addEventListener('mouseenter',function(){ if(!interactive||zoomedIdx!==-1)return; o.el.classList.add('hot'); o.el.style.opacity='1'; showExplain(o.k); });
+      o.el.addEventListener('mouseleave',function(){ if(!interactive||zoomedIdx!==-1)return; o.el.classList.remove('hot'); o.el.style.opacity='0.62'; hideExplain(); });
+    });
+
+    var startTs=null, ffTarget=null;
+    function fastForward(){ if(!startTs)return; var cur=(performance.now()-startTs)/1000; if(cur<21)ffTarget=21; }
+    function raf(ts){ if(reelDone)return; if(!startTs)startTs=ts; if(ffTarget!==null){ startTs=ts-ffTarget*1000; ffTarget=null; } var t=Math.min((ts-startTs)/1000,24); seek(t); if(t<24)requestAnimationFrame(raf); else { reelEnded=true; if(userPresent)enterInteractive(); } }
+
+    document.addEventListener('mousemove',function(){ userPresent=true; if(reelEnded&&!interactive)enterInteractive(); },{once:true});
+    document.addEventListener('click',function(e){ var ctx=getAC(); if(ctx&&ctx.state==='suspended')ctx.resume(); if(e.target.closest&&e.target.closest('.phone-wrap'))return; if(!interactive)fastForward(); else if(zoomedIdx!==-1)exitZoom(); });
+    document.addEventListener('keydown',function(e){ if(e.ctrlKey||e.metaKey||e.altKey)return; if(e.key===' '||e.key==='PageUp'||e.key==='PageDown'||(e.key&&e.key.indexOf('Arrow')===0))e.preventDefault(); userPresent=true; if(!interactive)fastForward(); else if(zoomedIdx!==-1)exitZoom(); });
+
+    seek(0); requestAnimationFrame(raf);
+  </script>
+</body>
+</html>

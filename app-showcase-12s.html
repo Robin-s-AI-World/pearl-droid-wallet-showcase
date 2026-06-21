@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="en" data-duration="24">
+<head>
+  <meta charset="utf-8" />
+  <title>Pearl Wallet — App Showcase</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+    :root {
+      --bg:     #050d1a;
+      --fg:     #deeaf8;
+      --muted:  #4a6a8a;
+      --accent: #00d4d4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #050d1a;
+    }
+    body {
+      width: 1920px; height: 1080px;
+      overflow: hidden;
+      position: relative;
+      transform-origin: 0 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 90%, rgba(0,90,110,0.38) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 38% at 16% 22%, rgba(0,40,80,0.32) 0%, transparent 60%),
+        #050d1a;
+    }
+
+    .stars {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at  96px  72px, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 310px 180px, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 540px 430px, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1px 1px at 760px  90px, rgba(255,255,255,0.28) 0%, transparent 100%),
+        radial-gradient(1px 1px at 980px 310px, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 1180px 70px, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1420px 240px, rgba(255,255,255,0.28) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1640px 490px, rgba(255,255,255,0.30) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 1790px 140px, rgba(255,255,255,0.48) 0%, transparent 100%),
+        radial-gradient(1px 1px at 180px 640px, rgba(255,255,255,0.26) 0%, transparent 100%),
+        radial-gradient(1px 1px at 440px 790px, rgba(255,255,255,0.30) 0%, transparent 100%),
+        radial-gradient(1px 1px at 870px 890px, rgba(255,255,255,0.22) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1280px 740px, rgba(255,255,255,0.33) 0%, transparent 100%),
+        radial-gradient(1px 1px at 1680px 840px, rgba(255,255,255,0.26) 0%, transparent 100%);
+    }
+
+    /* ── Headline ── */
+    .headline-wrap {
+      position: absolute;
+      top: 88px; left: 0; right: 0;
+      text-align: center;
+      z-index: 20;
+      will-change: transform, opacity;
+    }
+    .headline-kicker {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.90;
+      margin-bottom: 14px;
+    }
+    .headline {
+      font-size: 80px;
+      font-weight: 800;
+      letter-spacing: -0.022em;
+      text-transform: uppercase;
+      color: var(--fg);
+      line-height: 1;
+    }
+    .headline-android {
+      display: inline-block;
+      font-family: 'Dancing Script', 'Segoe Script', 'Comic Sans MS', cursive;
+      font-size: 54px;
+      font-weight: 700;
+      color: var(--accent);
+      transform: rotate(-9deg) translate(328px, 22px);
+      letter-spacing: 0.01em;
+      text-shadow: 0 0 28px rgba(0,212,212,0.55);
+      position: relative;
+      margin-top: -10px;
+    }
+    .headline-rule {
+      height: 1px;
+      width: 680px;
+      margin: 12px auto 0;
+      background: linear-gradient(90deg,
+        transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
+      transform-origin: left center;
+    }
+
+    /* ── Phones ── */
+    .phones-stage {
+      position: absolute; inset: 0;
+      perspective: 1600px;
+      perspective-origin: 50% 60%;
+      z-index: 25;
+    }
+    /* Zoom veil — sits above headline (z20) but below phones-stage (z25).
+       Dims everything behind the advanced phone without touching it. */
+    #zoom-veil {
+      position: absolute; inset: 0;
+      background: #050d1a;
+      z-index: 22;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .phone-wrap {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 220px; height: 418px;
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+    }
+    .phone-frame {
+      position: absolute; inset: 0;
+      border-radius: 40px;
+      background: #000;
+      box-shadow:
+        0 0 0 2.5px #233040,
+        0 0 0 4.5px #0e1d2b,
+        0 80px 130px rgba(0,0,0,0.92),
+        0 28px 48px rgba(0,0,0,0.62),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .phone-island {
+      position: absolute;
+      top: 13px; left: 50%;
+      transform: translateX(-50%);
+      width: 88px; height: 22px;
+      background: #000;
+      border-radius: 14px;
+      z-index: 5;
+    }
+    .phone-screen {
+      position: absolute;
+      top: 10px; left: 9px; right: 9px; bottom: 10px;
+      border-radius: 31px;
+      overflow: hidden;
+      background: #000;
+    }
+    .phone-screen img {
+      position: absolute;
+      inset: 16px 13px;
+      width: calc(100% - 26px);
+      height: calc(100% - 32px);
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-radius: 3px;
+    }
+    .phone-bar {
+      position: absolute;
+      bottom: 9px; left: 50%;
+      transform: translateX(-50%);
+      width: 106px; height: 4px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 3px;
+      z-index: 10;
+    }
+    .phone-glow {
+      position: absolute; inset: -36px;
+      border-radius: 72px;
+      background: radial-gradient(ellipse at 50% 50%,
+        rgba(0,212,212,0.20) 0%, transparent 68%);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* ── Callouts (vertical connector style) ── */
+    .callout {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      opacity: 0;
+      z-index: 30;
+      transform: translateX(-50%);
+    }
+    .callout-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      max-width: 360px;
+    }
+    .callout.hot .callout-text {
+      color: #eafdff;
+      text-shadow: 0 0 14px rgba(0,212,212,0.55);
+    }
+    .callout-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,212,212,0.9);
+    }
+    .callout-vline {
+      width: 1px;
+      height: 0;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Nav bar ── */
+    .site-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 72px;
+      background: linear-gradient(180deg, rgba(5,13,26,0.92) 0%, transparent 100%);
+      z-index: 60;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .snav-logo {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 24px; font-weight: 700;
+      letter-spacing: 0.06em; color: var(--fg);
+    }
+    .snav-logo img { width: 38px; height: 38px; border-radius: 9px; }
+    .snav-links { display: flex; gap: 38px; }
+    .snav-links span {
+      position: relative;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+      padding: 5px 11px;
+      border-radius: 4px;
+      transition: color 0.16s;
+    }
+    .snav-links span::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 4px;
+      background: rgba(0,212,212,0.08);
+      box-shadow: 0 0 20px rgba(0,212,212,0.18);
+      opacity: 0;
+      transition: opacity 0.16s;
+      pointer-events: none;
+    }
+    .snav-links span::after {
+      content: '';
+      position: absolute; inset: 16% 0;
+      border-left: 1.5px solid var(--accent);
+      border-right: 1.5px solid var(--accent);
+      opacity: 0;
+      transition: opacity 0.16s;
+      pointer-events: none;
+    }
+    .snav-links span:hover { color: var(--fg); }
+    .snav-links span:hover::before,
+    .snav-links span:hover::after { opacity: 1; }
+
+    /* ── Logo outro ── */
+    .logo-outro {
+      position: absolute;
+      right: 96px; bottom: 88px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      z-index: 40;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .logo-badge { width: 80px; height: 80px; border-radius: 18px; }
+    .logo-text  { display: flex; flex-direction: column; gap: 6px; }
+    .logo-name  {
+      font-size: 44px; font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--fg); line-height: 1;
+    }
+    .logo-sub   {
+      font-size: 16px; font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── Zoom overlay ── */
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes zoomIn { from { transform:scale(0.82); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+    /* ── Shimmer ── */
+    .shimmer {
+      position: absolute;
+      top: 46px; left: -280px;
+      width: 260px; height: 150px;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(0,212,212,0.26) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 25;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="stars"></div>
+  <div id="zoom-veil"></div>
+
+  <!-- Headline -->
+  <div class="headline-wrap" id="hw">
+    <div class="headline-kicker">Native Android &nbsp;·&nbsp; Purpose-built for Pearl Miners</div>
+    <h1 class="headline">PEARL WALLET</h1>
+    <div class="headline-rule" id="hrule"></div>
+    <div class="headline-android">for Android</div>
+  </div>
+
+  <!-- Phones -->
+  <div class="phones-stage">
+
+    <div class="phone-wrap" id="pL" style="opacity:0">
+      <div class="phone-glow" id="gL"></div>
+      <div class="phone-frame">
+        <div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jmp-1-splash.png" alt="Pearl Wallet launch" loading="eager">
+        </div>
+        <div class="phone-bar"></div>
+      </div>
+    </div>
+
+    <div class="phone-wrap" id="pC" style="opacity:0">
+      <div class="phone-glow" id="gC"></div>
+      <div class="phone-frame">
+        <div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jna-2-wallet-home.png" alt="Pearl Wallet portfolio" loading="eager">
+        </div>
+        <div class="phone-bar"></div>
+      </div>
+    </div>
+
+    <div class="phone-wrap" id="pR" style="opacity:0">
+      <div class="phone-glow" id="gR"></div>
+      <div class="phone-frame">
+        <div class="phone-island"></div>
+        <div class="phone-screen">
+          <img src="mqg00jok-4-otc-market.png" alt="Pearl OTC market" loading="eager">
+        </div>
+        <div class="phone-bar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- cL1: ABOVE left phone — text, dot, vline pointing down to phone top -->
+  <div class="callout" id="cL1">
+    <div class="callout-text" id="ctL1">don't copy-paste your seed —<br>write your backup on paper</div>
+    <div class="callout-dot"></div>
+    <div class="callout-vline" id="vL1"></div>
+  </div>
+
+  <!-- cL2: BELOW left phone — vline rising from phone bottom, dot, text -->
+  <div class="callout" id="cL2">
+    <div class="callout-vline" id="vL2"></div>
+    <div class="callout-dot"></div>
+    <div class="callout-text" id="ctL2">point your phone at the words —<br>we OCR it, nothing stored</div>
+  </div>
+
+  <!-- cC1: ABOVE center phone -->
+  <div class="callout" id="cC1">
+    <div class="callout-text" id="ctC1">don't chase explorer tabs —<br>the numbers live in your wallet</div>
+    <div class="callout-dot"></div>
+    <div class="callout-vline" id="vC1"></div>
+  </div>
+
+  <!-- cC2: BELOW center phone -->
+  <div class="callout" id="cC2">
+    <div class="callout-vline" id="vC2"></div>
+    <div class="callout-dot"></div>
+    <div class="callout-text" id="ctC2">height, difficulty, hashrate,<br>block time — synced live</div>
+  </div>
+
+  <!-- cR1: ABOVE right phone -->
+  <div class="callout" id="cR1">
+    <div class="callout-text" id="ctR1">don't fly blind on price —<br>the reference wallet shows none</div>
+    <div class="callout-dot"></div>
+    <div class="callout-vline" id="vR1"></div>
+  </div>
+
+  <!-- cR2: BELOW right phone -->
+  <div class="callout" id="cR2">
+    <div class="callout-vline" id="vR2"></div>
+    <div class="callout-dot"></div>
+    <div class="callout-text" id="ctR2">hold, or cash in? the live<br>OTC rate is here — your call</div>
+  </div>
+
+  <!-- Shimmer sweep -->
+  <div class="shimmer" id="shim"></div>
+
+  <!-- Nav bar (enters after animation) -->
+  <nav class="site-nav" id="snav">
+    <div class="snav-logo">
+      <img src="mqgpvfye-pearlogo.png" alt="Pearl">
+      Pearl Wallet
+    </div>
+    <div class="snav-links">
+      <span>Download</span>
+      <span>Architecture</span>
+      <span>Miners</span>
+      <span>Blueprint</span>
+      <span>Blog</span>
+      <span>Changelog</span>
+      <span>FAQ</span>
+    </div>
+  </nav>
+
+  <script>
+    // ── Easing library ──────────────────────────────────────────────────
+    function c01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function prog(t, s, e) { return c01((t - s) / (e - s)); }
+    // Expo out — elegant headline entrance
+    function expo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+    // Cubic out — smooth phone reveals
+    function cubic(t) { var u = 1 - t; return 1 - u*u*u; }
+    // Sine in-out — graceful bilateral focus transitions
+    function sine(t) { return -(Math.cos(Math.PI * t) - 1) / 2; }
+
+    // ── Elements ────────────────────────────────────────────────────────
+    var hw   = document.getElementById('hw');
+    var hrule= document.getElementById('hrule');
+    var pL   = document.getElementById('pL');
+    var pC   = document.getElementById('pC');
+    var pR   = document.getElementById('pR');
+    var gL   = document.getElementById('gL');
+    var gC   = document.getElementById('gC');
+    var gR   = document.getElementById('gR');
+    var cL1  = document.getElementById('cL1');
+    var cL2  = document.getElementById('cL2');
+    var cC1  = document.getElementById('cC1');
+    var cC2  = document.getElementById('cC2');
+    var cR1  = document.getElementById('cR1');
+    var cR2  = document.getElementById('cR2');
+    var vL1  = document.getElementById('vL1');
+    var vL2  = document.getElementById('vL2');
+    var vC1  = document.getElementById('vC1');
+    var vC2  = document.getElementById('vC2');
+    var vR1  = document.getElementById('vR1');
+    var vR2  = document.getElementById('vR2');
+    var shim     = document.getElementById('shim');
+    var zoomVeil = document.getElementById('zoom-veil');
+
+    // phone-wrap is 220×476 centered at top:50%;left:50%
+    // offset by (-110, -238) to center the box, then add x,y
+    function tf(x, y, ry, sc, tz, rz) {
+      return 'translate('+ (-110+x) +'px,'+ (-109+y) +'px)'
+        + ' translateZ('+ (tz||0) +'px)'
+        + ' rotateY('+ ry +'deg)'
+        + (rz ? ' rotateZ('+ rz +'deg)' : '')
+        + ' scale('+ sc +')';
+    }
+
+    // ── Audio engine ────────────────────────────────────────────────────
+    var AC = null, ambGain = null, prevT = -1;
+    var snd = {amb:0,wL:0,wC:0,wR:0,fL:0,fC:0,fR:0,shim:0};
+
+    function getAC() {
+      if (AC) return AC;
+      try { AC = new (window.AudioContext||window.webkitAudioContext)(); } catch(e) {}
+      return AC;
+    }
+
+    function resetSnd() {
+      snd = {amb:0,wL:0,wC:0,wR:0,fL:0,fC:0,fR:0,shim:0};
+    }
+
+    function startAmbient(ctx) {
+      // Mystique drone: 5 detuned sines + slow LFO tremolo
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0.032, ctx.currentTime + 5);
+      master.connect(ctx.destination);
+      ambGain = master;
+      [[55,0,0.55],[110,0.4,0.35],[165,-0.3,0.18],[220,0.5,0.10],[330,-0.6,0.06]].forEach(function(p) {
+        var o = ctx.createOscillator(); o.type = 'sine';
+        o.frequency.value = p[0] + p[1];
+        var g = ctx.createGain(); g.gain.value = p[2];
+        o.connect(g); g.connect(master); o.start();
+      });
+      // LFO
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.12;
+      var lg = ctx.createGain(); lg.gain.value = 0.006;
+      lfo.connect(lg); lg.connect(master.gain); lfo.start();
+    }
+
+    function playWhoosh(ctx, f1, f2, dur, vol) {
+      try {
+        var n = Math.floor(ctx.sampleRate * dur);
+        var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+        var d = buf.getChannelData(0);
+        for (var i=0;i<n;i++) d[i]=Math.random()*2-1;
+        var src = ctx.createBufferSource(); src.buffer = buf;
+        var filt = ctx.createBiquadFilter(); filt.type='bandpass'; filt.Q.value=2.5;
+        filt.frequency.setValueAtTime(f1, ctx.currentTime);
+        filt.frequency.linearRampToValueAtTime(f2, ctx.currentTime+dur);
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0, ctx.currentTime);
+        g.gain.linearRampToValueAtTime(vol, ctx.currentTime+dur*0.12);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime+dur);
+        src.connect(filt); filt.connect(g); g.connect(ctx.destination);
+        src.start(); src.stop(ctx.currentTime+dur);
+      } catch(e) {}
+    }
+
+    function playChime(ctx, freq, dur, vol) {
+      try {
+        [1,2,3].forEach(function(h) {
+          var o = ctx.createOscillator(); o.type='sine';
+          o.frequency.value = freq * h;
+          var g = ctx.createGain();
+          g.gain.setValueAtTime(0, ctx.currentTime);
+          g.gain.linearRampToValueAtTime(vol/(h*1.6), ctx.currentTime+0.012);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+dur/h);
+          o.connect(g); g.connect(ctx.destination);
+          o.start(); o.stop(ctx.currentTime+dur+0.05);
+        });
+      } catch(e) {}
+    }
+
+    function playShimmer(ctx, dur, vol) {
+      // stereo noise sweep left→right synced with shimmer bar
+      try {
+        var n = Math.floor(ctx.sampleRate * dur);
+        var buf = ctx.createBuffer(2, n, ctx.sampleRate);
+        var L=buf.getChannelData(0), R=buf.getChannelData(1);
+        for (var i=0;i<n;i++) {
+          var v=Math.random()*2-1, p=i/n;
+          L[i]=v*(1-p)*0.9; R[i]=v*p*0.9;
+        }
+        var src = ctx.createBufferSource(); src.buffer = buf;
+        var filt = ctx.createBiquadFilter(); filt.type='bandpass'; filt.Q.value=1.5;
+        filt.frequency.setValueAtTime(5000, ctx.currentTime);
+        filt.frequency.linearRampToValueAtTime(10000, ctx.currentTime+dur);
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0, ctx.currentTime);
+        g.gain.linearRampToValueAtTime(vol, ctx.currentTime+0.08);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime+dur);
+        src.connect(filt); filt.connect(g); g.connect(ctx.destination);
+        src.start(); src.stop(ctx.currentTime+dur+0.05);
+      } catch(e) {}
+    }
+
+    function reveal(el, vl, a, dim, h) {
+      el.style.opacity = a * dim;
+      vl.style.height  = (a * h) + 'px';
+    }
+
+    // ── Timeline (all timings ×2 = 24s total) ──────────────────────────
+    //
+    //  0.0 –  2.0s  Headline rises
+    //  1.8 –  3.4s  Rule wipes
+    //  1.0 –  5.0s  Left phone reveal
+    //  1.5 –  5.5s  Center phone reveal
+    //  2.0 –  6.0s  Right phone reveal
+    //  5.0 –  9.4s  Left focus   (fi 5.0–6.6, fo 8.6–9.4)
+    //  9.4 – 13.8s  Center focus (fi 9.4–11.0, fo 13.0–13.8)
+    // 13.8 – 18.2s  Right focus  (fi 13.8–15.4, fo 17.4–18.2)
+    // 18.2 – 21.2s  Idle bob (6px, 0.6 Hz)
+    // 21.2 – 23.2s  Logo outro
+    // 22.4 – 24.0s  Shimmer sweep
+    //
+    function seek(t) {
+
+      // ── Per-frame zoom compositing ──
+      var anyZoom  = Math.max(zoomCur.L, zoomCur.C, zoomCur.R);
+      var zDimBg   = lerp(1, 0.12, anyZoom); // dim factor for callouts (above veil)
+
+      // ── Headline ──
+      var hp = expo(prog(t, 0, 2.0));
+      hw.style.opacity   = hp;
+      hw.style.transform = 'translateY('+ lerp(48, 0, hp) +'px)';
+
+      var rp = cubic(prog(t, 1.8, 3.4));
+      hrule.style.transform = 'scaleX('+ rp +')';
+      hrule.style.opacity   = rp > 0.01 ? 1 : 0;
+
+      // ── Phone LEFT ──
+      {
+        var rev  = cubic(prog(t, 1.0, 5.0));
+        var fade = c01(prog(t, 1.0, 2.4));
+        var fi   = sine(prog(t, 5.0, 6.6));
+        var fo   = sine(prog(t, 8.6, 9.4));
+
+        // Bob: 18.2→21.2s, 0.6 Hz, amplitude 6px, phase 0
+        var bob = (t >= 18.2 && t < 21.4)
+          ? 6 * Math.sin(2*Math.PI*0.6*(t-18.2)) : 0;
+
+        var x, ry, sc, y, rz, opBase, gl;
+
+        if (t < 5.0) {
+          x = lerp(-720, -390, rev);  ry = lerp(-22, -17, rev);
+          sc= lerp(0.74, 0.91, rev);  y  = lerp(38, 18, rev);
+          opBase = fade;              gl = 0;
+        } else if (t <= 9.4) {
+          var foV = t >= 8.6 ? fo : 0;
+          x  = lerp(lerp(-390,-300,fi), -390, foV);
+          ry = lerp(lerp(-17,  0,  fi),  -17, foV);
+          sc = lerp(lerp(0.91, 1.04,fi), 0.91,foV);
+          y  = lerp(lerp( 18,  0,  fi),   18, foV);
+          opBase = 1; gl = lerp(lerp(0,1,fi),0,foV);
+        } else {
+          // Fan out after bob: idle 18.2–21.4s, then settle into fanned pose 21.4–23.5s
+          var fanL = sine(prog(t, 21.4, 23.5));
+          x  = lerp(-390, -410, fanL);
+          y  = lerp(18 + bob, 52, fanL);
+          ry = lerp(-17, -13, fanL);
+          sc = lerp(0.91, 0.87, fanL);
+          rz = lerp(0, -6, fanL);
+          opBase=1; gl=0;
+        }
+
+        // Depth dimming when center or right is focused
+        var dimL = 1.0;
+        if (t > 9.4 && t < 13.8) {
+          var dIn  = sine(prog(t, 9.4, 10.4));
+          var dOut = sine(prog(t, 12.8, 13.8));
+          dimL = t < 12.8 ? lerp(1, 0.52, dIn) : lerp(0.52, 1, dOut);
+        }
+        if (t > 13.8 && t < 18.2) {
+          var dIn2  = sine(prog(t, 13.8, 14.8));
+          var dOut2 = sine(prog(t, 17.2, 18.2));
+          dimL = t < 17.2 ? lerp(1, 0.52, dIn2) : lerp(0.52, 1, dOut2);
+        }
+
+        var zL = zoomCur.L;
+        var zOtherL = c01(anyZoom - zL);
+        var xLf  = lerp(x,  x  * 0.22, zL);   // 2D canvas position for callout tracking
+        var scLf = sc * lerp(1, 1.30, zL);
+        pL.style.transform = tf(xLf, y, ry * (1 - zL * 0.7), scLf, hoverCur.L + lerp(0, 270, zL), rz);
+        pL.style.opacity = opBase * dimL * lerp(1, 0.10, zOtherL);
+        gL.style.opacity   = gl;
+      }
+
+      // ── Phone CENTER ──
+      {
+        var rev2  = cubic(prog(t, 1.5, 5.5));
+        var fade2 = c01(prog(t, 1.5, 2.8));
+        var fi2   = sine(prog(t, 9.4, 11.0));
+        var fo2   = sine(prog(t, 13.0, 13.8));
+
+        var bob2 = (t >= 18.2 && t < 21.4)
+          ? 6 * Math.sin(2*Math.PI*0.6*(t-18.2) + Math.PI*2/3) : 0;
+
+        var tz2, sc2, y2, rz2, opBase2, gl2;
+
+        if (t < 9.4) {
+          tz2 = lerp(-430, 0, rev2);  sc2 = lerp(0.64, 1.0, rev2);
+          y2  = 0;  rz2=0; opBase2 = fade2; gl2 = 0;
+        } else if (t <= 13.8) {
+          var fo2V = t >= 13.0 ? fo2 : 0;
+          sc2 = lerp(lerp(1.0, 1.04, fi2), 1.0, fo2V);
+          y2  = lerp(lerp(0,  -10,   fi2), 0,   fo2V);
+          tz2 = 0; rz2=0; opBase2 = 1; gl2 = lerp(lerp(0,1,fi2),0,fo2V);
+        } else {
+          // Center phone rises forward as hero in fan finale
+          var fanC = sine(prog(t, 21.4, 23.5));
+          sc2 = lerp(1.0, 1.04, fanC);
+          y2  = lerp(bob2, -24, fanC);
+          tz2 = lerp(0, 40, fanC);
+          rz2 = 0;
+          opBase2=1; gl2=0;
+        }
+
+        var dimC = 1.0;
+        if (t > 5.0 && t < 9.4) {
+          var cIn  = sine(prog(t, 5.0, 6.0));
+          var cOut = sine(prog(t, 8.4, 9.4));
+          dimC = t < 8.4 ? lerp(1, 0.52, cIn) : lerp(0.52, 1, cOut);
+        }
+        if (t > 13.8 && t < 18.2) {
+          var cIn2  = sine(prog(t, 13.8, 14.8));
+          var cOut2 = sine(prog(t, 17.2, 18.2));
+          dimC = t < 17.2 ? lerp(1, 0.52, cIn2) : lerp(0.52, 1, cOut2);
+        }
+
+        var zC = zoomCur.C;
+        var zOtherC = c01(anyZoom - zC);
+        var scCf = sc2 * lerp(1, 1.30, zC);    // 2D scale for callout tracking
+        pC.style.transform = tf(0, y2, 0, scCf, tz2 + hoverCur.C + lerp(0, 270, zC), rz2);
+        pC.style.opacity = opBase2 * dimC * lerp(1, 0.10, zOtherC);
+        gC.style.opacity   = gl2;
+      }
+
+      // ── Phone RIGHT ──
+      {
+        var rev3  = cubic(prog(t, 2.0, 6.0));
+        var fade3 = c01(prog(t, 2.0, 3.3));
+        var fi3   = sine(prog(t, 13.8, 15.4));
+        var fo3   = sine(prog(t, 17.4, 18.2));
+
+        var bob3 = (t >= 18.2 && t < 21.4)
+          ? 6 * Math.sin(2*Math.PI*0.6*(t-18.2) + Math.PI*4/3) : 0;
+
+        var x3, ry3, sc3, y3, rz3, opBase3, gl3;
+
+        if (t < 6.0) {
+          x3 = lerp(720, 390, rev3);  ry3 = lerp(22, 17, rev3);
+          sc3= lerp(0.74, 0.91, rev3); y3 = lerp(38, 18, rev3);
+          opBase3 = fade3; gl3 = 0;
+        } else if (t <= 18.2) {
+          if (t < 13.8) {
+            x3=390; ry3=17; sc3=0.91; y3=18; opBase3=1; gl3=0;
+          } else {
+            var fo3V = t >= 17.4 ? fo3 : 0;
+            x3  = lerp(lerp(390, 300, fi3), 390, fo3V);
+            ry3 = lerp(lerp( 17,   0, fi3),  17, fo3V);
+            sc3 = lerp(lerp(0.91,1.04,fi3),0.91, fo3V);
+            y3  = lerp(lerp( 18,   0, fi3),  18, fo3V);
+            opBase3=1; gl3 = lerp(lerp(0,1,fi3),0,fo3V);
+          }
+        } else {
+          var fanR = sine(prog(t, 21.4, 23.5));
+          x3  = lerp(390, 410, fanR);
+          y3  = lerp(18 + bob3, 52, fanR);
+          ry3 = lerp(17, 13, fanR);
+          sc3 = lerp(0.91, 0.87, fanR);
+          rz3 = lerp(0, 6, fanR);
+          opBase3=1; gl3=0;
+        }
+
+        var dimR = 1.0;
+        if (t > 5.0 && t < 9.4) {
+          var rIn  = sine(prog(t, 5.0, 6.0));
+          var rOut = sine(prog(t, 8.4, 9.4));
+          dimR = t < 8.4 ? lerp(1, 0.52, rIn) : lerp(0.52, 1, rOut);
+        }
+        if (t > 9.4 && t < 13.8) {
+          var rIn2  = sine(prog(t, 9.4, 10.4));
+          var rOut2 = sine(prog(t, 12.8, 13.8));
+          dimR = t < 12.8 ? lerp(1, 0.52, rIn2) : lerp(0.52, 1, rOut2);
+        }
+
+        var zR = zoomCur.R;
+        var zOtherR = c01(anyZoom - zR);
+        var xRf  = lerp(x3, x3 * 0.22, zR);   // 2D canvas position for callout tracking
+        var scRf = sc3 * lerp(1, 1.30, zR);
+        pR.style.transform = tf(xRf, y3, ry3 * (1 - zR * 0.7), scRf, hoverCur.R + lerp(0, 270, zR), rz3);
+        pR.style.opacity = opBase3 * dimR * lerp(1, 0.10, zOtherR);
+        gR.style.opacity   = gl3;
+      }
+
+      // ── Callout positions — vertical connectors, centered on phone X ──
+      // above callout: bottom CSS anchors element bottom at phone top edge - gap
+      // below callout: top CSS anchors element top at phone bottom edge + gap
+      {
+        var pLhh = 209 * scLf, pLcx = 960 + xLf, pLcy = 640 + y;
+        var pChh = 209 * scCf, pCcx = 960,        pCcy = 640 + y2;
+        var pRhh = 209 * scRf, pRcx = 960 + xRf,  pRcy = 640 + y3;
+
+        cL1.style.left = pLcx + 'px';
+        cL1.style.bottom = (1080 - (pLcy - pLhh) + 16) + 'px';
+        cL1.style.top    = '';
+        cL2.style.left = pLcx + 'px';
+        cL2.style.top    = (pLcy + pLhh + 16) + 'px';
+        cL2.style.bottom = '';
+
+        cC1.style.left = pCcx + 'px';
+        cC1.style.bottom = (1080 - (pCcy - pChh) + 16) + 'px';
+        cC1.style.top    = '';
+        cC2.style.left = pCcx + 'px';
+        cC2.style.top    = (pCcy + pChh + 16) + 'px';
+        cC2.style.bottom = '';
+
+        cR1.style.left = pRcx + 'px';
+        cR1.style.bottom = (1080 - (pRcy - pRhh) + 16) + 'px';
+        cR1.style.top    = '';
+        cR2.style.left = pRcx + 'px';
+        cR2.style.top    = (pRcy + pRhh + 16) + 'px';
+        cR2.style.bottom = '';
+      }
+
+      // Reveal callouts — vline height grows 0→h as a appears
+      var cdimL = t > 9.4 ? lerp(1, 0.30, sine(prog(t, 9.4, 10.8))) : 1;
+      reveal(cL1, vL1, c01(prog(t, 5.8, 6.8)), cdimL * zDimBg, 58);
+      reveal(cL2, vL2, c01(prog(t, 7.0, 8.0)), cdimL * zDimBg, 44);
+      var cdimC = t > 13.8 ? lerp(1, 0.30, sine(prog(t, 13.8, 15.0))) : 1;
+      reveal(cC1, vC1, c01(prog(t, 10.0, 11.0)), cdimC * zDimBg, 40);
+      reveal(cC2, vC2, c01(prog(t, 11.2, 12.2)), cdimC * zDimBg, 60);
+      var cdimR = t > 18.2 ? lerp(1, 0.30, sine(prog(t, 18.2, 19.4))) : 1;
+      reveal(cR1, vR1, c01(prog(t, 14.4, 15.4)), cdimR * zDimBg, 54);
+      reveal(cR2, vR2, c01(prog(t, 15.6, 16.6)), cdimR * zDimBg, 46);
+
+      // ── Zoom veil: darkens bg + headline behind the advanced phone ──
+      zoomVeil.style.opacity = anyZoom * 0.74;
+
+      // ── Shimmer: 22.4→24.0s ──
+      {
+        var sp = prog(t, 22.4, 24.0);
+        if (sp > 0 && sp < 1) {
+          shim.style.opacity = 1;
+          shim.style.left    = lerp(-280, 1980, sp) + 'px';
+        } else {
+          shim.style.opacity = 0;
+        }
+      }
+
+      // ── Nav bar: slides down 21.4→23.5s alongside logo outro ──
+      {
+        var snav = document.getElementById('snav');
+        var np = cubic(prog(t, 21.4, 23.5));
+        snav.style.opacity   = np;
+        snav.style.transform = 'translateY('+ lerp(-20, 0, np) +'px)';
+      }
+
+      // ── Audio triggers ──
+      var ctx = getAC();
+      if (ctx) {
+        if (t < prevT - 0.3) resetSnd();
+        if (!snd.amb  && t>=1.0)  { snd.amb=1;  startAmbient(ctx); }
+        if (!snd.wL   && t>=1.0)  { snd.wL=1;   playWhoosh(ctx,900,220,0.55,0.07); }
+        if (!snd.wC   && t>=1.5)  { snd.wC=1;   playWhoosh(ctx,1100,260,0.65,0.055); }
+        if (!snd.wR   && t>=2.0)  { snd.wR=1;   playWhoosh(ctx,850,200,0.50,0.065); }
+        if (!snd.fL   && t>=6.6)  { snd.fL=1;   playChime(ctx,440,1.8,0.055); }
+        if (!snd.fC   && t>=11.0) { snd.fC=1;   playChime(ctx,528,2.0,0.048); }
+        if (!snd.fR   && t>=15.4) { snd.fR=1;   playChime(ctx,659,2.2,0.042); }
+        if (!snd.shim && t>=22.4) { snd.shim=1; playShimmer(ctx,1.7,0.09); }
+        prevT = t;
+      }
+    }
+
+    // ── HyperFrames renderer hook ──
+    window.seek     = seek;
+    window.DURATION = 24;
+
+    // ── Responsive scale-to-fit ─────────────────────────────────────
+    // Scales the 1920×1080 body to fill any viewport, centered.
+    // The HyperFrames video renderer uses a 1920×1080 viewport, so it
+    // gets s=1 and transform is a no-op — export is pixel-perfect.
+    function scaleToFit() {
+      var s  = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      var tx = (window.innerWidth  - 1920 * s) / 2;
+      var ty = (window.innerHeight - 1080 * s) / 2;
+      document.body.style.transform =
+        'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    }
+    window.addEventListener('resize', scaleToFit);
+    scaleToFit();
+
+    // ── Phone hover / click interactivity ──
+    // Hover: translateZ boost (screen advances toward viewer)
+    // Click: in-scene zoom — phone glides forward into view, scene dims behind it.
+    //        Click again (or anywhere outside) to retreat.
+    var hoverTarget = {L:0, C:0, R:0};
+    var hoverCur    = {L:0, C:0, R:0};
+    var zoomTarget  = null;           // 'L' | 'C' | 'R' | null
+    var zoomCur     = {L:0, C:0, R:0};
+    var rafActive   = false;
+
+    function ensureRaf() {
+      if (!rafActive) { rafActive = true; requestAnimationFrame(raf); }
+    }
+
+    [
+      {el: pL, key: 'L'},
+      {el: pC, key: 'C'},
+      {el: pR, key: 'R'}
+    ].forEach(function(p) {
+      p.el.style.cursor = 'pointer';
+      p.el.addEventListener('mouseenter', function() {
+        hoverTarget[p.key] = 28;
+        p.el.querySelector('.phone-frame').style.filter = 'brightness(1.12)';
+        ensureRaf();
+      });
+      p.el.addEventListener('mouseleave', function() {
+        hoverTarget[p.key] = 0;
+        p.el.querySelector('.phone-frame').style.filter = '';
+        ensureRaf();
+      });
+      p.el.addEventListener('click', function() {
+        zoomTarget = (zoomTarget === p.key) ? null : p.key;
+        ensureRaf();
+      });
+    });
+
+    // ── Browser auto-play ──
+    var startTs = null;
+    var ffTarget = null; // set to a time (s) to warp the clock on next frame
+
+    function fastForward() {
+      if (!startTs) return;
+      var cur = (performance.now() - startTs) / 1000;
+      if (cur < 24) { ffTarget = 24; ensureRaf(); }
+    }
+
+    function raf(ts) {
+      rafActive = false;
+      if (!startTs) startTs = ts;
+      if (ffTarget !== null) {
+        startTs = ts - ffTarget * 1000;
+        ffTarget = null;
+      }
+      // Lerp hover translateZ boost toward target each frame
+      hoverCur.L += (hoverTarget.L - hoverCur.L) * 0.16;
+      hoverCur.C += (hoverTarget.C - hoverCur.C) * 0.16;
+      hoverCur.R += (hoverTarget.R - hoverCur.R) * 0.16;
+      // Lerp in-scene zoom progress
+      var _keys = ['L','C','R'];
+      for (var _i=0; _i<3; _i++) {
+        var _k = _keys[_i];
+        var _zt = zoomTarget === _k ? 1 : 0;
+        zoomCur[_k] += (_zt - zoomCur[_k]) * 0.10;
+      }
+      var t = Math.min((ts - startTs) / 1000, 24);
+      seek(t);
+      // Keep looping while animation runs OR interactions are still animating
+      var busy = t < 24 || zoomTarget !== null ||
+        zoomCur.L > 0.002 || zoomCur.C > 0.002 || zoomCur.R > 0.002 ||
+        hoverCur.L > 0.5   || hoverCur.C > 0.5   || hoverCur.R > 0.5;
+      if (busy) { rafActive = true; requestAnimationFrame(raf); }
+    }
+
+    // Unlock AudioContext on first interaction (browser autoplay policy)
+    document.addEventListener('click', function() {
+      var ctx = getAC();
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }, {once: true});
+
+    // Any key = fast-forward to end; click outside phones = fast-forward to end
+    document.addEventListener('keydown', function(e) {
+      var isMod = e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta';
+      if (!isMod) { e.preventDefault(); fastForward(); }
+    });
+    document.addEventListener('click', function(e) {
+      var onPhone = e.target.closest && e.target.closest('.phone-wrap');
+      if (!onPhone) {
+        if (zoomTarget !== null) { zoomTarget = null; return; } // dismiss zoom first
+        fastForward();
+      }
+    });
+
+    seek(0);
+    ensureRaf();
+  </script>
+</body>
+</html>
