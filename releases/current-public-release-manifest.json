@@ -1,0 +1,82 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.99.1331",
+  "build": "1331",
+  "built_at": "2026-06-21T18:16:03-04:00",
+  "content_updated_at": "2026-06-22",
+  "release_status": "production",
+  "working_status": "release-signed",
+  "public_channel_label": "Direct APK",
+  "testing_warning": "",
+  "copy": {
+    "eyebrow": "Direct Android APK",
+    "hero_title": "PRL Wallet for Android",
+    "hero_summary": "The first native Android wallet for the Pearl blockchain. Monitor your rigs, move your PRL, and check live OTC rates — all from your phone.",
+    "primary_cta": "Download APK",
+    "secondary_cta": "Verify the hash first",
+    "above_fold_note": "Release data is populated from JSON. CI/manual builds update this manifest automatically."
+  },
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
+    "commit": "unknown",
+    "branch": "master",
+    "ci_system": "manual",
+    "ci_run_url": null
+  },
+  "distribution": {
+    "channel": "direct-apk",
+    "google_play_status": "not-active",
+    "canonical_origin": "prldroid-wallet.robin.mba",
+    "canonical_domain": "https://prldroid-wallet.robin.mba/"
+  },
+  "artifacts": [
+    {
+      "id": "android-apk-release",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.99.1331-release-signed.apk",
+      "size_bytes": 108231989,
+      "sha256": "e98636e984fcfff2bb71cffdd47512d6524f4047ad924fb9f58327a48ed452b3",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "https://prldroid-wallet.robin.mba/downloads/pearl-wallet-android-v1.99.1331-release-signed.apk"
+        }
+      ],
+      "license": {
+        "primary": "proprietary",
+        "primary_label": "All Rights Reserved",
+        "components": [
+          {
+            "name": "Oyster wallet engine",
+            "source": "https://github.com/pearl-research-labs/pearl/tree/master/wallet",
+            "license": "ISC",
+            "license_url": "https://github.com/pearl-research-labs/pearl/blob/master/wallet/LICENSE",
+            "scope": "Vendored wallet engine compiled via gomobile. Provides core wallet functionality (key management, UTXO tracking, transaction signing)."
+          }
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "primary_artifact_id": "android-apk-release",
+    "sha256_command": "sha256sum pearl-wallet-android-v1.99.1331-release-signed.apk",
+    "expected_sha256": "e98636e984fcfff2bb71cffdd47512d6524f4047ad924fb9f58327a48ed452b3"
+  },
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.99.1331",
+        "date": "2026-06-21T18:16:03-04:00",
+        "notes": [
+          "Your seed phrase never gets stored as a picture — built-in OCR lets you import a recovery phrase by pointing your camera, then wipes the image instantly. No screenshots, no gallery leaks.",
+          "Address book: save and label your frequent contacts so you never paste the wrong address again.",
+          "Live OTC price data straight from lordofpearls.xyz — see the real-time PRL/USDC rate without leaving the wallet.",
+          "Coming soon: Android home screen widget to track price swings at a glance, plus target-price push notifications so you never miss your exit."
+        ]
+      }
+    ]
+  }
+}

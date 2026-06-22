@@ -241,7 +241,24 @@
       letter-spacing: 0.06em; color: var(--fg);
     }
     .snav-logo img { width: 38px; height: 38px; border-radius: 9px; }
-    .snav-links { display: flex; gap: 38px; }
+    .snav-links { display: flex; gap: 38px; align-items: center; }
+    .snav-links span.pouw-cta {
+      color: var(--accent);
+      border: 1px solid rgba(0,212,212,0.30);
+      border-radius: 6px;
+      padding: 6px 14px;
+      letter-spacing: 0.10em;
+    }
+    .snav-links span.pouw-cta::before,
+    .snav-links span.pouw-cta::after { display: none; }
+    .snav-links span.pouw-cta:hover {
+      background: rgba(0,212,212,0.10);
+      border-color: var(--accent);
+    }
+    .snav-links span.pouw-cta.active {
+      background: rgba(0,212,212,0.12);
+      border-color: var(--accent);
+    }
     .snav-links span {
       position: relative;
       font-size: 11px; font-weight: 600;
@@ -313,6 +330,328 @@
       pointer-events: none;
       z-index: 25;
       opacity: 0;
+    }
+
+    /* ── Content overlay panel ── */
+
+    /* Floating page buttons (appear after animation) */
+    .page-float-btns {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 1920px;
+      height: 0;
+      z-index: 55;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .page-float-btns.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .page-float-btn {
+      position: absolute;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: clamp(11px, 1.1vw, 14px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      white-space: normal;
+      max-width: 220px;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .page-float-btn.left-btn {
+      left: 180px;
+      top: 33%;
+      transform: translateY(-50%);
+    }
+    .page-float-btn.right-btn {
+      right: 180px;
+      top: 67%;
+      transform: translateY(-50%);
+    }
+    .page-float-btn.glow {
+      background: var(--accent);
+      color: #050d1a;
+      box-shadow: 0 0 20px rgba(0,212,212,0.40), 0 0 40px rgba(0,212,212,0.15);
+      animation: pulse-glow 2.5s ease-in-out infinite;
+    }
+    .page-float-btn.glow:hover {
+      transform: translateY(-50%) translateY(-2px);
+      box-shadow: 0 0 30px rgba(0,212,212,0.55), 0 0 60px rgba(0,212,212,0.25);
+    }
+    .page-float-btn.outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid rgba(0,212,212,0.35);
+    }
+    .page-float-btn.outline:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,212,0.08);
+      transform: translateY(-50%) translateY(-2px);
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,212,212,0.40), 0 0 40px rgba(0,212,212,0.15); }
+      50% { box-shadow: 0 0 28px rgba(0,212,212,0.55), 0 0 55px rgba(0,212,212,0.22); }
+    }
+    @media (max-width: 768px) {
+      .page-float-btns { height: auto; top: auto; bottom: 80px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+      .page-float-btn { position: static; transform: none; width: 80vw; max-width: 320px; }
+      .page-float-btn.glow:hover { transform: translateY(-2px); }
+      .page-float-btn.outline:hover { transform: translateY(-2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .page-float-btn.glow { animation: none; }
+      .page-float-btns { transition: opacity 0.01s; }
+    }
+
+    #overlay-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(5,13,26,0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 70;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #overlay-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #overlay-panel {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: clamp(320px, 60vw, 900px);
+      max-height: 80vh;
+      transform: translate(-50%, -50%) scale(0.96);
+      background: linear-gradient(180deg, #0a1525 0%, #060e1a 100%);
+      border: 1px solid rgba(0,212,212,0.18);
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(0,212,212,0.08), 0 20px 80px rgba(0,0,0,0.6);
+      z-index: 71;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    #overlay-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid rgba(0,212,212,0.10);
+      flex-shrink: 0;
+    }
+    .overlay-title {
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .overlay-close {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(0,212,212,0.20);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .overlay-close:hover {
+      color: var(--fg);
+      border-color: var(--accent);
+      background: rgba(0,212,212,0.08);
+    }
+
+    .overlay-body {
+      padding: 24px 28px 32px;
+      overflow-y: auto;
+      flex: 1;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,212,212,0.25) transparent;
+    }
+    .overlay-body::-webkit-scrollbar { width: 6px; }
+    .overlay-body::-webkit-scrollbar-track { background: transparent; }
+    .overlay-body::-webkit-scrollbar-thumb {
+      background: rgba(0,212,212,0.20);
+      border-radius: 3px;
+    }
+
+    .overlay-body h2 {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 700;
+      color: var(--fg);
+      margin: 28px 0 12px;
+      letter-spacing: -0.01em;
+    }
+    .overlay-body h2:first-child { margin-top: 0; }
+    .overlay-body h3 {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 600;
+      color: var(--accent);
+      margin: 22px 0 8px;
+      letter-spacing: 0.02em;
+    }
+    .overlay-body p {
+      font-size: clamp(13px, 1.4vw, 15px);
+      line-height: 1.65;
+      color: #b8c8dc;
+      margin: 0 0 14px;
+    }
+    .overlay-body ul, .overlay-body ol {
+      font-size: clamp(13px, 1.4vw, 15px);
+      line-height: 1.65;
+      color: #b8c8dc;
+      margin: 0 0 14px;
+      padding-left: 22px;
+    }
+    .overlay-body li { margin-bottom: 6px; }
+    .overlay-body strong { color: var(--fg); font-weight: 600; }
+    .overlay-body a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,212,212,0.30);
+    }
+    .overlay-body a:hover { border-bottom-color: var(--accent); }
+    .overlay-body code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.88em;
+      background: rgba(0,212,212,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .overlay-body .disclaimer {
+      border-left: 2px solid rgba(0,212,212,0.30);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: rgba(0,212,212,0.04);
+      border-radius: 0 8px 8px 0;
+      font-size: clamp(12px, 1.2vw, 13px);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .overlay-body .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .overlay-body .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .cta-btn.primary {
+      background: var(--accent);
+      color: #050d1a;
+    }
+    .cta-btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0,212,212,0.35);
+    }
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(0,212,212,0.30);
+    }
+    .cta-btn.secondary:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,212,0.06);
+    }
+    .overlay-body .hash-box {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: clamp(11px, 1.1vw, 12px);
+      background: rgba(0,0,0,0.30);
+      border: 1px solid rgba(0,212,212,0.10);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      word-break: break-all;
+      color: var(--accent);
+      line-height: 1.5;
+    }
+    .overlay-body .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .overlay-body .info-card {
+      background: rgba(0,212,212,0.04);
+      border: 1px solid rgba(0,212,212,0.08);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .overlay-body .info-card .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .overlay-body .info-card .value {
+      font-size: clamp(14px, 1.5vw, 17px);
+      font-weight: 600;
+      color: var(--fg);
+    }
+    .overlay-body .info-card .value.accent { color: var(--accent); }
+
+    /* Nav active state */
+    .snav-links span.active {
+      color: var(--fg);
+    }
+    .snav-links span.active::before { opacity: 1; }
+    .snav-links span.active::after { opacity: 1; }
+
+    /* Responsive: mobile panel */
+    @media (max-width: 768px) {
+      #overlay-backdrop { background: rgba(5,13,26,0.95); backdrop-filter: none; -webkit-backdrop-filter: none; }
+      #overlay-panel {
+        width: 95vw;
+        max-height: 88vh;
+        border-radius: 12px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #overlay-backdrop, #overlay-panel {
+        transition: opacity 0.01s;
+      }
+      #overlay-panel { transform: translate(-50%, -50%); }
     }
   </style>
 </head>
@@ -409,6 +748,12 @@
     <div class="callout-text" id="ctR2">hold, or cash in? the live<br>OTC rate is here — your call</div>
   </div>
 
+  <!-- Floating page buttons (appear after animation) -->
+  <div class="page-float-btns" id="page-float-btns">
+    <button class="page-float-btn glow left-btn" onclick="openSection('download')">Download PRL Wallet</button>
+    <button class="page-float-btn outline right-btn" onclick="openSection('pouw')">What is Proof of Useful Work?</button>
+  </div>
+
   <!-- Shimmer sweep -->
   <div class="shimmer" id="shim"></div>
 
@@ -419,15 +764,26 @@
       Pearl Wallet
     </div>
     <div class="snav-links">
-      <span>Download</span>
-      <span>Architecture</span>
-      <span>Miners</span>
-      <span>Blueprint</span>
-      <span>Blog</span>
-      <span>Changelog</span>
-      <span>FAQ</span>
+      <span data-section="download">Download</span>
+      <span data-section="architecture">Architecture</span>
+      <span data-section="miners">Miners</span>
+      <span data-section="blueprint">Blueprint</span>
+      <span data-section="blog">Blog</span>
+      <span data-section="changelog">Changelog</span>
+      <span data-section="faq">FAQ</span>
+      <span data-section="pouw" class="pouw-cta">What is PoUW?</span>
     </div>
   </nav>
+
+  <!-- Content overlay -->
+  <div id="overlay-backdrop"></div>
+  <div id="overlay-panel">
+    <div class="overlay-header">
+      <div class="overlay-title" id="overlay-title">—</div>
+      <button class="overlay-close" id="overlay-close">&times;</button>
+    </div>
+    <div class="overlay-body" id="overlay-body"></div>
+  </div>
 
   <script>
     // ── Easing library ──────────────────────────────────────────────────
@@ -825,6 +1181,14 @@
         var np = cubic(prog(t, 21.4, 23.5));
         snav.style.opacity   = np;
         snav.style.transform = 'translateY('+ lerp(-20, 0, np) +'px)';
+
+        // Floating page buttons fade in slightly after nav
+        var fp = document.getElementById('page-float-btns');
+        if (fp) {
+          var fpP = c01((t - 22.0) / 1.5);
+          fp.style.opacity = fpP;
+          fp.style.pointerEvents = fpP > 0.5 ? 'auto' : 'none';
+        }
       }
 
       // ── Audio triggers ──
@@ -942,16 +1306,443 @@
 
     // Any key = fast-forward to end; click outside phones = fast-forward to end
     document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlayOpen) { closeOverlay(); return; }
       var isMod = e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta';
-      if (!isMod) { e.preventDefault(); fastForward(); }
+      if (!isMod && !overlayOpen) { e.preventDefault(); fastForward(); }
     });
     document.addEventListener('click', function(e) {
+      if (overlayOpen) return;
       var onPhone = e.target.closest && e.target.closest('.phone-wrap');
-      if (!onPhone) {
+      var onNav = e.target.closest && e.target.closest('.site-nav');
+      if (!onPhone && !onNav) {
         if (zoomTarget !== null) { zoomTarget = null; return; } // dismiss zoom first
         fastForward();
       }
     });
+
+    // ── Content overlay system ──────────────────────────────────────────
+    var overlayOpen = false;
+    var overlayBackdrop = document.getElementById('overlay-backdrop');
+    var overlayPanel = document.getElementById('overlay-panel');
+    var overlayTitle = document.getElementById('overlay-title');
+    var overlayBody = document.getElementById('overlay-body');
+    var overlayClose = document.getElementById('overlay-close');
+    var activeSection = null;
+
+    // ── Seed manifest (fallback if fetch fails) ──
+    var SEED_MANIFEST = {
+      schema: "mba.robin.release-manifest.v1",
+      project: "PRL Wallet",
+      version: "1.99.1331",
+      build: "1331",
+      built_at: "2026-06-21T18:16:03-04:00",
+      artifacts: [{
+        id: "android-apk-release",
+        platform: "android",
+        kind: "apk",
+        filename: "pearl-wallet-android-v1.99.1331-release-signed.apk",
+        size_bytes: 108231989,
+        sha256: "e98636e984fcfff2bb71cffdd47512d6524f4047ad924fb9f58327a48ed452b3",
+        locations: [{ type: "web", public: true, url: "https://prldroid-wallet.robin.mba/downloads/pearl-wallet-android-v1.99.1331-release-signed.apk" }],
+        license: {
+          primary: "proprietary",
+          primary_label: "All Rights Reserved",
+          components: [{
+            name: "Oyster wallet engine",
+            source: "https://github.com/pearl-research-labs/pearl/tree/master/wallet",
+            license: "ISC",
+            license_url: "https://github.com/pearl-research-labs/pearl/blob/master/wallet/LICENSE",
+            scope: "Vendored wallet engine compiled via gomobile. Provides core wallet functionality (key management, UTXO tracking, transaction signing)."
+          }]
+        }
+      }],
+      verification: {
+        primary_artifact_id: "android-apk-release",
+        sha256_command: "sha256sum pearl-wallet-android-v1.99.1331-release-signed.apk",
+        expected_sha256: "e98636e984fcfff2bb71cffdd47512d6524f4047ad924fb9f58327a48ed452b3"
+      },
+      changelog: {
+        entries: [{
+          version: "1.99.1331",
+          date: "2026-06-21T18:16:03-04:00",
+          notes: [
+            "Your seed phrase never gets stored as a picture — built-in OCR lets you import a recovery phrase by pointing your camera, then wipes the image instantly. No screenshots, no gallery leaks.",
+            "Address book: save and label your frequent contacts so you never paste the wrong address again.",
+            "Live OTC price data straight from lordofpearls.xyz — see the real-time PRL/USDC rate without leaving the wallet.",
+            "Coming soon: Android home screen widget to track price swings at a glance, plus target-price push notifications so you never miss your exit."
+          ]
+        }]
+      }
+    };
+
+    var releaseManifest = SEED_MANIFEST;
+
+    // Fetch manifest at runtime (CI/CD updates the JSON file)
+    function fetchManifest() {
+      fetch('releases/current-public-release-manifest.json')
+        .then(function(r) { return r.json(); })
+        .then(function(m) { releaseManifest = m; })
+        .catch(function() { /* fall back to seed */ });
+    }
+    fetchManifest();
+
+    function formatBytes(b) {
+      if (b > 1048576) return (b / 1048576).toFixed(1) + ' MB';
+      if (b > 1024) return (b / 1024).toFixed(0) + ' KB';
+      return b + ' B';
+    }
+
+    function formatDate(iso) {
+      try {
+        var d = new Date(iso);
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch(e) { return iso; }
+    }
+
+    // ── Content sections ────────────────────────────────────────────────
+    var sections = {};
+
+    sections.download = {
+      title: 'Download',
+      html: function() {
+        var apk = releaseManifest.artifacts.filter(function(a) { return a.kind === 'apk'; })[0] || releaseManifest.artifacts[0];
+        var url = apk.locations[0].url;
+        var ver = releaseManifest.version;
+        var date = formatDate(releaseManifest.built_at);
+        var size = formatBytes(apk.size_bytes);
+        var hash = apk.sha256;
+        var notes = (releaseManifest.changelog.entries[0] || {}).notes || [];
+
+        var notesHtml = notes.map(function(n) { return '<li>' + n + '</li>'; }).join('');
+
+        return '<h2>Get PRL Wallet</h2>' +
+          '<p>The first native Android wallet for the Pearl blockchain. Monitor your rigs, move your PRL, check live OTC rates — all from your phone.</p>' +
+          '<div class="info-grid">' +
+            '<div class="info-card"><div class="label">Version</div><div class="value accent">v' + ver + '</div></div>' +
+            '<div class="info-card"><div class="label">Built</div><div class="value">' + date + '</div></div>' +
+            '<div class="info-card"><div class="label">Size</div><div class="value">' + size + '</div></div>' +
+            '<div class="info-card"><div class="label">Platform</div><div class="value">Android</div></div>' +
+          '</div>' +
+          '<div class="cta-row">' +
+            '<a href="' + url + '" class="cta-btn primary">Download APK</a>' +
+            '<a href="' + url + '" class="cta-btn secondary" onclick="window.open(\'' + url + '\', \'_blank\'); return false;">Open in new tab</a>' +
+          '</div>' +
+          '<h3>Verify the download</h3>' +
+          '<p>Before installing, confirm the file integrity:</p>' +
+          '<div class="hash-box">' +
+            '<strong>Expected SHA-256:</strong><br>' + hash + '<br><br>' +
+            '<strong>Verify:</strong><br>' + releaseManifest.verification.sha256_command + '<br>' +
+            '# Compare the output to the hash above' +
+          '</div>' +
+          (notesHtml ? '<h3>Release notes</h3><ul>' + notesHtml + '</ul>' : '') +
+          (apk.license ? '<h3>Licensing</h3>' +
+            '<p><strong>' + (apk.license.primary_label || apk.license.primary) + '</strong></p>' +
+            (apk.license.components && apk.license.components.length ? '<p>Portions licensed from third parties:</p><ul>' +
+              apk.license.components.map(function(c) {
+                return '<li><strong>' + c.name + '</strong> — <a href="' + c.license_url + '" target="_blank">' + c.license + ' License</a>. ' + c.scope + ' <a href="' + c.source + '" target="_blank">Source</a>.</li>';
+              }).join('') + '</ul>' : '') : '') +
+          '<div class="disclaimer">Release data is fetched from <code>releases/current-public-release-manifest.json</code>. New builds update automatically via CI/CD — no site edits required.</div>';
+      }
+    };
+
+    sections.architecture = {
+      title: 'Architecture',
+      html: function() {
+        return '<h2>Same Engine. No Rewrites.</h2>' +
+          '<p>PRL Wallet runs the <strong>unmodified Oyster wallet engine</strong> — the exact same Go code that powers the Pearl daemon on desktop and server nodes. It\'s compiled into Android via gomobile, not reimplemented in Kotlin.</p>' +
+          '<p>Why does this matter? Because a rewrite means new bugs. New attack surfaces. New ways to lose your keys. By using the battle-tested Go engine directly, PRL Wallet inherits years of security auditing and real-world usage.</p>' +
+          '<h3>What\'s under the hood</h3>' +
+          '<ul>' +
+            '<li><strong>Oyster wallet engine</strong> — vendored directly from the Pearl core repository, compiled via gomobile into a native Android Archive (AAR)</li>' +
+            '<li><strong>Jetpack Compose UI</strong> — modern Android UI toolkit communicating with the Go engine through an androidbridge layer</li>' +
+            '<li><strong>Post-quantum cryptography</strong> — XMSS (extended Merkle signatures) via BIP-86 (Taproot addresses) and purpose 222, with BIP-32/44/86 hierarchical deterministic key derivation</li>' +
+            '<li><strong>Full UTXO management</strong> — the same unspent transaction output tracking as the desktop wallet</li>' +
+          '</ul>' +
+          '<h3>No new bug surfaces</h3>' +
+          '<p>Because there\'s no Kotlin or Java reimplementation of the wallet logic, there are no new vulnerability surfaces. The Go code that has been running on desktop nodes since Pearl launched is the same code running on your phone. Different wrapper, same engine.</p>' +
+          '<div class="disclaimer">For the full technical specification, see the Blueprint section.</div>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
+      }
+    };
+
+    sections.miners = {
+      title: 'Miners',
+      html: function() {
+        return '<h2>Built for Miners, Open to All</h2>' +
+          '<p>The official Pearl wallets are desktop-only. PRL Wallet fills the gap — native Android power for miners who need to monitor, manage, and move funds without sitting at a workstation.</p>' +
+          '<h3>Monitor on the go</h3>' +
+          '<p>Check balances, transaction history, and UTXO status from anywhere. No need to remote into your mining rig or carry a laptop to the field. Your phone is your dashboard.</p>' +
+          '<h3>Transact away from desktop</h3>' +
+          '<p>Send and receive PRL while away from your main node. Sign transactions with the same cryptographic engine that runs the daemon — no security downgrade for mobility.</p>' +
+          '<h3>First native Android wallet</h3>' +
+          '<p>Until PRL Wallet, the only Pearl wallets were desktop-bound. We are the first — and currently only — native Android wallet for the Pearl ecosystem, built specifically to serve miners who live on mobile.</p>' +
+          '<h3>Miner-centric roadmap</h3>' +
+          '<ul>' +
+            '<li><strong>Mining Pool Integration</strong> — Direct connection to pool APIs for real-time hashrate, worker status, and payout tracking — all inside the wallet.</li>' +
+            '<li><strong>Push Notifications for Payouts</strong> — Instant alerts when pool payouts arrive, block rewards confirm, or UTXO maturity thresholds are reached.</li>' +
+            '<li><strong>Cold-Storage Sweeping</strong> — One-tap sweep of mining rewards from hot addresses to cold storage, with configurable thresholds and automatic batching.</li>' +
+            '<li><strong>Hardware Wallet Pairing</strong> — Bluetooth/USB pairing with Ledger and Trezor for air-gapped signing of large mining consolidations.</li>' +
+            '<li><strong>Multi-Pool Aggregation Dashboard</strong> — Unified view across multiple mining pools, solo mining nodes, and staking contracts — one screen, all your yield.</li>' +
+            '<li><strong>Android Home Screen Widget</strong> — Glance at PRL price swings without opening the app. A live widget on your home screen shows the current rate and trend arrow.</li>' +
+            '<li><strong>Target-Price Push Notifications</strong> — Set your price, get pinged when PRL hits it. Never miss your exit again.</li>' +
+          '</ul>' +
+          '<h2>Cashing Out — The OTC Route</h2>' +
+          '<p>The wallet shows live OTC rates from <a href="https://otc.lordofpearls.xyz" target="_blank">lordofpearls.xyz</a>. When you\'re ready to cash in some PRL, here\'s how it works:</p>' +
+          '<h3>Option A — Web Interface</h3>' +
+          '<ol>' +
+            '<li>Go to <a href="https://otc.lordofpearls.xyz" target="_blank">otc.lordofpearls.xyz</a> in your browser</li>' +
+            '<li>Click <strong>Connect Telegram</strong> — this opens the Telegram bot to authenticate you</li>' +
+            '<li>Once authenticated, you\'ll see the order book, your balance, and the trading interface on the web</li>' +
+          '</ol>' +
+          '<h3>Option B — Telegram Bot Directly</h3>' +
+          '<ol>' +
+            '<li>Open <a href="https://t.me/LOPOTCBOT" target="_blank">@LOPOTCBOT</a> in Telegram</li>' +
+            '<li>Send <code>/start</code> to begin, <code>/help</code> for all commands</li>' +
+          '</ol>' +
+          '<h3>Depositing Funds</h3>' +
+          '<ol>' +
+            '<li>In the bot, tap <strong>Deposit</strong> (or send <code>/deposit</code>)</li>' +
+            '<li>You\'ll receive a deposit address — send <strong>PRL</strong> (Pearl L1 mainnet) and/or <strong>USDC</strong> (Ethereum ERC-20 only — not Polygon, not BSC)</li>' +
+            '<li>Wait for <strong>2 network confirmations</strong> (~5 minutes)</li>' +
+            '<li>The bot notifies you when your balance is available</li>' +
+          '</ol>' +
+          '<h3>Trading</h3>' +
+          '<ul>' +
+            '<li>Post an order: <code>/buy 100 PRL @ 0.55</code> or <code>/sell 100 PRL @ 0.60</code></li>' +
+            '<li>Or take an existing order from the order book</li>' +
+            '<li>Trades settle instantly — both sides see updated balances immediately</li>' +
+            '<li>Flat <strong>1.8% fee</strong></li>' +
+          '</ul>' +
+          '<h3>Withdrawing</h3>' +
+          '<ul>' +
+            '<li>Withdraw PRL or USDC to your own wallet address</li>' +
+            '<li>Enable 2FA via <code>/security</code> for extra protection on withdrawals (6-digit TOTP from your authenticator app)</li>' +
+          '</ul>' +
+          '<h3>Referral Program</h3>' +
+          '<ul>' +
+            '<li>Run <code>/referral</code> to get your invite link</li>' +
+            '<li>Earn <strong>15% of every fee</strong> from anyone who joins via your link — for life</li>' +
+            '<li>Claim accumulated earnings anytime</li>' +
+          '</ul>' +
+          '<div class="disclaimer"><strong>Disclaimer:</strong> OTC exchange services are provided by Lord of Pearls, an unrelated third party. The OTC exchange is <strong>custodial</strong> during the deposit phase — only deposit what you intend to trade. PRL Wallet is noncustodial and is not affiliated with the OTC exchange. Referral links may generate compensation for the project at no cost to you. PRL on Pearl L1 mainnet · USDC on Ethereum (ERC-20). Sending the wrong asset or wrong chain to a deposit address will result in lost funds.</div>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a><a href="#" class="cta-btn secondary" onclick="openSection(\'pouw\'); return false;">What is Proof of Useful Work?</a></div>';
+      }
+    };
+
+    sections.pouw = {
+      title: 'Proof of Useful Work',
+      html: function() {
+        return '<h2>How Pearl Mining Actually Works</h2>' +
+          '<p>New to Pearl? Confused about what "Proof of Useful Work" means? Here\'s a plain-English explainer based on the publicly available <a href="https://pearlresearch.ai/" target="_blank">Pearl Whitepaper</a>.</p>' +
+          '<h3>What is Proof-of-Useful Work?</h3>' +
+          '<p>Instead of Bitcoin\'s SHA-256 hashing (which computes nothing useful), Pearl mining is based on <strong>matrix multiplication</strong> — the core mathematical operation behind AI model training and inference. The Pearl whitepaper describes this as replacing "Bitcoin\'s wasteful proof-of-work mining (artificial hashing) with the native operation underlying modern AI" (<a href="https://pearlresearch.ai/" target="_blank">§1, Introduction</a>).</p>' +
+          '<h3>Why matmuls and not full LLM inference?</h3>' +
+          '<p>The mining kernel operates on <strong>matrix multiplication</strong> specifically — not full model inference. Here\'s why:</p>' +
+          '<ul>' +
+            '<li>The PoUW protocol requires the miner to compute the product of two matrices and produce a cryptographic proof that the computation was done faithfully (<a href="https://pearlresearch.ai/" target="_blank">§3, Proof of Useful Work</a>).</li>' +
+            '<li>The proof binds to the <strong>computational trace</strong> of a tiled matrix multiplication algorithm — every intermediate block product must be verifiable (<a href="https://pearlresearch.ai/" target="_blank">§3.1.2</a>).</li>' +
+            '<li>Full LLM inference involves many operations beyond matmuls (attention, activations, tokenization, sampling) that don\'t fit the proof structure. The whitepaper notes that the current implementation uses INT8 matmul, with planned upgrades for FP8/FP4/BF16 (<a href="https://pearlresearch.ai/" target="_blank">§1.1, Planned Upgrades</a>).</li>' +
+            '<li>So you won\'t see "GPT-4 inference" in your mining artifacts — you\'ll see matrix products. These are the building blocks of AI compute, not the full pipeline.</li>' +
+          '</ul>' +
+          '<h3>Why does the protocol add noise?</h3>' +
+          '<p>The protocol adds carefully constructed low-rank noise matrices to the inputs before multiplication, then removes the noise afterward to recover the true result. This prevents miners from choosing "easy" matrices (like all-zeros) to gain an unfair advantage — the noise makes every computation equally hard (<a href="https://pearlresearch.ai/" target="_blank">§3.1.1, Low-Rank Noise Paradigm</a>).</p>' +
+          '<h3>What about privacy?</h3>' +
+          '<p>The protocol uses cryptographic commitments and zero-knowledge proofs so that the input matrices (which could be proprietary model weights or user data) are never revealed to other network participants (<a href="https://pearlresearch.ai/" target="_blank">§3.1.5, Privacy and Zero-Knowledge PoW</a>).</p>' +
+          '<h3>Where does the "useful" work go?</h3>' +
+          '<p>The whitepaper envisions a marketplace where the useful matmul outputs can be matched with AI compute demand — providers extract yield from idle GPU fragments, pipeline stalls, and micro-batches (<a href="https://pearlresearch.ai/" target="_blank">§1, Introduction</a>). The current network focuses on the mining protocol itself; the compute marketplace is a future development.</p>' +
+          '<p><strong>Bottom line:</strong> Pearl mining does real mathematical work (matrix multiplication) that underpins AI compute. The artifacts you see are matrix products, not full model outputs. The protocol is designed so that this work is verifiable, fair, and privacy-preserving. For the full technical specification, read the <a href="https://pearlresearch.ai/" target="_blank">Pearl Whitepaper</a>.</p>' +
+          '<div class="disclaimer">PRL Wallet is an independent project and is not affiliated with Pearl Research. This explainer is educational, based on the publicly available whitepaper.</div>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
+      }
+    };
+
+    sections.blueprint = {
+      title: 'Blueprint',
+      html: function() {
+        return '<h2>The Blueprint</h2>' +
+          '<p>The complete PRL Wallet specification — from Android Studio project setup through NDK configuration to signed release builds. The full guide for contributors and auditors.</p>' +
+          '<p>The blueprint covers every layer of the project: the gomobile bind process, the androidbridge package architecture, the Jetpack Compose UI layer, and the CI/CD pipeline that produces signed release builds.</p>' +
+          '<h3>What\'s inside</h3>' +
+          '<ul>' +
+            '<li>System architecture and component overview</li>' +
+            '<li>Development environment setup (Android Studio, NDK, Go toolchain)</li>' +
+            '<li>Signed release build process</li>' +
+            '<li>Testing and verification procedures</li>' +
+            '<li>Contributor guidelines</li>' +
+          '</ul>' +
+          '<div class="cta-row">' +
+            '<a href="assets/The_prldroid_Wallet_Blueprint.pdf" target="_blank" class="cta-btn primary">Download PDF</a>' +
+          '</div>' +
+          '<div class="disclaimer">The blueprint is hosted locally on this site.</div>';
+      }
+    };
+
+    sections.blog = {
+      title: 'Blog',
+      html: function() {
+        return '<h2>From the Ledger</h2>' +
+          '<p>Technical writing on the architecture, philosophy, and roadmap of PRL Wallet.</p>' +
+          '<h3>Welcome to PRL Wallet — Why We Built It</h3>' +
+          '<p><strong>June 2026</strong></p>' +
+          '<p>The official Pearl wallets are desktop-only. If you\'re a miner, that means you\'re tied to your workstation to check balances, sign transactions, or monitor UTXO status. We built PRL Wallet because miners don\'t live at desks — they live on their phones.</p>' +
+          '<p>PRL Wallet is the first native Android wallet for the Pearl ecosystem. It runs the same Oyster wallet engine that powers the desktop daemon, compiled via gomobile — not a reimplementation, not a wrapper around a web view. The real thing, on your phone.</p>' +
+          '<p>This blog will cover the architecture decisions, the roadmap, and the miner-focused features we\'re building. Stay tuned.</p>' +
+          '<h3>Architecture Philosophy: No Reimplementation</h3>' +
+          '<p><strong>June 2026</strong></p>' +
+          '<p>When we started PRL Wallet, the question wasn\'t "how do we build an Android wallet?" — it was "how do we get the existing, audited, production-tested Go wallet engine onto Android without rewriting it?"</p>' +
+          '<p>The answer was gomobile: compile the Oyster engine into a native AAR, communicate through a thin bridge, and build the UI in Jetpack Compose. No new crypto code. No new key management. No new bug surfaces. Just the same engine that has been securing Pearl transactions since mainnet, now running natively on Android.</p>' +
+          '<p>This is more than a technical choice — it\'s a security posture. Every line of reimplementation is a line that could have a bug. By reusing the exact same Go code, we inherit every fix, every audit, and every hour of production hardening that the desktop wallet has received.</p>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
+      }
+    };
+
+    sections.changelog = {
+      title: 'Changelog',
+      html: function() {
+        var entries = releaseManifest.changelog.entries || [];
+        var entriesHtml = entries.map(function(e) {
+          var notesHtml = (e.notes || []).map(function(n) { return '<li>' + n + '</li>'; }).join('');
+          return '<h3>v' + e.version + ' — ' + formatDate(e.date) + '</h3><ul>' + notesHtml + '</ul>';
+        }).join('');
+
+        return '<h2>Release History</h2>' +
+          '<p>Every build, every change, every hash. Cumulative and immutable.</p>' +
+          (entriesHtml || '<p>No release notes available.</p>') +
+          '<div class="disclaimer">Release data is fetched from <code>releases/current-public-release-manifest.json</code>. New builds appear here automatically via CI/CD.</div>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download Latest</a></div>';
+      }
+    };
+
+    sections.faq = {
+      title: 'FAQ',
+      html: function() {
+        return '<h2>Frequently Asked Questions</h2>' +
+          '<h3>What is PRL Wallet?</h3>' +
+          '<p>PRL Wallet is a noncustodial Android wallet for the Pearl blockchain. It embeds the unmodified Oyster wallet engine from the Pearl core repository via gomobile — no Kotlin reimplementation, no new bug surfaces. You hold your own keys; the developers cannot access, recover, or reset them.</p>' +
+          '<h3>Is PRL Wallet custodial?</h3>' +
+          '<p>No. PRL Wallet is fully noncustodial. Your private keys and seed phrases are generated and stored exclusively on your device. The developers have no ability to access, recover, or reset your wallet.</p>' +
+          '<h3>Does PRL Wallet provide exchange or trading functions?</h3>' +
+          '<p>No. PRL Wallet does not provide exchange, swap, or trading functions. The wallet shows live OTC rates and contains referral links to a third-party OTC exchange (Lord of Pearls) for liquidity access. These links may generate compensation, but the project is not affiliated with that platform.</p>' +
+          '<h3>Is the wallet engine a reimplementation?</h3>' +
+          '<p>No. PRL Wallet vendors the unmodified official Oyster wallet engine directly from the Pearl core repository and compiles it into Android via gomobile. There is no Kotlin or Java reimplementation. The exact same Go code that powers the Pearl daemon runs inside the Android app.</p>' +
+          '<h3>What cryptographic features does PRL Wallet support?</h3>' +
+          '<p>PRL Wallet supports post-quantum XMSS cryptography via BIP-86 (purpose 86, Taproot addresses) and purpose 222 for extended Merkle signature schemes. It also implements BIP-32/44/86 hierarchical deterministic key derivation and full UTXO management.</p>' +
+          '<h3>How is the wallet engine integrated into Android?</h3>' +
+          '<p>The Oyster wallet engine is compiled into a native Android Archive (AAR) using gomobile bind. The Android app (built with Jetpack Compose and Kotlin) communicates with the engine through the androidbridge package, which imports real production packages from the Pearl core repository.</p>' +
+          '<h3>Is there an official Pearl Android wallet?</h3>' +
+          '<p>No. The official Pearl wallets are desktop-only. PRL Wallet is the first — and currently only — native Android wallet for the Pearl ecosystem. It was built specifically because miners needed a way to monitor balances, manage UTXOs, and transact without carrying a laptop or remoting into a node.</p>' +
+          '<h3>Can I monitor my mining rewards on the go?</h3>' +
+          '<p>Yes. PRL Wallet gives you full visibility into your balances, transaction history, and UTXO status from anywhere. Future releases will add mining pool API integration, push notifications for payouts, and a unified multi-pool dashboard.</p>' +
+          '<h3>What miner-focused features are on the roadmap?</h3>' +
+          '<p>The miner-centric roadmap includes: mining pool API integration for real-time hashrate and worker status; push notifications for pool payouts and block reward confirmations; one-tap cold-storage sweeping of mining rewards; hardware wallet pairing (Ledger/Trezor) for air-gapped consolidation; a multi-pool aggregation dashboard that unifies all your yield sources in one screen; an Android home screen widget for at-a-glance price tracking; and target-price push notifications so you never miss your exit.</p>' +
+          '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
+      }
+    };
+
+    // ── Overlay show/hide logic ──
+    function openSection(key) {
+      var sec = sections[key];
+      if (!sec) return;
+      activeSection = key;
+      overlayTitle.textContent = sec.title;
+      overlayBody.innerHTML = sec.html();
+      overlayBackdrop.classList.add('open');
+      overlayPanel.classList.add('open');
+      overlayOpen = true;
+      overlayBody.scrollTop = 0;
+
+      // Hide floating buttons when overlay opens
+      var fp = document.getElementById('page-float-btns');
+      if (fp) fp.style.opacity = '0';
+
+      // Update nav active states
+      var links = document.querySelectorAll('.snav-links span');
+      links.forEach(function(s) {
+        s.classList.toggle('active', s.getAttribute('data-section') === key);
+      });
+    }
+
+    function closeOverlay() {
+      overlayBackdrop.classList.remove('open');
+      overlayPanel.classList.remove('open');
+      overlayOpen = false;
+      activeSection = null;
+
+      // Restore floating buttons if animation has finished
+      var fp = document.getElementById('page-float-btns');
+      if (fp) {
+        var t = startTs ? Math.min((performance.now() - startTs) / 1000, 24) : 24;
+        if (t >= 22) fp.style.opacity = '1';
+      }
+
+      var links = document.querySelectorAll('.snav-links span');
+      links.forEach(function(s) { s.classList.remove('active'); });
+    }
+
+    window.openSection = openSection;
+
+    // Nav click handlers
+    document.querySelectorAll('.snav-links span').forEach(function(span) {
+      span.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var key = span.getAttribute('data-section');
+        if (overlayOpen && activeSection === key) {
+          closeOverlay();
+        } else {
+          openSection(key);
+        }
+      });
+    });
+
+    // Close button
+    overlayClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeOverlay();
+    });
+
+    // Click backdrop to close
+    overlayBackdrop.addEventListener('click', function(e) {
+      if (e.target === overlayBackdrop) closeOverlay();
+    });
+
+    // ── Ambient loop after animation ends ──
+    // Keep gentle phone bob running so the scene feels alive behind overlays
+    var ambientActive = false;
+    function ambientLoop() {
+      if (!ambientActive) return;
+      var t = 23.5 + (performance.now() - ambientStart) / 1000;
+      // Gentle bob: 3px, 0.4 Hz, phase-offset per phone
+      var bL = 3 * Math.sin(2*Math.PI*0.4*t);
+      var bC = 3 * Math.sin(2*Math.PI*0.4*t + Math.PI*2/3);
+      var bR = 3 * Math.sin(2*Math.PI*0.4*t + Math.PI*4/3);
+
+      pL.style.transform = tf(-410, 52 + bL, -13, 0.87, 0, -6);
+      pC.style.transform = tf(0, -24 + bC, 0, 1.04, 40, 0);
+      pR.style.transform = tf(410, 52 + bR, 13, 0.87, 0, 6);
+
+      requestAnimationFrame(ambientLoop);
+    }
+
+    var ambientStart = 0;
+    // Hook into the existing RAF loop: when animation ends, start ambient
+    var origRaf = raf;
+    // After the main animation finishes (t >= 24 and no interactions),
+    // the existing RAF stops. We detect this and start ambient.
+    var checkAmbient = setInterval(function() {
+      if (!rafActive && !overlayOpen && !ambientActive) {
+        var t = startTs ? Math.min((performance.now() - startTs) / 1000, 24) : 24;
+        if (t >= 24 && zoomTarget === null &&
+            zoomCur.L < 0.002 && zoomCur.C < 0.002 && zoomCur.R < 0.002) {
+          ambientActive = true;
+          ambientStart = performance.now();
+          ambientLoop();
+        }
+      }
+      // Stop ambient when overlay opens or interaction resumes
+      if (ambientActive && (overlayOpen || rafActive)) {
+        ambientActive = false;
+      }
+    }, 500);
 
     seek(0);
     ensureRaf();
