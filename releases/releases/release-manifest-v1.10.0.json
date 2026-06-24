@@ -1,0 +1,75 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "prldroid-wallet",
+  "version": "1.10.0",
+  "build": "70942",
+  "built_at": "2026-05-30T10:47:44-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/prldroid-wallet",
+    "commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+    "branch": "main",
+    "ci_system": "github-actions",
+    "ci_run_url": "https://github.com/Robin-s-AI-World/prldroid-wallet/actions/runs/1234567890"
+  },
+  "artifacts": [
+    {
+      "id": "android-apk",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "PRLWallet-Android-v1.10.0-release-signed.apk",
+      "size_bytes": 60095484,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.10.0-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "PRLWallet-Android-v1.10.0-release-signed.aab",
+      "size_bytes": 36698158,
+      "sha256": "b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456789",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.10.0-release-signed.aab"
+        }
+      ]
+    },
+    {
+      "id": "native-debug-symbols",
+      "platform": "android",
+      "kind": "zip",
+      "filename": "native-debug-symbols-v1.10.0.zip",
+      "size_bytes": 29780556,
+      "sha256": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef1234567890",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/native-debug-symbols-v1.10.0.zip"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.10.0",
+        "date": "2026-05-30",
+        "notes": [
+          "Improved transaction signing reliability on low-memory devices",
+          "Updated Oyster engine to latest stable commit",
+          "Added Explorer fallback for read-only wallet access",
+          "Fixed QR code scanning on dark mode screens"
+        ]
+      }
+    ]
+  }
+}

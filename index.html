@@ -414,6 +414,109 @@
       letter-spacing: 0.04em;
     }
 
+    /* Flipbook overlay */
+    .flipbook-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 110;
+      background: rgba(5,13,26,0.96);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .flipbook-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .flipbook-close {
+      position: absolute;
+      top: 16px; right: 24px;
+      font-size: 32px;
+      color: var(--fg);
+      cursor: pointer;
+      background: none;
+      border: none;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+      z-index: 112;
+    }
+    .flipbook-close:hover { opacity: 1; }
+    .flipbook-title {
+      position: absolute;
+      top: 22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #flipbook-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      overflow: hidden;
+    }
+    .flipbook-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 0 20px;
+      z-index: 112;
+    }
+    .flipbook-nav-btn {
+      background: rgba(0,212,212,0.10);
+      border: 1px solid rgba(0,212,212,0.30);
+      color: var(--accent);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .flipbook-nav-btn:hover {
+      background: rgba(0,212,212,0.20);
+      border-color: var(--accent);
+    }
+    .flipbook-page-counter {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      min-width: 100px;
+      text-align: center;
+    }
+    .flipbook-download {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .flipbook-download:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .stf__item {
+      background: #fff;
+      overflow: hidden;
+    }
+    .stf__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     /* Floating page buttons (appear after animation) */
     .page-float-btns {
       position: absolute;
@@ -733,6 +836,101 @@
       }
       #overlay-panel { transform: translate(-50%, -50%); }
     }
+
+    /* ── Terms acceptance modal ── */
+    #terms-modal-backdrop {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(5,13,26,0.85);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    #terms-modal-backdrop.open { display: flex; opacity: 1; }
+    #terms-modal {
+      background: var(--bg);
+      border: 1px solid rgba(0,212,212,0.25);
+      border-radius: 16px;
+      max-width: 560px; width: 90vw;
+      max-height: 85vh; overflow-y: auto;
+      padding: 32px 36px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,212,212,0.08);
+      transform: scale(0.96); transition: transform 0.25s ease;
+    }
+    #terms-modal-backdrop.open #terms-modal { transform: scale(1); }
+    #terms-modal h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg);
+      margin-bottom: 6px; letter-spacing: 0.02em;
+    }
+    #terms-modal .terms-subtitle {
+      font-size: 13px; color: var(--muted); margin-bottom: 20px;
+    }
+    #terms-modal .terms-body {
+      font-size: 13px; line-height: 1.7; color: var(--fg);
+      margin-bottom: 20px;
+    }
+    #terms-modal .terms-body strong { color: var(--accent); }
+    #terms-modal .terms-body p { margin-bottom: 12px; }
+    #terms-modal .terms-links {
+      font-size: 13px; margin-bottom: 20px; color: var(--muted);
+    }
+    #terms-modal .terms-links a {
+      color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid rgba(0,212,212,0.3);
+    }
+    #terms-modal .terms-links a:hover { border-bottom-color: var(--accent); }
+    #terms-modal .terms-checkbox-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 24px; cursor: pointer;
+    }
+    #terms-modal .terms-checkbox-row input {
+      margin-top: 2px; accent-color: var(--accent);
+      width: 18px; height: 18px; flex-shrink: 0;
+    }
+    #terms-modal .terms-checkbox-row label {
+      font-size: 13px; color: var(--fg); cursor: pointer; line-height: 1.5;
+    }
+    #terms-modal .terms-actions {
+      display: flex; gap: 12px; justify-content: flex-end;
+    }
+    #terms-modal .terms-btn {
+      padding: 10px 24px; border-radius: 8px; font-size: 14px;
+      font-weight: 600; cursor: pointer; border: none; transition: all 0.15s;
+    }
+    #terms-modal .terms-btn.cancel {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--muted);
+    }
+    #terms-modal .terms-btn.cancel:hover { color: var(--fg); border-color: var(--fg); }
+    #terms-modal .terms-btn.download {
+      background: var(--accent); color: #050d1a;
+    }
+    #terms-modal .terms-btn.download:disabled {
+      opacity: 0.35; cursor: not-allowed;
+    }
+    #terms-modal .terms-btn.download:not(:disabled):hover {
+      box-shadow: 0 0 20px rgba(0,212,212,0.4);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      z-index: 50; padding: 10px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; color: var(--muted);
+      background: rgba(5,13,26,0.6); backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(74,106,138,0.15);
+      opacity: 0; transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .site-footer.visible { opacity: 1; pointer-events: auto; }
+    .site-footer a {
+      color: var(--muted); text-decoration: none; transition: color 0.15s;
+    }
+    .site-footer a:hover { color: var(--accent); }
+    .site-footer .footer-links { display: flex; gap: 20px; }
+    @media (max-width: 768px) {
+      .site-footer { flex-direction: column; gap: 4px; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -871,6 +1069,55 @@
     <img id="lightbox-img" src="" alt="">
     <div class="lightbox-caption" id="lightbox-caption"></div>
   </div>
+
+  <!-- Flipbook overlay -->
+  <div class="flipbook-overlay" id="flipbook-overlay">
+    <button class="flipbook-close" id="flipbook-close">&times;</button>
+    <div class="flipbook-title" id="flipbook-title"></div>
+    <div id="flipbook-container"></div>
+    <div class="flipbook-controls">
+      <button class="flipbook-nav-btn" id="flipbook-prev">&#8592;</button>
+      <span class="flipbook-page-counter" id="flipbook-counter">—</span>
+      <button class="flipbook-nav-btn" id="flipbook-next">&#8594;</button>
+      <a href="#" id="flipbook-download" class="flipbook-download" download>Download PDF</a>
+    </div>
+  </div>
+
+  <!-- Terms acceptance modal -->
+  <div id="terms-modal-backdrop">
+    <div id="terms-modal">
+      <h2>Before you download</h2>
+      <div class="terms-subtitle">Please read and accept the terms to continue.</div>
+      <div class="terms-body">
+        <p>PRL Wallet is a <strong>self-custody</strong> wallet. You are solely responsible for securing your <strong>mnemonic seed phrase</strong>, <strong>passwords</strong>, and private keys.</p>
+        <p><strong>We cannot recover lost mnemonics, reset passwords, or reverse transactions.</strong> If you lose access to your wallet, your funds may be <strong>permanently irretrievable</strong>.</p>
+        <p>The software is provided <strong>"as is"</strong> without warranty of any kind. You use it at your <strong>own risk</strong>.</p>
+      </div>
+      <div class="terms-links">
+        Full documents: <a href="terms.html" target="_blank">Terms of Use</a> &middot; <a href="privacy.html" target="_blank">Privacy Policy</a>
+      </div>
+      <div class="terms-checkbox-row">
+        <input type="checkbox" id="terms-accept-checkbox">
+        <label for="terms-accept-checkbox">I have read and accept the Terms of Use and Privacy Policy. I understand that lost mnemonics or passwords cannot be recovered.</label>
+      </div>
+      <div class="terms-actions">
+        <button class="terms-btn cancel" id="terms-cancel">Cancel</button>
+        <button class="terms-btn download" id="terms-download" disabled>Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="site-footer">
+    <div>&copy; 2026 Robin L. M. Cheung, MBA. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/Robin-s-AI-World/prldroid-wallet" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+  <script src="assets/page-flip.browser.js"></script>
 
   <script>
     // ── Easing library ──────────────────────────────────────────────────
@@ -1394,6 +1641,7 @@
     // Any key = fast-forward to end; click outside phones = fast-forward to end
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
+        if (flipbookOverlay.classList.contains('open')) { closeFlipbook(); return; }
         if (lightbox.classList.contains('open')) { closeLightbox(); return; }
         if (overlayOpen) { closeOverlay(); return; }
       }
@@ -1514,8 +1762,8 @@
             '<div class="info-card"><div class="label">Platform</div><div class="value">Android</div></div>' +
           '</div>' +
           '<div class="cta-row">' +
-            '<a href="' + url + '" class="cta-btn primary">Download APK</a>' +
-            '<a href="' + url + '" class="cta-btn secondary" onclick="window.open(\'' + url + '\', \'_blank\'); return false;">Open in new tab</a>' +
+            '<a href="' + url + '" class="cta-btn primary" onclick="return tryDownload(event, \'' + url + '\')">Download APK</a>' +
+            '<a href="' + url + '" class="cta-btn secondary" onclick="return tryDownload(event, \'' + url + '\')">Open in new tab</a>' +
           '</div>' +
           '<h3>Verify the download</h3>' +
           '<p>Before installing, confirm the file integrity:</p>' +
@@ -1539,19 +1787,8 @@
       title: 'Architecture',
       html: function() {
         return '<h2>Same Engine. No Rewrites.</h2>' +
-          '<p>PRL Wallet runs the <strong>unmodified Oyster wallet engine</strong> — the exact same Go code that powers the Pearl daemon on desktop and server nodes. It\'s compiled into Android via gomobile, not reimplemented in Kotlin.</p>' +
-          '<p>Why does this matter? Because a rewrite means new bugs. New attack surfaces. New ways to lose your keys. By using the battle-tested Go engine directly, PRL Wallet inherits years of security auditing and real-world usage.</p>' +
-          '<h3>What\'s under the hood</h3>' +
-          '<ul>' +
-            '<li><strong>Oyster wallet engine</strong> — vendored directly from the Pearl core repository, compiled via gomobile into a native Android Archive (AAR)</li>' +
-            '<li><strong>Jetpack Compose UI</strong> — modern Android UI toolkit communicating with the Go engine through an androidbridge layer</li>' +
-            '<li><strong>Post-quantum cryptography</strong> — XMSS (extended Merkle signatures) via BIP-86 (Taproot addresses) and purpose 222, with BIP-32/44/86 hierarchical deterministic key derivation</li>' +
-            '<li><strong>Full UTXO management</strong> — the same unspent transaction output tracking as the desktop wallet</li>' +
-          '</ul>' +
-          '<h3>No new bug surfaces</h3>' +
-          '<p>Because there\'s no Kotlin or Java reimplementation of the wallet logic, there are no new vulnerability surfaces. The Go code that has been running on desktop nodes since Pearl launched is the same code running on your phone. Different wrapper, same engine.</p>' +
-          '<h3>Architecture Documents</h3>' +
-          '<p>Click any thumbnail to view the full-size diagram:</p>' +
+          '<p>PRL Wallet runs the <strong>unmodified Oyster wallet engine</strong> — the exact same Go code that powers the Pearl daemon on desktop and server nodes. Compiled into Android via gomobile, not reimplemented in Kotlin.</p>' +
+          '<p>Click any thumbnail to view the full-size diagram, or the document card to flip through the full technicals:</p>' +
           '<div class="thumb-gallery">' +
             '<div class="thumb-card" onclick="openLightbox(\'assets/Mobile_Wallet_Technical_Architecture.png\', \'Technical Architecture\')">' +
               '<img src="assets/Mobile_Wallet_Technical_Architecture.png" alt="Technical Architecture" loading="lazy">' +
@@ -1569,7 +1806,20 @@
               '<img src="assets/Native_Pearl_Blockchain_Wallet_Overview.png" alt="Wallet Overview" loading="lazy">' +
               '<div class="thumb-label">Wallet Overview</div>' +
             '</div>' +
+            '<div class="thumb-card" onclick="openFlipbook(\'android-technicals\')">' +
+              '<img src="assets/flipbook/android-technicals/page-01.jpg" alt="Android Technicals" loading="lazy">' +
+              '<div class="thumb-label">Android Technicals (10-page flipbook)</div>' +
+            '</div>' +
           '</div>' +
+          '<h3>What\'s under the hood</h3>' +
+          '<ul>' +
+            '<li><strong>Oyster wallet engine</strong> — vendored directly from the Pearl core repository, compiled via gomobile into a native Android Archive (AAR)</li>' +
+            '<li><strong>Jetpack Compose UI</strong> — modern Android UI toolkit communicating with the Go engine through an androidbridge layer</li>' +
+            '<li><strong>Post-quantum cryptography</strong> — XMSS (extended Merkle signatures) via BIP-86 (Taproot addresses) and purpose 222, with BIP-32/44/86 hierarchical deterministic key derivation</li>' +
+            '<li><strong>Full UTXO management</strong> — the same unspent transaction output tracking as the desktop wallet</li>' +
+          '</ul>' +
+          '<h3>No new bug surfaces</h3>' +
+          '<p>Because there\'s no Kotlin or Java reimplementation of the wallet logic, there are no new vulnerability surfaces. The Go code that has been running on desktop nodes since Pearl launched is the same code running on your phone. Different wrapper, same engine.</p>' +
           '<div class="disclaimer">For the full technical specification, see the Blueprint section.</div>' +
           '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
       }
@@ -1580,6 +1830,16 @@
       html: function() {
         return '<h2>Built for Miners, Open to All</h2>' +
           '<p>The official Pearl wallets are desktop-only. PRL Wallet fills the gap — native Android power for miners who need to monitor, manage, and move funds without sitting at a workstation.</p>' +
+          '<div class="thumb-gallery">' +
+            '<div class="thumb-card" onclick="openLightbox(\'assets/Mining_Wallet_Features_Overview.png\', \'Mining Wallet Features\')">' +
+              '<img src="assets/Mining_Wallet_Features_Overview.png" alt="Mining Wallet Features" loading="lazy">' +
+              '<div class="thumb-label">Mining Wallet Features</div>' +
+            '</div>' +
+            '<div class="thumb-card" onclick="openLightbox(\'assets/Pearl_Wallet_Mining_Tool_Overview.png\', \'Mining Tool Overview\')">' +
+              '<img src="assets/Pearl_Wallet_Mining_Tool_Overview.png" alt="Mining Tool Overview" loading="lazy">' +
+              '<div class="thumb-label">Mining Tool Overview</div>' +
+            '</div>' +
+          '</div>' +
           '<h3>Monitor on the go</h3>' +
           '<p>Check balances, transaction history, and UTXO status from anywhere. No need to remote into your mining rig or carry a laptop to the field. Your phone is your dashboard.</p>' +
           '<h3>Transact away from desktop</h3>' +
@@ -1670,8 +1930,17 @@
       title: 'Blueprint',
       html: function() {
         return '<h2>The Blueprint</h2>' +
-          '<p>The complete PRL Wallet specification — from Android Studio project setup through NDK configuration to signed release builds. The full guide for contributors and auditors.</p>' +
-          '<p>The blueprint covers every layer of the project: the gomobile bind process, the androidbridge package architecture, the Jetpack Compose UI layer, and the CI/CD pipeline that produces signed release builds.</p>' +
+          '<p>The complete PRL Wallet specification — from Android Studio project setup through NDK configuration to signed release builds. Click a cover to flip through the full document.</p>' +
+          '<div class="thumb-gallery">' +
+            '<div class="thumb-card" onclick="openFlipbook(\'blueprint\')">' +
+              '<img src="assets/flipbook/blueprint/page-01.jpg" alt="The Blueprint" loading="lazy">' +
+              '<div class="thumb-label">The Blueprint (14-page flipbook)</div>' +
+            '</div>' +
+            '<div class="thumb-card" onclick="openFlipbook(\'command-center\')">' +
+              '<img src="assets/flipbook/command-center/page-1.jpg" alt="Command Center" loading="lazy">' +
+              '<div class="thumb-label">Command Center (7-page flipbook)</div>' +
+            '</div>' +
+          '</div>' +
           '<h3>What\'s inside</h3>' +
           '<ul>' +
             '<li>System architecture and component overview</li>' +
@@ -1680,10 +1949,7 @@
             '<li>Testing and verification procedures</li>' +
             '<li>Contributor guidelines</li>' +
           '</ul>' +
-          '<div class="cta-row">' +
-            '<a href="assets/The_prldroid_Wallet_Blueprint.pdf" target="_blank" class="cta-btn primary">Download PDF</a>' +
-          '</div>' +
-          '<div class="disclaimer">The blueprint is hosted locally on this site.</div>';
+          '<div class="disclaimer">Documents are hosted locally on this site.</div>';
       }
     };
 
@@ -1814,6 +2080,163 @@
       if (e.target === lightbox) closeLightbox();
     });
 
+    // ── Flipbook ──
+    var flipbookOverlay = document.getElementById('flipbook-overlay');
+    var flipbookContainer = document.getElementById('flipbook-container');
+    var flipbookCloseBtn = document.getElementById('flipbook-close');
+    var flipbookPrev = document.getElementById('flipbook-prev');
+    var flipbookNext = document.getElementById('flipbook-next');
+    var flipbookCounter = document.getElementById('flipbook-counter');
+    var flipbookDownload = document.getElementById('flipbook-download');
+    var flipbookTitleEl = document.getElementById('flipbook-title');
+    var currentFlipbook = null;
+
+    // Page-turn sound via Web Audio API
+    function playPageFlipSound() {
+      try {
+        var ctx = getAC();
+        if (!ctx || ctx.state === 'suspended') return;
+        var dur = 0.15;
+        var sr = ctx.sampleRate;
+        var buf = ctx.createBuffer(1, sr * dur, sr);
+        var data = buf.getChannelData(0);
+        for (var i = 0; i < data.length; i++) {
+          var t = i / data.length;
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 3) * 0.3;
+        }
+        var src = ctx.createBufferSource();
+        src.buffer = buf;
+        var filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 2000;
+        filter.Q.value = 0.8;
+        var gain = ctx.createGain();
+        gain.gain.value = 0.5;
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        src.start();
+      } catch(e) {}
+    }
+
+    var flipbookData = {
+      'blueprint': {
+        title: 'The Blueprint',
+        pages: 14,
+        prefix: 'assets/flipbook/blueprint/page-',
+        suffix: '.jpg',
+        pdf: 'assets/The_prldroid_Wallet_Blueprint.pdf',
+        pad: 2
+      },
+      'android-technicals': {
+        title: 'Android Technicals',
+        pages: 10,
+        prefix: 'assets/flipbook/android-technicals/page-',
+        suffix: '.jpg',
+        pdf: 'assets/Pearl_Wallet_Android_Technicals.pdf',
+        pad: 2
+      },
+      'command-center': {
+        title: 'Command Center',
+        pages: 7,
+        prefix: 'assets/flipbook/command-center/page-',
+        suffix: '.jpg',
+        pdf: 'assets/Pearl_Wallet_Command_Center.pdf',
+        pad: 1
+      }
+    };
+
+    function padNum(n, pad) {
+      var s = String(n);
+      while (s.length < pad) s = '0' + s;
+      return s;
+    }
+
+    function openFlipbook(key) {
+      var data = flipbookData[key];
+      if (!data) return;
+
+      // Clean up previous flipbook
+      if (currentFlipbook) {
+        try { currentFlipbook.destroy(); } catch(e) {}
+        currentFlipbook = null;
+      }
+      flipbookContainer.innerHTML = '';
+
+      // Build page images
+      var images = [];
+      for (var i = 1; i <= data.pages; i++) {
+        images.push(data.prefix + padNum(i, data.pad) + data.suffix);
+      }
+
+      flipbookTitleEl.textContent = data.title;
+      flipbookDownload.href = data.pdf;
+      flipbookCounter.textContent = 'Page 1 of ' + data.pages;
+      flipbookOverlay.classList.add('open');
+
+      // Determine page size based on viewport
+      var isPortrait = window.innerHeight > window.innerWidth;
+      var pageW = isPortrait ? Math.min(window.innerWidth - 40, 500) : 450;
+      var pageH = Math.round(pageW * 1.4);
+
+      // Create StPageFlip instance
+      var pf = new St.PageFlip(flipbookContainer, {
+        width: pageW,
+        height: pageH,
+        size: 'stretch',
+        minWidth: 200,
+        maxWidth: 600,
+        minHeight: 280,
+        maxHeight: 900,
+        drawShadow: true,
+        flippingTime: 800,
+        usePortrait: true,
+        startZIndex: 0,
+        maxShadowOpacity: 0.5,
+        showCover: true,
+        mobileScrollSupport: true,
+        swipeDistance: 30,
+        useMouseEvents: true
+      });
+
+      pf.loadFromImages(images);
+
+      pf.on('flip', function(e) {
+        var pageNum = e.data + 1;
+        flipbookCounter.textContent = 'Page ' + pageNum + ' of ' + data.pages;
+        playPageFlipSound();
+      });
+
+      pf.on('changeState', function(e) {
+        if (e.data === 'flipping') playPageFlipSound();
+      });
+
+      currentFlipbook = pf;
+    }
+
+    function closeFlipbook() {
+      flipbookOverlay.classList.remove('open');
+      if (currentFlipbook) {
+        try { currentFlipbook.destroy(); } catch(e) {}
+        currentFlipbook = null;
+      }
+      flipbookContainer.innerHTML = '';
+    }
+
+    window.openFlipbook = openFlipbook;
+    window.closeFlipbook = closeFlipbook;
+
+    flipbookCloseBtn.addEventListener('click', closeFlipbook);
+    flipbookOverlay.addEventListener('click', function(e) {
+      if (e.target === flipbookOverlay) closeFlipbook();
+    });
+    flipbookPrev.addEventListener('click', function() {
+      if (currentFlipbook) currentFlipbook.turnToPrevPage();
+    });
+    flipbookNext.addEventListener('click', function() {
+      if (currentFlipbook) currentFlipbook.turnToNextPage();
+    });
+
     // Nav click handlers
     document.querySelectorAll('.snav-links span').forEach(function(span) {
       span.addEventListener('click', function(e) {
@@ -1876,6 +2299,74 @@
         ambientActive = false;
       }
     }, 500);
+
+    // ── Terms acceptance modal + clickwrap beacon ───────────────────────
+    var pendingDownloadUrl = null;
+    var termsBackdrop = document.getElementById('terms-modal-backdrop');
+    var termsCheckbox = document.getElementById('terms-accept-checkbox');
+    var termsDownloadBtn = document.getElementById('terms-download');
+    var termsCancelBtn = document.getElementById('terms-cancel');
+
+    function tryDownload(e, url) {
+      e.preventDefault();
+      e.stopPropagation();
+      pendingDownloadUrl = url;
+      termsCheckbox.checked = false;
+      termsDownloadBtn.disabled = true;
+      termsBackdrop.classList.add('open');
+      return false;
+    }
+
+    function closeTermsModal() {
+      termsBackdrop.classList.remove('open');
+      pendingDownloadUrl = null;
+    }
+
+    function logAcceptance(url) {
+      // Fire-and-forget beacon to serverless endpoint
+      // Logs IP, geo, timestamp on Netlify/Vercel platform logs
+      // TODO: When StackCP MySQL is provisioned, the serverless function will
+      // also persist to the database. See README.md → Clickwrap Logging section.
+      try {
+        var version = (releaseManifest && releaseManifest.version) ? releaseManifest.version : 'unknown';
+        fetch('/api/log-acceptance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accepted: true, version: version, url: url })
+        }).catch(function() {});
+      } catch(err) {}
+    }
+
+    termsCheckbox.addEventListener('change', function() {
+      termsDownloadBtn.disabled = !termsCheckbox.checked;
+    });
+
+    termsCancelBtn.addEventListener('click', closeTermsModal);
+
+    termsDownloadBtn.addEventListener('click', function() {
+      if (!pendingDownloadUrl) return;
+      logAcceptance(pendingDownloadUrl);
+      window.open(pendingDownloadUrl, '_blank');
+      closeTermsModal();
+    });
+
+    termsBackdrop.addEventListener('click', function(e) {
+      if (e.target === termsBackdrop) closeTermsModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && termsBackdrop.classList.contains('open')) closeTermsModal();
+    });
+
+    // ── Footer visibility (show after nav appears) ──
+    var footerEl = document.getElementById('site-footer');
+    var footerCheck = setInterval(function() {
+      var snav = document.getElementById('snav');
+      if (snav && parseFloat(snav.style.opacity) > 0.5) {
+        footerEl.classList.add('visible');
+        clearInterval(footerCheck);
+      }
+    }, 200);
 
     seek(0);
     ensureRaf();

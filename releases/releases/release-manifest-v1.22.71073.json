@@ -1,0 +1,49 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.22.71073",
+  "build": "71073",
+  "built_at": "2026-05-31T17:53:34-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/prldroid-wallet",
+    "commit": "6e5e81a06f424db0fa0a5c4975405b6b3435d637",
+    "branch": "master",
+    "ci_system": "github-actions",
+    "ci_run_url": null
+  },
+  "artifacts": [
+    {
+      "id": "android-apk",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "PRLWallet-Android-v1.22.71073-release-signed.apk",
+      "size_bytes": 59986378,
+      "sha256": "850c0d1e992b1570e1cf7ce2e33fa7a37cdd7ade3cd1b24ad04237fd7d7ca480",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.22.71073-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "PRLWallet-Android-v1.22.71073-release-signed.aab",
+      "size_bytes": 36695827,
+      "sha256": "411fa45feceb6179c097564d4676cb6feb011de4d07e21f9b908898548e01f49",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.22.71073-release-signed.aab"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": []
+  }
+}

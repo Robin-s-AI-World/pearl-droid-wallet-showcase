@@ -1,0 +1,92 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.45.74159",
+  "build": "74159",
+  "built_at": "2026-06-02T21:19:35-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
+    "commit": "02d3fa31ddebb8d92a0bd3ed931f1896a586226a",
+    "branch": "master",
+    "ci_system": "github-actions",
+    "ci_run_url": null
+  },
+  "artifacts": [
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "pearl-wallet-android-v1.45.74159-release-signed.aab",
+      "size_bytes": 54615499,
+      "sha256": "31ee7b8000f3dc080947037fcbd02cd62ddd0fda7adc08d83c9a3ab65f0b707b",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.45.74159-release-signed.aab"
+        }
+      ]
+    },
+    {
+      "id": "android-apk-release",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.45.74159-release-signed.apk",
+      "size_bytes": 100034304,
+      "sha256": "4dfa739ed36a5044cef61cb6a94e733f5a72b52851655a0d61c4abca1e6bc04c",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.45.74159-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-apk-debug",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.45.74159-debug-signed.apk",
+      "size_bytes": 120576146,
+      "sha256": "fc6afdb071d55df0ae53864df8c7fa6c917a755358d1683a76b8161359a1b724",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.45.74159-debug-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-debug-symbols",
+      "platform": "android",
+      "kind": "native-debug-symbols",
+      "filename": "pearl-wallet-android-v1.45.74159-native-debug-symbols.zip",
+      "size_bytes": 27765137,
+      "sha256": "7fbfba0615bde31dea5fe09aa993460464018007f993b52c9b7972d92a494bfc",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.45.74159-native-debug-symbols.zip"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.45.74159",
+        "date": "2026-06-02T21:19:35-04:00",
+        "notes": [
+          "Oyster engine wiring (node connection, SPV sync)",
+          "UI completeness: QR scanner, recovery phrase, auto-lock",
+          "Analytics layer (privacy-first, no-op default)",
+          "OTC swap referral funnel (AD-1 — disclosed external hand-off)",
+          "Build pipeline: idempotent release recipe, canonical artifact naming",
+          "Release APK will not install over prior builds with different signing key — uninstall first."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.48.82775",
+  "build": "82775",
+  "built_at": "2026-06-08T20:55:17-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
+    "commit": "8ae07db190f323b708629f08171619002d963024",
+    "branch": "master",
+    "ci_system": "github-actions",
+    "ci_run_url": null
+  },
+  "artifacts": [
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "pearl-wallet-android-v1.48.82775-release-signed.aab",
+      "size_bytes": 54626292,
+      "sha256": "b6d2d7cd554c8e8561ee3941696abfa2bdaf7b5eee6d90ed528865f3c409b9fd",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.48.82775-release-signed.aab"
+        }
+      ]
+    },
+    {
+      "id": "android-apk-release",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.48.82775-release-signed.apk",
+      "size_bytes": 100050688,
+      "sha256": "19f2c5c0d40be84942492ab9bd313414b773a150f83cc4bad325b0c63ea2c003",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.48.82775-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-apk-debug",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.48.82775-debug-signed.apk",
+      "size_bytes": 120592530,
+      "sha256": "dca153b29ec50aefc08abebf956359e44888ad40306ae2121e27bb6864f224e3",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.48.82775-debug-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-debug-symbols",
+      "platform": "android",
+      "kind": "native-debug-symbols",
+      "filename": "pearl-wallet-android-v1.48.82775-native-debug-symbols.zip",
+      "size_bytes": 27765137,
+      "sha256": "abf86117b221c1815ff2a0bd8e875557a13be0536d4ee1244ba50eb4b85c5c3c",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.48.82775-native-debug-symbols.zip"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.48.82775",
+        "date": "2026-06-08T20:55:17-04:00",
+        "notes": [
+          "**Version Name:** 1.48.82775",
+          "**Version Code:** 100048",
+          "**Build Date:** 2026-06-08",
+          "Phase-5 architecture parity: multi-account, address-validation, sync-status surfaces wired through repository/viewmodel layers.",
+          "Fixed `MnemonicGenerator.init()` never called — wallet creation now loads BIP-39 wordlist at app startup.",
+          "Relocated `UnspentOutput` to `data/model/UnspentOutput.kt` per ARCHITECTURE.md §4.",
+          "Updated entity table in ARCHITECTURE.md for `WalletInfoData`, `NodeInfoData`, `SyncStatus`, `AccountInfo`, `AddressValidation`.",
+          "`pearl-wallet-android-v1.48.82775-release-signed.aab` (Play Console upload)",
+          "`pearl-wallet-android-v1.48.82775-release-signed.apk`",
+          "`pearl-wallet-android-v1.48.82775-debug-signed.apk`",
+          "`pearl-wallet-android-v1.48.82775-native-debug-symbols.zip`"
+        ]
+      }
+    ]
+  }
+}

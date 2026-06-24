@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prldroid-wallet.robin.mba/releases/schema/release-manifest.schema.json",
+  "title": "PRL Wallet Release Manifest",
+  "description": "CI/manual-build emitted release metadata consumed by the PRL Wallet landing page autopopulator.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "project",
+    "version",
+    "build",
+    "built_at",
+    "release_status",
+    "working_status",
+    "source",
+    "distribution",
+    "artifacts",
+    "verification",
+    "features",
+    "known_limitations",
+    "changelog"
+  ],
+  "properties": {
+    "schema": { "type": "string", "const": "mba.robin.release-manifest.v1" },
+    "project": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "build": { "type": "string", "pattern": "^[0-9]+$" },
+    "built_at": { "type": "string" },
+    "content_updated_at": { "type": "string" },
+    "release_status": {
+      "type": "string",
+      "enum": ["development", "tester", "release-candidate", "stable", "yanked", "archived"]
+    },
+    "working_status": {
+      "type": "string",
+      "enum": ["unknown", "not-yet-first-confirmed-working-wallet", "first-working-confirmed", "known-broken", "production-ready", "deprecated"]
+    },
+    "public_channel_label": { "type": "string" },
+    "testing_warning": { "type": "string" },
+    "copy": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "eyebrow": { "type": "string" },
+        "hero_title": { "type": "string" },
+        "hero_summary": { "type": "string" },
+        "primary_cta": { "type": "string" },
+        "secondary_cta": { "type": "string" },
+        "above_fold_note": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "branch", "ci_system"],
+      "properties": {
+        "repository": { "type": "string" },
+        "commit": { "type": "string" },
+        "branch": { "type": "string" },
+        "ci_system": { "type": "string" },
+        "ci_run_url": { "type": ["string", "null"] }
+      }
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["channel", "canonical_origin", "canonical_domain"],
+      "properties": {
+        "channel": { "type": "string", "enum": ["direct-apk", "play-store", "github-release", "shared-hosting-mirror", "internal"] },
+        "google_play_status": { "type": "string", "enum": ["not-active", "pending", "active", "rejected", "unknown"] },
+        "canonical_origin": { "type": "string", "enum": ["local-nginx-ui", "shared-hosting", "github-release", "other"] },
+        "canonical_live_root": { "type": "string" },
+        "canonical_domain": { "type": "string" },
+        "shared_hosting_mirror": { "type": "string" }
+      }
+    },
+    "artifacts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/artifact" } },
+    "verification": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["primary_artifact_id", "expected_sha256"],
+      "properties": {
+        "primary_artifact_id": { "type": "string" },
+        "sha256_command": { "type": "string" },
+        "expected_sha256": { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" },
+        "signature_certificate_sha256": { "type": "string" }
+      }
+    },
+    "features": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+    "known_limitations": { "type": "array", "items": { "type": "string" } },
+    "changelog": {
+      "type": "object",
+      "required": ["entries"],
+      "properties": {
+        "entries": { "type": "array", "items": { "$ref": "#/$defs/changelog_entry" } }
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": ["id", "platform", "kind", "filename", "size_bytes", "sha256", "locations"],
+      "properties": {
+        "id": { "type": "string" },
+        "platform": { "type": "string", "enum": ["android", "web", "docs", "other"] },
+        "kind": { "type": "string", "enum": ["apk", "aab", "native-debug-symbols", "json", "xml", "zip", "other"] },
+        "filename": { "type": "string" },
+        "size_bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" },
+        "locations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["type", "public", "url"],
+            "properties": {
+              "type": { "type": "string", "enum": ["web", "github-release", "local", "mirror", "other"] },
+              "public": { "type": "boolean" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": ["title", "status", "summary"],
+      "properties": {
+        "title": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "being-verified", "planned", "disabled", "removed", "known-broken"] },
+        "summary": { "type": "string" }
+      }
+    },
+    "changelog_entry": {
+      "type": "object",
+      "required": ["version", "date", "notes"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "date": { "type": "string" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

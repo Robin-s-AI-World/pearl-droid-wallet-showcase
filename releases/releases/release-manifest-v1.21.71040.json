@@ -1,0 +1,62 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.21.71040",
+  "build": "71040",
+  "built_at": "2026-05-31T17:20:44-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/prldroid-wallet",
+    "commit": "6e5e81a06f424db0fa0a5c4975405b6b3435d637",
+    "branch": "master",
+    "ci_system": "github-actions",
+    "ci_run_url": null
+  },
+  "artifacts": [
+    {
+      "id": "android-apk",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "PRLWallet-Android-v1.21.71040-release-signed.apk",
+      "size_bytes": 59941386,
+      "sha256": "f087d32a1896cf474ff73346e525698506ee7265e122c55099fce1154ae36c99",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.21.71040-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "PRLWallet-Android-v1.21.71040-release-signed.aab",
+      "size_bytes": 36650326,
+      "sha256": "396deac35effa91df8df509eb71f3d39b083a1ba925d85e557eaf2125d5ec190",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.21.71040-release-signed.aab"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.21.71040",
+        "date": "2026-05-31T17:20:44-04:00",
+        "notes": [
+          "**Unified PRL orb launcher icon** baked into the build at all densities (mdpi through xxxhdpi, square + round)",
+          "**Signed release build** with production keystore (APK + AAB)",
+          "**Native debug symbols** included for Play Console crash reporting",
+          "`PRLWallet-Android-v1.21.71040-release-signed.apk` (59.9 MB) — sideload / direct distribution",
+          "`PRLWallet-Android-v1.21.71040-release-signed.aab` (36.6 MB) — Play Console upload",
+          "`native-debug-symbols-v1.21.71040.zip` (29.7 MB) — Play Console debug symbols"
+        ]
+      }
+    ]
+  }
+}

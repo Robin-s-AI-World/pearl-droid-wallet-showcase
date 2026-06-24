@@ -1,9 +1,9 @@
 {
   "schema": "mba.robin.release-manifest.v1",
   "project": "PRL Wallet",
-  "version": "1.105.3620",
-  "build": "3620",
-  "built_at": "2026-06-23T08:20:30-04:00",
+  "version": "1.103.3566",
+  "build": "3566",
+  "built_at": "2026-06-23T07:26:28-04:00",
   "content_updated_at": "2026-06-23",
   "release_status": "tester",
   "working_status": "not-yet-first-confirmed-working-wallet",
@@ -19,7 +19,7 @@
   },
   "source": {
     "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
-    "commit": "46bcefd74bd6011762a5eb8ac3e4b22734f88ac1",
+    "commit": "9922c25e5aef7613b1f5b0cbad3eca47af1bfa5f",
     "branch": "master",
     "ci_system": "manual",
     "ci_run_url": null
@@ -37,14 +37,14 @@
       "id": "android-aab",
       "platform": "android",
       "kind": "aab",
-      "filename": "pearl-wallet-android-v1.105.3620-release-signed.aab",
-      "size_bytes": 56369647,
-      "sha256": "adb6474217ac1533576c02f4eb3145625c79bf8293e4aa867e22566777d3f1a2",
+      "filename": "pearl-wallet-android-v1.103.3566-release-signed.aab",
+      "size_bytes": 56370049,
+      "sha256": "f079d173784ff1ddda694d5803af652a1c627905716a0f69792356eda0bb55bc",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-release-signed.aab"
+          "url": "downloads/pearl-wallet-android-v1.103.3566-release-signed.aab"
         }
       ]
     },
@@ -52,14 +52,14 @@
       "id": "android-apk-release",
       "platform": "android",
       "kind": "apk",
-      "filename": "pearl-wallet-android-v1.105.3620-release-signed.apk",
+      "filename": "pearl-wallet-android-v1.103.3566-release-signed.apk",
       "size_bytes": 108231429,
-      "sha256": "db35914c00ce278aa2b3f8a3126c57f35951695e5bb4321e42e8e8df7004bcef",
+      "sha256": "9b2a42942ba21dea49ff0a3e88df9c85cfa1c95e6e34a224ff22be87238f7b7d",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-release-signed.apk"
+          "url": "downloads/pearl-wallet-android-v1.103.3566-release-signed.apk"
         }
       ]
     },
@@ -67,22 +67,22 @@
       "id": "android-debug-symbols",
       "platform": "android",
       "kind": "native-debug-symbols",
-      "filename": "pearl-wallet-android-v1.105.3620-native-debug-symbols.zip",
+      "filename": "pearl-wallet-android-v1.103.3566-native-debug-symbols.zip",
       "size_bytes": 45867536,
-      "sha256": "58d16074673172a15badd7fdf98d201b73d0206a76e5efd3cdc68adef39b52aa",
+      "sha256": "32e345981f3c14613a6dc71b9938b971052431573dbe070076b7dcde4eed8995",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-native-debug-symbols.zip"
+          "url": "downloads/pearl-wallet-android-v1.103.3566-native-debug-symbols.zip"
         }
       ]
     }
   ],
   "verification": {
     "primary_artifact_id": "android-apk-release",
-    "sha256_command": "sha256sum pearl-wallet-android-v1.105.3620-release-signed.apk",
-    "expected_sha256": "db35914c00ce278aa2b3f8a3126c57f35951695e5bb4321e42e8e8df7004bcef"
+    "sha256_command": "sha256sum pearl-wallet-android-v1.103.3566-release-signed.apk",
+    "expected_sha256": "9b2a42942ba21dea49ff0a3e88df9c85cfa1c95e6e34a224ff22be87238f7b7d"
   },
   "features": [
     {
@@ -125,15 +125,10 @@
   "changelog": {
     "entries": [
       {
-        "version": "1.105.3620",
-        "date": "2026-06-23T08:20:30-04:00",
+        "version": "1.103.3566",
+        "date": "2026-06-23T07:26:28-04:00",
         "notes": [
-          "Battery optimization exemption now requested on all devices during sync, not just those already under optimization.",
-          "Home screen widgets: miner widget rewritten to be RemoteViews-safe (fixes 'couldn't add widget' on many launchers), Pearl logo and app name added to both widgets, field labels added (Balance, Height, Subsidy, etc.).",
-          "Widget tap opens the app directly to the Receive/QR screen.",
-          "Sync progress now reports correctly even when the wallet is locked — the SPV chain service runs independently.",
-          "Foreground service with notification keeps sync alive in the background.",
-          "Activity screen shows pending transactions from the explorer with a 'Pending Sync' badge during synchronization.",
+          "See commit log for details.",
           "Release builds are signed with the same production key; in-place upgrades work. If switching from a debug/dev build, uninstall first."
         ]
       }

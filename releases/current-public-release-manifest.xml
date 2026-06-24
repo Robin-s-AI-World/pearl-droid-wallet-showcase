@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<releaseManifest schema="mba.robin.release-manifest.v1" project="PRL Wallet" version="1.105.3620" build="3620" releaseStatus="tester" workingStatus="not-yet-first-confirmed-working-wallet">
+  <builtAt>2026-06-23T08:20:30-04:00</builtAt>
+  <contentUpdatedAt>2026-06-23</contentUpdatedAt>
+  <publicChannelLabel>Tester APK</publicChannelLabel>
+  <testingWarning>This build is published so the website, release manifest, downloads, checksums, and Android install path can be tested. It is not yet confirmed as the first fully working wallet release. Do not use it for meaningful funds.</testingWarning>
+  <copy>
+    <eyebrow>Direct Android tester APK</eyebrow>
+    <heroTitle>Pearl Wallet for Android is being tested.</heroTitle>
+    <heroSummary>PRL Wallet is a noncustodial Android wallet project for Pearl. This page is wired to release metadata so every build can update the version, date, download link, hash, changelog, and status without editing the homepage.</heroSummary>
+    <primaryCta>Download tester APK</primaryCta>
+    <secondaryCta>Verify the hash first</secondaryCta>
+    <aboveFoldNote>Release data is populated from JSON now and XML as fallback. CI/manual builds emit both.</aboveFoldNote>
+  </copy>
+  <source repository="https://github.com/Robin-s-AI-World/pearl-wallet-android" commit="46bcefd74bd6011762a5eb8ac3e4b22734f88ac1" branch="master" ciSystem="manual" />
+  <distribution channel="direct-apk" googlePlayStatus="not-active" canonicalOrigin="local-nginx-ui" canonicalLiveRoot="/var/www/prldroid-wallet/current" canonicalDomain="https://prldroid-wallet.robin.mba/" sharedHostingMirror="downstream mirror for higher public traffic, not the canonical release authority" />
+  <artifacts>
+    <artifact id="android-aab" platform="android" kind="aab">
+      <filename>pearl-wallet-android-v1.105.3620-release-signed.aab</filename>
+      <sizeBytes>56369647</sizeBytes>
+      <sha256>adb6474217ac1533576c02f4eb3145625c79bf8293e4aa867e22566777d3f1a2</sha256>
+      <location type="web" public="true">downloads/pearl-wallet-android-v1.105.3620-release-signed.aab</location>
+    </artifact>
+    <artifact id="android-apk-release" platform="android" kind="apk">
+      <filename>pearl-wallet-android-v1.105.3620-release-signed.apk</filename>
+      <sizeBytes>108231429</sizeBytes>
+      <sha256>db35914c00ce278aa2b3f8a3126c57f35951695e5bb4321e42e8e8df7004bcef</sha256>
+      <location type="web" public="true">downloads/pearl-wallet-android-v1.105.3620-release-signed.apk</location>
+    </artifact>
+    <artifact id="android-debug-symbols" platform="android" kind="native-debug-symbols">
+      <filename>pearl-wallet-android-v1.105.3620-native-debug-symbols.zip</filename>
+      <sizeBytes>45867536</sizeBytes>
+      <sha256>58d16074673172a15badd7fdf98d201b73d0206a76e5efd3cdc68adef39b52aa</sha256>
+      <location type="web" public="true">downloads/pearl-wallet-android-v1.105.3620-native-debug-symbols.zip</location>
+    </artifact>
+  </artifacts>
+  <verification primaryArtifactId="android-apk-release">
+    <sha256Command>sha256sum pearl-wallet-android-v1.105.3620-release-signed.apk</sha256Command>
+    <expectedSha256>db35914c00ce278aa2b3f8a3126c57f35951695e5bb4321e42e8e8df7004bcef</expectedSha256>
+  </verification>
+  <features>
+    <feature title="Manifest-driven landing page" status="available">The homepage reads release metadata at runtime and fills version, dates, download URLs, hashes, status, features, and changelog.</feature>
+    <feature title="Direct signed APK distribution" status="available">The tester APK is distributed from the site while app-store distribution is not active.</feature>
+    <feature title="Checksum verification" status="available">The published SHA-256 is displayed beside the APK download so testers can confirm file integrity before installing.</feature>
+    <feature title="SPV wallet recovery" status="being-verified">Import recovery, genesis birthday handling, and full balance discovery are under active repair and verification.</feature>
+    <feature title="Explorer preliminary balance" status="being-verified">The app can display a provisional explorer balance for the visible receive address while local sync catches up. Full HD-wallet discovery remains a separate verification concern.</feature>
+    <feature title="Local canonical deployment" status="available">The local nginx-ui deployment is the canonical site. Shared hosting can mirror it later for traffic, but the local release root remains authoritative.</feature>
+  </features>
+  <knownLimitations>
+    <limitation>Working status: not-yet-first-confirmed-working-wallet</limitation>
+    <limitation>Do not use tester APKs for meaningful funds unless a release is explicitly marked production-ready.</limitation>
+    <limitation>Explorer preliminary balance is single-address and provisional until local wallet recovery is complete.</limitation>
+    <limitation>Manual builds and CI builds must emit this manifest shape; index.html must not be hand-edited for release data.</limitation>
+  </knownLimitations>
+  <changelog>
+    <entry version="1.105.3620" date="2026-06-23T08:20:30-04:00">
+      <note>See commit log for details.</note>
+      <note>Release builds are signed with the same production key; in-place upgrades work. If switching from a debug/dev build, uninstall first.</note>
+    </entry>
+  </changelog>
+</releaseManifest>

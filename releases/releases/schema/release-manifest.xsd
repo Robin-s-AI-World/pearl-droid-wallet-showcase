@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:annotation>
+    <xs:documentation>PRL Wallet release manifest XML companion schema. JSON is primary; XML mirrors the same data for tooling, diagnostics, and fallback loading.</xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="ReleaseStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="development"/>
+      <xs:enumeration value="tester"/>
+      <xs:enumeration value="release-candidate"/>
+      <xs:enumeration value="stable"/>
+      <xs:enumeration value="yanked"/>
+      <xs:enumeration value="archived"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WorkingStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unknown"/>
+      <xs:enumeration value="not-yet-first-confirmed-working-wallet"/>
+      <xs:enumeration value="first-working-confirmed"/>
+      <xs:enumeration value="known-broken"/>
+      <xs:enumeration value="production-ready"/>
+      <xs:enumeration value="deprecated"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Version">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.[0-9]+\.[0-9]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Sha256">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="releaseManifest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="builtAt" type="xs:string"/>
+        <xs:element name="contentUpdatedAt" type="xs:string" minOccurs="0"/>
+        <xs:element name="publicChannelLabel" type="xs:string" minOccurs="0"/>
+        <xs:element name="testingWarning" type="xs:string" minOccurs="0"/>
+        <xs:element name="copy" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="eyebrow" type="xs:string" minOccurs="0"/>
+              <xs:element name="heroTitle" type="xs:string" minOccurs="0"/>
+              <xs:element name="heroSummary" type="xs:string" minOccurs="0"/>
+              <xs:element name="primaryCta" type="xs:string" minOccurs="0"/>
+              <xs:element name="secondaryCta" type="xs:string" minOccurs="0"/>
+              <xs:element name="aboveFoldNote" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="source">
+          <xs:complexType>
+            <xs:attribute name="repository" type="xs:string" use="required"/>
+            <xs:attribute name="commit" type="xs:string" use="required"/>
+            <xs:attribute name="branch" type="xs:string" use="required"/>
+            <xs:attribute name="ciSystem" type="xs:string" use="required"/>
+            <xs:attribute name="ciRunUrl" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="distribution">
+          <xs:complexType>
+            <xs:attribute name="channel" type="xs:string" use="required"/>
+            <xs:attribute name="googlePlayStatus" type="xs:string" use="optional"/>
+            <xs:attribute name="canonicalOrigin" type="xs:string" use="required"/>
+            <xs:attribute name="canonicalLiveRoot" type="xs:string" use="optional"/>
+            <xs:attribute name="canonicalDomain" type="xs:string" use="required"/>
+            <xs:attribute name="sharedHostingMirror" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="artifacts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="artifact" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="filename" type="xs:string"/>
+                    <xs:element name="sizeBytes" type="xs:nonNegativeInteger"/>
+                    <xs:element name="sha256" type="Sha256"/>
+                    <xs:element name="location" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="type" type="xs:string" use="required"/>
+                            <xs:attribute name="public" type="xs:boolean" use="required"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="platform" type="xs:string" use="required"/>
+                  <xs:attribute name="kind" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="verification">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sha256Command" type="xs:string" minOccurs="0"/>
+              <xs:element name="expectedSha256" type="Sha256"/>
+              <xs:element name="signatureCertificateSha256" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="primaryArtifactId" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="features" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="feature" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="title" type="xs:string" use="required"/>
+                      <xs:attribute name="status" type="xs:string" use="required"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="knownLimitations" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="limitation" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="changelog">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entry" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="note" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                  </xs:sequence>
+                  <xs:attribute name="version" type="Version" use="required"/>
+                  <xs:attribute name="date" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="schema" type="xs:string" use="required"/>
+      <xs:attribute name="project" type="xs:string" use="required"/>
+      <xs:attribute name="version" type="Version" use="required"/>
+      <xs:attribute name="build" type="xs:string" use="required"/>
+      <xs:attribute name="releaseStatus" type="ReleaseStatus" use="required"/>
+      <xs:attribute name="workingStatus" type="WorkingStatus" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

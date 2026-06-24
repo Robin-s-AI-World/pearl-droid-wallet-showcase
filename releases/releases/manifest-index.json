@@ -1,0 +1,40 @@
+{
+  "schema": "mba.robin.manifest-index.v1",
+  "project": "PRL Wallet",
+  "updated_at": "2026-06-23T07:29:38-04:00",
+  "files": [
+    "release-manifest-v1.100.1331.json",
+    "release-manifest-v1.10.0.json",
+    "release-manifest-v1.103.3566.json",
+    "release-manifest-v1.15.70942.json",
+    "release-manifest-v1.21.71040.json",
+    "release-manifest-v1.22.71073.json",
+    "release-manifest-v1.45.74159.json",
+    "release-manifest-v1.46.74318.json",
+    "release-manifest-v1.48.82775.json",
+    "release-manifest-v1.54.84786.json",
+    "release-manifest-v1.64.86862.json",
+    "release-manifest-v1.66.87173.json",
+    "release-manifest-v1.67.87179.json",
+    "release-manifest-v1.68.87214.json",
+    "release-manifest-v1.69.87225.json",
+    "release-manifest-v1.70.87247.json",
+    "release-manifest-v1.73.87893.json",
+    "release-manifest-v1.74.88291.json",
+    "release-manifest-v1.75.88315.json",
+    "release-manifest-v1.76.88332.json",
+    "release-manifest-v1.78.89070.json",
+    "release-manifest-v1.79.89845.json",
+    "release-manifest-v1.80.90337.json",
+    "release-manifest-v1.83.1079.json",
+    "release-manifest-v1.93.1296.json",
+    "release-manifest-v1.97.1315.json"
+  ],
+  "xml_files": [
+    "release-manifest-v1.100.1331.xml",
+    "release-manifest-v1.103.3566.xml",
+    "release-manifest-v1.83.1079.xml",
+    "release-manifest-v1.93.1296.xml",
+    "release-manifest-v1.97.1315.xml"
+  ]
+}

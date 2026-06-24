@@ -1,0 +1,45 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "prldroid-wallet",
+  "version": "1.15.0",
+  "build": "70942",
+  "built_at": "2026-05-30T10:47:44-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/prldroid-wallet",
+    "commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+    "branch": "main",
+    "ci_system": "github-actions",
+    "ci_run_url": "https://github.com/Robin-s-AI-World/prldroid-wallet/actions/runs/1234567890"
+  },
+  "artifacts": [
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "PRLWallet-Android-v1.15.70942-release-signed.aab",
+      "size_bytes": 36813632,
+      "sha256": "d4e5f6789012345678901234567890abcdef1234567890abcdef1234567890ab",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/PRLWallet-Android-v1.15.70942-release-signed.aab"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.15.0",
+        "date": "2026-05-30",
+        "notes": [
+          "Updated launcher icon to unified PRL orb logo",
+          "Updated Oyster engine to latest stable commit",
+          "Improved transaction signing reliability on low-memory devices",
+          "Fixed QR code scanning on dark mode screens"
+        ]
+      }
+    ]
+  }
+}

@@ -1,5 +1,5 @@
+headersOrigin = "config"
 plugins = []
-headers = []
 redirects = []
 
 [functions]
@@ -23,3 +23,29 @@ publishOrigin = "config"
 [build.processing.js]
 
 [build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+Cache-Control = "public, max-age=86400"
+
+[[headers]]
+for = "/downloads/*"
+
+[headers.values]
+Cache-Control = "public, max-age=3600"
+
+[[headers]]
+for = "/releases/*"
+
+[headers.values]
+Cache-Control = "public, max-age=300"

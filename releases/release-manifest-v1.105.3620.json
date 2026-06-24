@@ -44,7 +44,7 @@
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-release-signed.aab"
+          "url": "downloads/pearl-wallet-android-v1.105.3620-release-signed.aab"
         }
       ]
     },
@@ -59,7 +59,7 @@
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-release-signed.apk"
+          "url": "downloads/pearl-wallet-android-v1.105.3620-release-signed.apk"
         }
       ]
     },
@@ -74,7 +74,7 @@
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.105.3620/pearl-wallet-android-v1.105.3620-native-debug-symbols.zip"
+          "url": "downloads/pearl-wallet-android-v1.105.3620-native-debug-symbols.zip"
         }
       ]
     }
@@ -128,12 +128,7 @@
         "version": "1.105.3620",
         "date": "2026-06-23T08:20:30-04:00",
         "notes": [
-          "Battery optimization exemption now requested on all devices during sync, not just those already under optimization.",
-          "Home screen widgets: miner widget rewritten to be RemoteViews-safe (fixes 'couldn't add widget' on many launchers), Pearl logo and app name added to both widgets, field labels added (Balance, Height, Subsidy, etc.).",
-          "Widget tap opens the app directly to the Receive/QR screen.",
-          "Sync progress now reports correctly even when the wallet is locked — the SPV chain service runs independently.",
-          "Foreground service with notification keeps sync alive in the background.",
-          "Activity screen shows pending transactions from the explorer with a 'Pending Sync' badge during synchronization.",
+          "See commit log for details.",
           "Release builds are signed with the same production key; in-place upgrades work. If switching from a debug/dev build, uninstall first."
         ]
       }

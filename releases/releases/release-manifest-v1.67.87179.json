@@ -1,0 +1,73 @@
+{
+  "schema": "mba.robin.release-manifest.v1",
+  "project": "PRL Wallet",
+  "version": "1.67.87179",
+  "build": "87179",
+  "built_at": "2026-06-11T22:19:46-04:00",
+  "source": {
+    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
+    "commit": "7736f5c135454fc6f2d239b4227cfb9f6404a0fa",
+    "branch": "master",
+    "ci_system": "github-actions",
+    "ci_run_url": null
+  },
+  "artifacts": [
+    {
+      "id": "android-aab",
+      "platform": "android",
+      "kind": "aab",
+      "filename": "pearl-wallet-android-v1.67.87179-release-signed.aab",
+      "size_bytes": 55695509,
+      "sha256": "af3f179cd8790b711e515e755b0880d6878fcb30555851142cc07ee77a4c95e7",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.67.87179-release-signed.aab"
+        }
+      ]
+    },
+    {
+      "id": "android-apk-release",
+      "platform": "android",
+      "kind": "apk",
+      "filename": "pearl-wallet-android-v1.67.87179-release-signed.apk",
+      "size_bytes": 107838465,
+      "sha256": "c89ff92f30f3fa58b55eb198ccf2d28676770ffe435e88eb9a6519952ee87ce7",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.67.87179-release-signed.apk"
+        }
+      ]
+    },
+    {
+      "id": "android-debug-symbols",
+      "platform": "android",
+      "kind": "native-debug-symbols",
+      "filename": "pearl-wallet-android-v1.67.87179-native-debug-symbols.zip",
+      "size_bytes": 45802949,
+      "sha256": "14a6def68dce03d8c82ce0f0e4f1f97d6af6f733f48ba36e969b05ff60e26faa",
+      "locations": [
+        {
+          "type": "web",
+          "public": true,
+          "url": "downloads/pearl-wallet-android-v1.67.87179-native-debug-symbols.zip"
+        }
+      ]
+    }
+  ],
+  "changelog": {
+    "entries": [
+      {
+        "version": "1.67.87179",
+        "date": "2026-06-11T22:19:46-04:00",
+        "notes": [
+          "See commit log for details.",
+          "Release builds are signed with the same production key; in-place upgrades work. If switching from a debug/dev build, uninstall first."
+        ]
+      }
+    ]
+  }
+}

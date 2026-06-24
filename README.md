@@ -48,6 +48,10 @@ Both hosts must be kept in sync. After any content change, deploy to **both** Ne
 ├── sitemap.xml             # Sitemap
 ├── netlify.toml            # Netlify config (headers, caching)
 ├── .vercelignore           # Excludes large binaries from Vercel
+├── netlify/functions/      # Netlify serverless functions
+│   └── log-acceptance.js   # Clickwrap acceptance logger
+├── api/                    # Vercel serverless functions
+│   └── log-acceptance.js   # Clickwrap acceptance logger
 ├── releases/               # Release manifests (JSON + XML)
 │   ├── current-public-release-manifest.json
 │   ├── current-public-release-manifest.xml
@@ -58,6 +62,57 @@ Both hosts must be kept in sync. After any content change, deploy to **both** Ne
 ├── marketing/outreach/     # Marketing materials
 ├── DESIGN-HANDOFF.md       # Design system handoff doc
 └── DESIGN-MANIFEST.json    # Design manifest
+```
+
+## Clickwrap Logging
+
+The download flow includes a terms acceptance modal. When a user accepts the terms and clicks Download, a fire-and-forget beacon POSTs to `/api/log-acceptance` with the app version and accepted flag. The serverless function records:
+
+- Timestamp (ISO 8601)
+- IP address (from `x-forwarded-for` or platform headers)
+- Country/region (from Vercel geo headers or Cloudflare `cf-ipcountry`)
+- User-Agent
+- App version
+- Accepted: true
+
+### Viewing logs
+
+- **Netlify:** Dashboard → Functions → `log-acceptance` → Logs
+- **Vercel:** Dashboard → Project → Logs (filter for `[clickwrap-acceptance]`)
+
+### TODO: StackCP MySQL persistence
+
+The serverless functions currently log to platform console only. When the StackCP MySQL database is provisioned, uncomment the MySQL block in both function files and set these environment variables on Netlify and Vercel:
+
+| Variable | Description |
+|---|---|
+| `MYSQL_HOST` | StackCP MySQL server hostname |
+| `MYSQL_PORT` | MySQL port (default 3306) |
+| `MYSQL_USER` | Database user |
+| `MYSQL_PASSWORD` | Database password |
+| `MYSQL_DATABASE` | Database name |
+
+**StackCP setup:**
+1. Log into StackCP → MySQL Databases → Create a new database and user
+2. Enable remote MySQL access (add `%` as allowed host, or restrict to Netlify/Vercel egress IPs)
+3. Run the schema SQL below via phpMyAdmin or StackCP's database tool
+4. Set the environment variables on Netlify and Vercel
+5. Install `mysql2` as a dependency: `npm install mysql2`
+6. Uncomment the MySQL block in `netlify/functions/log-acceptance.js` and `api/log-acceptance.js`
+7. Redeploy both hosts
+
+**Schema:**
+```sql
+CREATE TABLE clickwrap_acceptances (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  accepted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  ip_address VARCHAR(45),
+  country VARCHAR(2),
+  region VARCHAR(100),
+  user_agent TEXT,
+  app_version VARCHAR(50),
+  accepted BOOLEAN DEFAULT TRUE
+);
 ```
 
 ## Source repos

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /releases/
+Allow: /downloads/
+Disallow: /releases/*.json
+Disallow: /downloads/*.apk
+Disallow: /downloads/*.aab
+
+Sitemap: https://prldroid-wallet.robin.mba/sitemap.xml

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<releaseManifest schema="mba.robin.release-manifest.v1" project="PRL Wallet" version="1.100.1331" build="1331" releaseStatus="tester" workingStatus="not-yet-first-confirmed-working-wallet">
+  <builtAt>2026-06-21T18:11:51-04:00</builtAt>
+  <contentUpdatedAt>2026-06-21</contentUpdatedAt>
+  <publicChannelLabel>Tester APK</publicChannelLabel>
+  <testingWarning>This build is published so the website, release manifest, downloads, checksums, and Android install path can be tested. It is not yet confirmed as the first fully working wallet release. Do not use it for meaningful funds.</testingWarning>
+  <copy>
+    <eyebrow>Direct Android tester APK</eyebrow>
+    <heroTitle>Pearl Wallet for Android is being tested.</heroTitle>
+    <heroSummary>PRL Wallet is a noncustodial Android wallet project for Pearl. This page is wired to release metadata so every build can update the version, date, download link, hash, changelog, and status without editing the homepage.</heroSummary>
+    <primaryCta>Download tester APK</primaryCta>
+    <secondaryCta>Verify the hash first</secondaryCta>
+    <aboveFoldNote>Release data is populated from JSON now and XML as fallback. CI/manual builds emit both.</aboveFoldNote>
+  </copy>
+  <source repository="https://github.com/Robin-s-AI-World/pearl-wallet-android" commit="1f0e3964e7bd54fca6963cf910c67581b096e3a7" branch="master" ciSystem="manual" />
+  <distribution channel="direct-apk" googlePlayStatus="not-active" canonicalOrigin="local-nginx-ui" canonicalLiveRoot="/var/www/prldroid-wallet/current" canonicalDomain="https://prldroid-wallet.robin.mba/" sharedHostingMirror="downstream mirror for higher public traffic, not the canonical release authority" />
+  <artifacts />
+  <verification primaryArtifactId="android-apk-release">
+    <sha256Command>sha256sum downloaded-file.apk</sha256Command>
+    <expectedSha256 />
+  </verification>
+  <features>
+    <feature title="Manifest-driven landing page" status="available">The homepage reads release metadata at runtime and fills version, dates, download URLs, hashes, status, features, and changelog.</feature>
+    <feature title="Direct signed APK distribution" status="available">The tester APK is distributed from the site while app-store distribution is not active.</feature>
+    <feature title="Checksum verification" status="available">The published SHA-256 is displayed beside the APK download so testers can confirm file integrity before installing.</feature>
+    <feature title="SPV wallet recovery" status="being-verified">Import recovery, genesis birthday handling, and full balance discovery are under active repair and verification.</feature>
+    <feature title="Explorer preliminary balance" status="being-verified">The app can display a provisional explorer balance for the visible receive address while local sync catches up. Full HD-wallet discovery remains a separate verification concern.</feature>
+    <feature title="Local canonical deployment" status="available">The local nginx-ui deployment is the canonical site. Shared hosting can mirror it later for traffic, but the local release root remains authoritative.</feature>
+  </features>
+  <knownLimitations>
+    <limitation>Working status: not-yet-first-confirmed-working-wallet</limitation>
+    <limitation>Do not use tester APKs for meaningful funds unless a release is explicitly marked production-ready.</limitation>
+    <limitation>Explorer preliminary balance is single-address and provisional until local wallet recovery is complete.</limitation>
+    <limitation>Manual builds and CI builds must emit this manifest shape; index.html must not be hand-edited for release data.</limitation>
+  </knownLimitations>
+  <changelog>
+    <entry version="1.100.1331" date="2026-06-21T18:11:51-04:00">
+      <note>Release manifest generated without a RELEASE_NOTES file.</note>
+    </entry>
+  </changelog>
+</releaseManifest>
