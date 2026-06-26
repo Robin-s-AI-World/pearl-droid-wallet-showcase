@@ -1,14 +1,13 @@
+functionsDirectory = "/home/robin/Desktop/github/pearl-wallet-showcase/netlify/functions"
+functionsDirectoryOrigin = "default"
 headersOrigin = "config"
 plugins = []
 redirects = []
 
-[functions]
-
-[functions."*"]
-
 [build]
 publish = "/home/robin/Desktop/github/pearl-wallet-showcase"
 publishOrigin = "config"
+functions = "/home/robin/Desktop/github/pearl-wallet-showcase/netlify/functions"
 
 [build.environment]
 
@@ -23,6 +22,10 @@ publishOrigin = "config"
 [build.processing.js]
 
 [build.services]
+
+[functions]
+
+[functions."*"]
 
 [[headers]]
 for = "/*"
