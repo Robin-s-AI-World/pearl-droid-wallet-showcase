@@ -3,7 +3,7 @@
   "project": "PRL Wallet",
   "version": "1.116.08418",
   "build": "08418",
-  "built_at": "2026-06-26T16:25:00-04:00",
+  "built_at": "2026-06-26T20:43:08Z",
   "content_updated_at": "2026-06-26",
   "release_status": "tester",
   "working_status": "not-yet-first-confirmed-working-wallet",
@@ -19,7 +19,7 @@
   },
   "source": {
     "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
-    "commit": "69dd34783baec563b2abb5985edc819602b6cbb0",
+    "commit": "bc7724288c41e7c012d064588cdaabef2531d667",
     "branch": "master",
     "ci_system": "manual",
     "ci_run_url": null
@@ -96,13 +96,8 @@
     "entries": [
       {
         "version": "1.116.08418",
-        "date": "2026-06-26T16:25:00-04:00",
-        "notes": [
-          "P0: balance walks ALL wallet addresses, queries working explorer endpoint, sums to full provisional (never 0).",
-          "Selector: top-right logo, address labels, rename.",
-          "Sync: wallet-% only.",
-          "MiningStats: K/M/G/T formatting.",
-          "All prior recovery fixes."
+        "date": "2026-06-26T20:43:08Z",
+        "notes": [\n          "## v1.116.08418 — Balance fix + Selector redesign",\n          "### P0: Balance never shows 0 during sync",\n          "- Walks ALL wallet addresses (engine AddressesByAccount)",\n          "- Queries working explorer endpoint (api/wallet/txs) concurrently for each",\n          "- Sums → full provisional balance displayed immediately",\n          "- Broken getWalletInfo endpoint (returned HTML) removed",\n          "### Wallet Selector",\n          "- Moved to top-right profile logo (browser-extension pattern)",\n          "- Default label = prl1…vv7 (truncated address)",\n          "- Rename capability per wallet",\n          "### Other fixes",\n          "- Sync: ONE wallet % indicator",\n          "- MiningStats: K/M/G/T + cover-screen responsive",\n          "- Battery: exemption asked once (persisted)",\n          "- Cold launch always locked (AD-S20)",\n          "- Send: no per-send auth (auto-lock is boundary)",\n          "- Accounts loaded on cold launch",\n          "- Build: epoch-min % 10000 (5-digit weekly)",
         ]
       }
     ]
