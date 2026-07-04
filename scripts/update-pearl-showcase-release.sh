@@ -47,15 +47,18 @@ RELEASE_BODY="$(gh release view "v${VERSION}" --repo "$REPO" --json body --jq '.
 # Build changelog notes array from release body (each line becomes a note)
 CHANGELOG_NOTES=""
 while IFS= read -r line; do
-  [[ -n "$line" ]] && CHANGELOG_NOTES+="\n          \"$line\","
+  [[ -n "$line" ]] && CHANGELOG_NOTES+="$(printf '\n          "%s"' "$line")"
 done <<< "$RELEASE_BODY"
+# Strip trailing comma from the last note (if any)
+CHANGELOG_NOTES="${CHANGELOG_NOTES%,}"
 
 # Build built_at timestamp (use release publish time, or now)
 BUILT_AT="$(gh release view "v${VERSION}" --repo "$REPO" --json publishedAt --jq '.publishedAt' 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)"
 CONTENT_DATE="$(date -u +%Y-%m-%d)"
 
-# Source commit: use the latest commit of the main android repo at build time
-SOURCE_COMMIT="$(gh api repos/Robin-s-AI-World/pearl-wallet-android/commits/master --jq '.sha' 2>/dev/null || echo 'unknown')"
+# Source commit: use the latest commit of the android repo (try master, fall back to unknown)
+SOURCE_COMMIT="$(gh api repos/rebots-online/pearl-wallet-android/commits/master --jq '.sha' 2>/dev/null || echo 'unknown')"
+SOURCE_BRANCH="master"
 
 # Write manifest
 cat > "$MANIFEST" <<EOF
@@ -79,9 +82,9 @@ cat > "$MANIFEST" <<EOF
     "above_fold_note": "Release data is populated from JSON now and XML as fallback. CI/manual builds emit both."
   },
   "source": {
-    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
+    "repository": "https://github.com/rebots-online/pearl-wallet-android",
     "commit": "${SOURCE_COMMIT}",
-    "branch": "master",
+    "branch": "${SOURCE_BRANCH}",
     "ci_system": "manual",
     "ci_run_url": null
   },
@@ -175,8 +178,4 @@ echo "Manifest updated: ${APK_FILENAME} (${APK_SIZE} bytes, SHA-256 ${APK_HASH})
 echo "Deploying to Netlify..."
 netlify deploy --dir=. --site=02dc62c8-0007-4d66-9d33-99c9b4bd5be9 --prod
 
-# Deploy to Vercel
-echo "Deploying to Vercel..."
-vercel deploy --prod --yes
-
-echo "Done. v${VERSION} is live on Netlify and Vercel."
+echo "Done. v${VERSION} is live on Netlify."

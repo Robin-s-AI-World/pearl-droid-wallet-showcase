@@ -1,10 +1,10 @@
 {
   "schema": "mba.robin.release-manifest.v1",
   "project": "PRL Wallet",
-  "version": "1.116.08418",
-  "build": "08418",
-  "built_at": "2026-06-26T20:43:08Z",
-  "content_updated_at": "2026-06-26",
+  "version": "1.124.08366",
+  "build": "08366",
+  "built_at": "2026-07-04T11:03:05Z",
+  "content_updated_at": "2026-07-04",
   "release_status": "tester",
   "working_status": "not-yet-first-confirmed-working-wallet",
   "public_channel_label": "Tester APK",
@@ -18,9 +18,9 @@
     "above_fold_note": "Release data is populated from JSON now and XML as fallback. CI/manual builds emit both."
   },
   "source": {
-    "repository": "https://github.com/Robin-s-AI-World/pearl-wallet-android",
-    "commit": "bc7724288c41e7c012d064588cdaabef2531d667",
-    "branch": "master",
+    "repository": "https://github.com/rebots-online/pearl-wallet-android",
+    "commit": "bfa8bcf935c9b4cae4c4b65f297ab19ba33c7930",
+    "branch": "fix/balance-sync-truth",
     "ci_system": "manual",
     "ci_run_url": null
   },
@@ -37,22 +37,22 @@
       "id": "android-apk-release",
       "platform": "android",
       "kind": "apk",
-      "filename": "pearl-wallet-android-v1.116.08418-release-signed.apk",
-      "size_bytes": 108362537,
-      "sha256": "039df701192651769bb1307a21c6031d453da6c6b35fed73fbb02c3a5f41d8c9",
+      "filename": "pearl-wallet-android-v1.124.08366-release-signed.apk",
+      "size_bytes": 108428089,
+      "sha256": "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.116.08418/pearl-wallet-android-v1.116.08418-release-signed.apk"
+          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.124.08366/pearl-wallet-android-v1.124.08366-release-signed.apk"
         }
       ]
     }
   ],
   "verification": {
     "primary_artifact_id": "android-apk-release",
-    "sha256_command": "sha256sum pearl-wallet-android-v1.116.08418-release-signed.apk",
-    "expected_sha256": "039df701192651769bb1307a21c6031d453da6c6b35fed73fbb02c3a5f41d8c9"
+    "sha256_command": "sha256sum pearl-wallet-android-v1.124.08366-release-signed.apk",
+    "expected_sha256": "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf"
   },
   "features": [
     {
@@ -95,9 +95,20 @@
   "changelog": {
     "entries": [
       {
-        "version": "1.116.08418",
-        "date": "2026-06-26T20:43:08Z",
-        "notes": [\n          "## v1.116.08418 — Balance fix + Selector redesign",\n          "### P0: Balance never shows 0 during sync",\n          "- Walks ALL wallet addresses (engine AddressesByAccount)",\n          "- Queries working explorer endpoint (api/wallet/txs) concurrently for each",\n          "- Sums → full provisional balance displayed immediately",\n          "- Broken getWalletInfo endpoint (returned HTML) removed",\n          "### Wallet Selector",\n          "- Moved to top-right profile logo (browser-extension pattern)",\n          "- Default label = prl1…vv7 (truncated address)",\n          "- Rename capability per wallet",\n          "### Other fixes",\n          "- Sync: ONE wallet % indicator",\n          "- MiningStats: K/M/G/T + cover-screen responsive",\n          "- Battery: exemption asked once (persisted)",\n          "- Cold launch always locked (AD-S20)",\n          "- Send: no per-send auth (auto-lock is boundary)",\n          "- Accounts loaded on cold launch",\n          "- Build: epoch-min % 10000 (5-digit weekly)",
+        "version": "1.124.08366",
+        "date": "2026-07-04T11:03:05Z",
+        "notes": [
+          "## v1.124.08366 — Balance display fix + settled security",
+          "### P0: Balance display fixed",
+          "- One balance surface — the wallet never shows 0 or conflicting values while syncing",
+          "- Balance verified against the explorer across all wallet addresses",
+          "- Green SYNCED indicator with labeled price change; locale-pinned number formatting",
+          "### Unlock & security hardening",
+          "- Cold launch always prompts for unlock (verified on-device)",
+          "- One-time wallet-password remedy flow when device credentials change",
+          "- Sends are gated while the security boundary is unavailable — funds can't move in a degraded state",
+          "### Signing",
+          "- Signed with the ecosystem production key; upgrades install over the top on every channel."
         ]
       }
     ]

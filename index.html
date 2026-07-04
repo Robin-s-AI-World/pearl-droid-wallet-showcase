@@ -1096,6 +1096,9 @@
       <div class="terms-links">
         Full documents: <a href="terms.html" target="_blank">Terms of Use</a> &middot; <a href="privacy.html" target="_blank">Privacy Policy</a>
       </div>
+      <div class="terms-links">
+        View release details and assets on <a href="https://github.com/rebots-online/pearl-wallet-releases/releases/tag/v1.124.08366" target="_blank" rel="noopener" id="terms-release-link">GitHub Releases</a>.
+      </div>
       <div class="terms-checkbox-row">
         <input type="checkbox" id="terms-accept-checkbox">
         <label for="terms-accept-checkbox">I have read and accept the Terms of Use and Privacy Policy. I understand that lost mnemonics or passwords cannot be recovered.</label>
@@ -1671,17 +1674,17 @@
     var SEED_MANIFEST = {
       schema: "mba.robin.release-manifest.v1",
       project: "PRL Wallet",
-      version: "1.116.08418",
-      build: "08418",
-      built_at: "2026-06-21T18:16:03-04:00",
+      version: "1.124.08366",
+      build: "08366",
+      built_at: "2026-07-04T11:03:05Z",
       artifacts: [{
         id: "android-apk-release",
         platform: "android",
         kind: "apk",
-        filename: "pearl-wallet-android-v1.116.08418-release-signed.apk",
-        size_bytes: 108362537,
-        sha256: "039df701192651769bb1307a21c6031d453da6c6b35fed73fbb02c3a5f41d8c9",
-        locations: [{ type: "web", public: true, url: "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.116.08418/pearl-wallet-android-v1.116.08418-release-signed.apk" }],
+        filename: "pearl-wallet-android-v1.124.08366-release-signed.apk",
+        size_bytes: 108428089,
+        sha256: "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf",
+        locations: [{ type: "web", public: true, url: "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.124.08366/pearl-wallet-android-v1.124.08366-release-signed.apk" }],
         license: {
           primary: "proprietary",
           primary_label: "All Rights Reserved",
@@ -1696,18 +1699,25 @@
       }],
       verification: {
         primary_artifact_id: "android-apk-release",
-        sha256_command: "sha256sum pearl-wallet-android-v1.116.08418-release-signed.apk",
-        expected_sha256: "039df701192651769bb1307a21c6031d453da6c6b35fed73fbb02c3a5f41d8c9"
+        sha256_command: "sha256sum pearl-wallet-android-v1.124.08366-release-signed.apk",
+        expected_sha256: "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf"
       },
       changelog: {
         entries: [{
-          version: "1.116.08418",
-          date: "2026-06-21T18:16:03-04:00",
+          version: "1.124.08366",
+          date: "2026-07-04T11:03:05Z",
           notes: [
-            "Your seed phrase never gets stored as a picture — built-in OCR lets you import a recovery phrase by pointing your camera, then wipes the image instantly. No screenshots, no gallery leaks.",
-            "Address book: save and label your frequent contacts so you never paste the wrong address again.",
-            "Live OTC price data straight from lordofpearls.xyz — see the real-time PRL/USDC rate without leaving the wallet.",
-            "Coming soon: Android home screen widget to track price swings at a glance, plus target-price push notifications so you never miss your exit."
+            "## v1.124.08366 — Balance display fix + settled security",
+            "### P0: Balance display fixed",
+            "- One balance surface — the wallet never shows 0 or conflicting values while syncing",
+            "- Balance verified against the explorer across all wallet addresses",
+            "- Green SYNCED indicator with labeled price change; locale-pinned number formatting",
+            "### Unlock & security hardening",
+            "- Cold launch always prompts for unlock (verified on-device)",
+            "- One-time wallet-password remedy flow when device credentials change",
+            "- Sends are gated while the security boundary is unavailable — funds can't move in a degraded state",
+            "### Signing",
+            "- Signed with the ecosystem production key; upgrades install over the top on every channel."
           ]
         }]
       }
@@ -1746,6 +1756,7 @@
         var apk = releaseManifest.artifacts.filter(function(a) { return a.kind === 'apk'; })[0] || releaseManifest.artifacts[0];
         var url = apk.locations[0].url;
         var ver = releaseManifest.version;
+        var releasePageUrl = 'https://github.com/rebots-online/pearl-wallet-releases/releases/tag/v' + ver;
         var date = formatDate(releaseManifest.built_at);
         var size = formatBytes(apk.size_bytes);
         var hash = apk.sha256;
@@ -1763,7 +1774,7 @@
           '</div>' +
           '<div class="cta-row">' +
             '<a href="' + url + '" class="cta-btn primary" onclick="return tryDownload(event, \'' + url + '\')">Download APK</a>' +
-            '<a href="' + url + '" class="cta-btn secondary" onclick="return tryDownload(event, \'' + url + '\')">Open in new tab</a>' +
+            '<a href="' + releasePageUrl + '" class="cta-btn secondary" target="_blank" rel="noopener">View on GitHub Releases</a>' +
           '</div>' +
           '<h3>Verify the download</h3>' +
           '<p>Before installing, confirm the file integrity:</p>' +
@@ -1853,8 +1864,9 @@
             '<li><strong>Cold-Storage Sweeping</strong> — One-tap sweep of mining rewards from hot addresses to cold storage, with configurable thresholds and automatic batching.</li>' +
             '<li><strong>Hardware Wallet Pairing</strong> — Bluetooth/USB pairing with Ledger and Trezor for air-gapped signing of large mining consolidations.</li>' +
             '<li><strong>Multi-Pool Aggregation Dashboard</strong> — Unified view across multiple mining pools, solo mining nodes, and staking contracts — one screen, all your yield.</li>' +
-            '<li><strong>Android Home Screen Widget</strong> — Glance at PRL price swings without opening the app. A live widget on your home screen shows the current rate and trend arrow.</li>' +
-            '<li><strong>Target-Price Push Notifications</strong> — Set your price, get pinged when PRL hits it. Never miss your exit again.</li>' +
+            '<li><strong>Android Home Screen Widget (2x1)</strong> — Live now. Glance at PRL price swings without opening the app. The 2x1 widget shows the current rate and trend arrow right on your home screen.</li>' +
+            '<li><strong>Android Home Screen Widget (4x2)</strong> — In progress. A larger widget with expanded price detail and chart preview.</li>' +
+            '<li><strong>Target-Price Push Notifications</strong> — Live now. Set your price, get pinged when PRL hits it. Never miss your exit again.</li>' +
           '</ul>' +
           '<h2>Cashing Out — The OTC Route</h2>' +
           '<p>The wallet shows live OTC rates from <a href="https://otc.lordofpearls.xyz" target="_blank">lordofpearls.xyz</a>. When you\'re ready to cash in some PRL, here\'s how it works:</p>' +
@@ -2010,7 +2022,7 @@
           '<h3>Can I monitor my mining rewards on the go?</h3>' +
           '<p>Yes. PRL Wallet gives you full visibility into your balances, transaction history, and UTXO status from anywhere. Future releases will add mining pool API integration, push notifications for payouts, and a unified multi-pool dashboard.</p>' +
           '<h3>What miner-focused features are on the roadmap?</h3>' +
-          '<p>The miner-centric roadmap includes: mining pool API integration for real-time hashrate and worker status; push notifications for pool payouts and block reward confirmations; one-tap cold-storage sweeping of mining rewards; hardware wallet pairing (Ledger/Trezor) for air-gapped consolidation; a multi-pool aggregation dashboard that unifies all your yield sources in one screen; an Android home screen widget for at-a-glance price tracking; and target-price push notifications so you never miss your exit.</p>' +
+          '<p>The miner-centric roadmap includes: mining pool API integration for real-time hashrate and worker status; push notifications for pool payouts and block reward confirmations; one-tap cold-storage sweeping of mining rewards; hardware wallet pairing (Ledger/Trezor) for air-gapped consolidation; a multi-pool aggregation dashboard that unifies all your yield sources in one screen; a 2x1 Android home screen widget for at-a-glance price tracking (live now); a larger 4x2 widget with expanded detail (in progress); and target-price push notifications so you never miss your exit (live now).</p>' +
           '<div class="cta-row"><a href="#" class="cta-btn primary" onclick="openSection(\'download\'); return false;">Download PRL Wallet</a></div>';
       }
     };
@@ -2307,12 +2319,18 @@
     var termsDownloadBtn = document.getElementById('terms-download');
     var termsCancelBtn = document.getElementById('terms-cancel');
 
+    var termsReleaseLink = document.getElementById('terms-release-link');
+
     function tryDownload(e, url) {
       e.preventDefault();
       e.stopPropagation();
       pendingDownloadUrl = url;
       termsCheckbox.checked = false;
       termsDownloadBtn.disabled = true;
+      if (termsReleaseLink) {
+        var ver = (releaseManifest && releaseManifest.version) ? releaseManifest.version : '1.116.08418';
+        termsReleaseLink.href = 'https://github.com/rebots-online/pearl-wallet-releases/releases/tag/v' + ver;
+      }
       termsBackdrop.classList.add('open');
       return false;
     }

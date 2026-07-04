@@ -1,2 +1,7 @@
 .vercel
 .netlify
+downloads/
+*.apk
+*.aab
+*.m4a
+*.mp4
