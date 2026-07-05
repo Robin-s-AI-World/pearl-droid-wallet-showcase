@@ -1729,7 +1729,13 @@
     function fetchManifest() {
       fetch('releases/current-public-release-manifest.json')
         .then(function(r) { return r.json(); })
-        .then(function(m) { releaseManifest = m; })
+        .then(function(m) {
+          releaseManifest = m;
+          // If a section is already open, re-render it so fetched data replaces seed data
+          if (overlayOpen && activeSection && sections[activeSection]) {
+            overlayBody.innerHTML = sections[activeSection].html();
+          }
+        })
         .catch(function() { /* fall back to seed */ });
     }
     fetchManifest();
@@ -1760,9 +1766,12 @@
         var date = formatDate(releaseManifest.built_at);
         var size = formatBytes(apk.size_bytes);
         var hash = apk.sha256;
-        var notes = (releaseManifest.changelog.entries[0] || {}).notes || [];
+        var entries = releaseManifest.changelog.entries || [];
 
-        var notesHtml = notes.map(function(n) { return '<li>' + n + '</li>'; }).join('');
+        var notesHtml = entries.map(function(e) {
+          var items = (e.notes || []).map(function(n) { return '<li>' + n + '</li>'; }).join('');
+          return '<h3>v' + e.version + ' — ' + formatDate(e.date) + '</h3><ul>' + items + '</ul>';
+        }).join('');
 
         return '<h2>Get PRL Wallet</h2>' +
           '<p>The first native Android wallet for the Pearl blockchain. Monitor your rigs, move your PRL, check live OTC rates — all from your phone.</p>' +
@@ -1783,7 +1792,7 @@
             '<strong>Verify:</strong><br>' + releaseManifest.verification.sha256_command + '<br>' +
             '# Compare the output to the hash above' +
           '</div>' +
-          (notesHtml ? '<h3>Release notes</h3><ul>' + notesHtml + '</ul>' : '') +
+          notesHtml +
           (apk.license ? '<h3>Licensing</h3>' +
             '<p><strong>' + (apk.license.primary_label || apk.license.primary) + '</strong></p>' +
             (apk.license.components && apk.license.components.length ? '<p>Portions licensed from third parties:</p><ul>' +
