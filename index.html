@@ -583,6 +583,35 @@
       0%, 100% { box-shadow: 0 0 20px rgba(0,212,212,0.40), 0 0 40px rgba(0,212,212,0.15); }
       50% { box-shadow: 0 0 28px rgba(0,212,212,0.55), 0 0 55px rgba(0,212,212,0.22); }
     }
+    /* ── MANDATORY-UPGRADE starburst sticker (appears BEFORE the main animation) ── */
+    #upgrade-sticker {
+      position: fixed; top: 84px; right: 28px; z-index: 9500;
+      width: 168px; height: 168px; border: none; cursor: pointer;
+      background: transparent; padding: 0;
+      animation: sticker-pop 0.45s cubic-bezier(.2,1.6,.4,1) 0.15s both;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+    }
+    #upgrade-sticker .burst {
+      position: absolute; inset: 0;
+      background: conic-gradient(#ffd54a, #ffb300, #ffd54a, #ffb300, #ffd54a);
+      clip-path: polygon(50% 0%, 59% 12%, 72% 5%, 75% 19%, 90% 18%, 86% 32%, 100% 38%, 89% 48%, 98% 60%, 84% 63%, 87% 78%, 72% 74%, 68% 89%, 56% 80%, 46% 92%, 40% 78%, 25% 84%, 27% 69%, 12% 68%, 20% 55%, 6% 47%, 19% 39%, 12% 25%, 27% 25%, 27% 10%, 41% 15%);
+      animation: sticker-spin 14s linear infinite;
+    }
+    #upgrade-sticker .label {
+      position: absolute; inset: 26px; border-radius: 50%;
+      background: #b3261e; color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: 2px; padding: 10px;
+      transform: rotate(-12deg);
+      animation: sticker-throb 1.6s ease-in-out infinite;
+    }
+    #upgrade-sticker .label .l1 { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; }
+    #upgrade-sticker .label .l2 { font-size: 15px; font-weight: 900; line-height: 1.1; }
+    #upgrade-sticker .label .l3 { font-size: 9px; opacity: 0.92; }
+    @keyframes sticker-pop { from { transform: scale(0) rotate(-40deg); } to { transform: scale(1) rotate(0); } }
+    @keyframes sticker-spin { to { transform: rotate(360deg); } }
+    @keyframes sticker-throb { 0%,100% { transform: rotate(-12deg) scale(1); } 50% { transform: rotate(-12deg) scale(1.07); } }
+    @media (max-width: 640px) { #upgrade-sticker { width: 126px; height: 126px; top: 70px; right: 12px; } #upgrade-sticker .label { inset: 20px; } #upgrade-sticker .label .l2 { font-size: 12px; } }
     @media (max-width: 768px) {
       .page-float-btns { height: auto; top: auto; bottom: 80px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
       .page-float-btn { position: static; transform: none; width: 80vw; max-width: 320px; }
@@ -934,6 +963,15 @@
   </style>
 </head>
 <body>
+  <!-- Mandatory-upgrade starburst: paints before the main animation; click = skip intro + open download popup -->
+  <button id="upgrade-sticker" aria-label="Mandatory upgrade — download the latest release now">
+    <span class="burst"></span>
+    <span class="label">
+      <span class="l1">MANDATORY</span>
+      <span class="l2">UPGRADE</span>
+      <span class="l3">hardfork block 99,000<br>tap to update</span>
+    </span>
+  </button>
   <div class="bg"></div>
   <div class="stars"></div>
   <div id="zoom-veil"></div>
@@ -2077,6 +2115,14 @@
     }
 
     window.openSection = openSection;
+    // Mandatory-upgrade sticker: complete the intro animation and jump straight
+    // to the download popup.
+    var upgradeSticker = document.getElementById('upgrade-sticker');
+    if (upgradeSticker) upgradeSticker.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { fastForward(); } catch(_) {}
+      openSection('download');
+    });
 
     // ── Lightbox ──
     var lightbox = document.getElementById('lightbox');
