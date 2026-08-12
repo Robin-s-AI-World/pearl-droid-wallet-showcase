@@ -1,10 +1,10 @@
 {
   "schema": "mba.robin.release-manifest.v1",
   "project": "PRL Wallet",
-  "version": "1.124.08366",
-  "build": "08366",
-  "built_at": "2026-07-04T11:03:05Z",
-  "content_updated_at": "2026-07-04",
+  "version": "1.131.04961",
+  "build": "04961",
+  "built_at": "2026-08-11T21:21:44-04:00",
+  "content_updated_at": "2026-08-11",
   "release_status": "tester",
   "working_status": "not-yet-first-confirmed-working-wallet",
   "public_channel_label": "Tester APK",
@@ -19,81 +19,57 @@
   },
   "source": {
     "repository": "https://github.com/rebots-online/pearl-wallet-android",
-    "commit": "bfa8bcf935c9b4cae4c4b65f297ab19ba33c7930",
-    "branch": "fix/balance-sync-truth",
+    "commit": "a915f42c9aa3e55f60d67d66771a73df49e5c96b",
+    "branch": "feat/engine-v2.0.5-salted-seed-hardfork",
     "ci_system": "manual",
     "ci_run_url": null
   },
   "distribution": {
-    "channel": "direct-apk",
+    "channel": "github-releases",
     "google_play_status": "not-active",
     "canonical_origin": "local-nginx-ui",
     "canonical_live_root": "/var/www/prldroid-wallet/current",
     "canonical_domain": "https://prldroid-wallet.robin.mba/",
-    "shared_hosting_mirror": "downstream mirror for higher public traffic, not the canonical release authority"
+    "shared_hosting_mirror": "downstream mirror for higher public traffic, not the canonical release authority",
+    "release_host": "github.com/Robin-s-AI-World/pearl-droid-wallet-showcase"
   },
   "artifacts": [
     {
       "id": "android-apk-release",
       "platform": "android",
       "kind": "apk",
-      "filename": "pearl-wallet-android-v1.124.08366-release-signed.apk",
-      "size_bytes": 108428089,
-      "sha256": "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf",
+      "filename": "pearl-wallet-android-v1.131.04961-release-signed.apk",
+      "size_bytes": 108139793,
+      "sha256": "f40b17b5a9e9998c2917e454ce7678ff1d04e0f42acb3b61389f92b50bf697e0",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.124.08366/pearl-wallet-android-v1.124.08366-release-signed.apk"
+          "url": "https://github.com/Robin-s-AI-World/pearl-droid-wallet-showcase/releases/download/pearl-wallet-android-v1.131.04961/pearl-wallet-android-v1.131.04961-release-signed.apk"
         }
       ]
     }
   ],
   "verification": {
     "primary_artifact_id": "android-apk-release",
-    "sha256_command": "sha256sum pearl-wallet-android-v1.124.08366-release-signed.apk",
-    "expected_sha256": "8b31edd9a95d10168415574f76a4f020eda28f8954997d2efe218000418eb5bf"
+    "sha256_command": "sha256sum pearl-wallet-android-v1.131.04961-release-signed.apk",
+    "expected_sha256": "f40b17b5a9e9998c2917e454ce7678ff1d04e0f42acb3b61389f92b50bf697e0"
   },
-  "features": [
-    {
-      "title": "Manifest-driven landing page",
-      "status": "available",
-      "summary": "The homepage reads release metadata at runtime and fills version, dates, download URLs, hashes, status, features, and changelog."
-    },
-    {
-      "title": "Direct signed APK distribution",
-      "status": "available",
-      "summary": "The tester APK is distributed from the site while app-store distribution is not active."
-    },
-    {
-      "title": "Checksum verification",
-      "status": "available",
-      "summary": "The published SHA-256 is displayed beside the APK download so testers can confirm file integrity before installing."
-    },
-    {
-      "title": "SPV wallet recovery",
-      "status": "being-verified",
-      "summary": "Import recovery, genesis birthday handling, and full balance discovery are under active repair and verification."
-    },
-    {
-      "title": "Explorer preliminary balance",
-      "status": "being-verified",
-      "summary": "The app can display a provisional explorer balance for the visible receive address while local sync catches up. Full HD-wallet discovery remains a separate verification concern."
-    },
-    {
-      "title": "Local canonical deployment",
-      "status": "available",
-      "summary": "The local nginx-ui deployment is the canonical site. Shared hosting can mirror it later for traffic, but the local release root remains authoritative."
-    }
-  ],
-  "known_limitations": [
-    "Working status: not-yet-first-confirmed-working-wallet",
-    "Do not use tester APKs for meaningful funds unless a release is explicitly marked production-ready.",
-    "Explorer preliminary balance is single-address and provisional until local wallet recovery is complete.",
-    "Manual builds and CI builds must emit this manifest shape; index.html must not be hand-edited for release data."
-  ],
   "changelog": {
     "entries": [
+      {
+        "version": "1.131.04961",
+        "date": "2026-08-11T21:21:44-04:00",
+        "notes": [
+          "**Engine upgraded to upstream `pearl-wallet-v2.0.5`** (commit `950adc85`, published",
+          "Local engine patches preserved: reconnect-safe `SynchronizeRPC` + `DisconnectRPC` (regression",
+          "Carried from this lineage since the v1.124 build on devices: AD-W1 balance-widget enlargement",
+          "Build tooling (GLM-4.7 crush-coded): NDK auto-discovery in `build-zkpow-android.sh`,",
+          "Vendored pristine tree: `vendored-in-code/pearlresearchai/wallet-go-v2.0.5/` +",
+          "Device verification of a live sync across the 99,000 boundary is pending; install",
+          "Release builds are signed with the same production key; in-place upgrades work. If switching"
+        ]
+      },
       {
         "version": "1.124.08366",
         "date": "2026-07-04T11:03:05Z",
