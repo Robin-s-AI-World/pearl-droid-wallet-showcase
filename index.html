@@ -951,6 +951,13 @@
       opacity: 0; transition: opacity 0.5s ease;
       pointer-events: none;
     }
+    /* Bottom-right version badge — populated from the runtime release manifest, never hardcoded */
+    #version-badge {
+      position: fixed; right: 10px; bottom: 8px; z-index: 9400;
+      font-size: 11px; line-height: 1.2; text-align: right;
+      color: rgba(255,255,255,0.55); font-family: inherit;
+      pointer-events: none; user-select: none;
+    }
     .site-footer.visible { opacity: 1; pointer-events: auto; }
     .site-footer a {
       color: var(--muted); text-decoration: none; transition: color 0.15s;
@@ -1149,12 +1156,12 @@
   </div>
 
   <!-- Footer -->
+  <div id="version-badge" aria-label="Current release version"></div>
   <footer class="site-footer" id="site-footer">
     <div>&copy; 2026 Robin L. M. Cheung, MBA. All rights reserved.</div>
     <div class="footer-links">
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
-      <a href="https://github.com/Robin-s-AI-World/prldroid-wallet" target="_blank">GitHub</a>
     </div>
   </footer>
 
@@ -1771,15 +1778,25 @@
       'https://raw.githubusercontent.com/Robin-s-AI-World/pearl-droid-wallet-showcase/master/releases/current-public-release-manifest.json',
       'releases/current-public-release-manifest.json'
     ];
+    function renderVersionBadge() {
+      var el = document.getElementById('version-badge');
+      if (!el || !releaseManifest) return;
+      var v = releaseManifest.version || '';
+      var b = releaseManifest.build || (v.split('.')[2] || '');
+      var d = '';
+      try { d = new Date(releaseManifest.built_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); } catch(e) {}
+      el.textContent = 'v' + v + ' · build ' + b + (d ? ' · ' + d : '');
+    }
     function fetchManifest(i) {
       i = i || 0;
       if (i >= MANIFEST_SOURCES.length) return; // keep seed
       fetch(MANIFEST_SOURCES[i], { cache: 'no-store' })
         .then(function(r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
-        .then(function(m) { releaseManifest = m; })
+        .then(function(m) { releaseManifest = m; renderVersionBadge(); })
         .catch(function() { fetchManifest(i + 1); });
     }
     fetchManifest();
+    renderVersionBadge();
 
     function formatBytes(b) {
       if (b > 1048576) return (b / 1048576).toFixed(1) + ' MB';
