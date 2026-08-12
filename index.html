@@ -1725,12 +1725,21 @@
 
     var releaseManifest = SEED_MANIFEST;
 
-    // Fetch manifest at runtime (CI/CD updates the JSON file)
-    function fetchManifest() {
-      fetch('releases/current-public-release-manifest.json')
-        .then(function(r) { return r.json(); })
+    // Fetch manifest at runtime. PRIMARY source is the showcase repo's raw
+    // git URL, which updates the moment a release pushes the manifest — no
+    // site redeploy needed (the whole point of the manifest). The deployed
+    // copy is the fallback; the inline SEED is the last resort.
+    var MANIFEST_SOURCES = [
+      'https://raw.githubusercontent.com/Robin-s-AI-World/pearl-droid-wallet-showcase/master/releases/current-public-release-manifest.json',
+      'releases/current-public-release-manifest.json'
+    ];
+    function fetchManifest(i) {
+      i = i || 0;
+      if (i >= MANIFEST_SOURCES.length) return; // keep seed
+      fetch(MANIFEST_SOURCES[i], { cache: 'no-store' })
+        .then(function(r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
         .then(function(m) { releaseManifest = m; })
-        .catch(function() { /* fall back to seed */ });
+        .catch(function() { fetchManifest(i + 1); });
     }
     fetchManifest();
 
