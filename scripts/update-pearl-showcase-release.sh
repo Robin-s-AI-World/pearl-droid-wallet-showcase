@@ -44,13 +44,10 @@ APK_SIZE="$(stat -c %s "${WORK_DIR}/${APK_FILENAME}")"
 # Get release notes
 RELEASE_BODY="$(gh release view "v${VERSION}" --repo "$REPO" --json body --jq '.body' || true)"
 
-# Build changelog notes array from release body (each line becomes a note)
-CHANGELOG_NOTES=""
-while IFS= read -r line; do
-  [[ -n "$line" ]] && CHANGELOG_NOTES+="$(printf '\n          "%s"' "$line")"
-done <<< "$RELEASE_BODY"
-# Strip trailing comma from the last note (if any)
-CHANGELOG_NOTES="${CHANGELOG_NOTES%,}"
+# Build changelog notes array from release body (each non-empty line becomes a
+# note). jq guarantees valid JSON: proper escaping AND commas — the previous
+# hand-rolled concatenation produced invalid JSON (no commas, raw quotes).
+CHANGELOG_NOTES="$(printf '%s' "$RELEASE_BODY" | jq -R -s 'split("\n") | map(select(length > 0))')"
 
 # Build built_at timestamp (use release publish time, or now)
 BUILT_AT="$(gh release view "v${VERSION}" --repo "$REPO" --json publishedAt --jq '.publishedAt' 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -161,8 +158,7 @@ cat > "$MANIFEST" <<EOF
       {
         "version": "${VERSION}",
         "date": "${BUILT_AT}",
-        "notes": [${CHANGELOG_NOTES}
-        ]
+        "notes": ${CHANGELOG_NOTES}
       }
     ]
   }
