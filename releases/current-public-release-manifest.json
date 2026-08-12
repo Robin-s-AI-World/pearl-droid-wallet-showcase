@@ -1,9 +1,9 @@
 {
   "schema": "mba.robin.release-manifest.v1",
   "project": "PRL Wallet",
-  "version": "1.132.04992",
-  "build": "04992",
-  "built_at": "2026-08-12T01:55:20Z",
+  "version": "1.133.05015",
+  "build": "05015",
+  "built_at": "2026-08-12T02:17:21Z",
   "content_updated_at": "2026-08-12",
   "release_status": "tester",
   "working_status": "not-yet-first-confirmed-working-wallet",
@@ -37,22 +37,22 @@
       "id": "android-apk-release",
       "platform": "android",
       "kind": "apk",
-      "filename": "pearl-wallet-android-v1.132.04992-release-signed.apk",
-      "size_bytes": 108139793,
-      "sha256": "c8c815336b1361da7668515b7ce6e4934e6143f0bb187a4354b80b9f6a308f00",
+      "filename": "pearl-wallet-android-v1.133.05015-release-signed.apk",
+      "size_bytes": 108139789,
+      "sha256": "aead15c0649b34908853b5a150830fef1e3ef25faeec05c9089246e7bd474ddf",
       "locations": [
         {
           "type": "web",
           "public": true,
-          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.132.04992/pearl-wallet-android-v1.132.04992-release-signed.apk"
+          "url": "https://github.com/rebots-online/pearl-wallet-releases/releases/download/v1.133.05015/pearl-wallet-android-v1.133.05015-release-signed.apk"
         }
       ]
     }
   ],
   "verification": {
     "primary_artifact_id": "android-apk-release",
-    "sha256_command": "sha256sum pearl-wallet-android-v1.132.04992-release-signed.apk",
-    "expected_sha256": "c8c815336b1361da7668515b7ce6e4934e6143f0bb187a4354b80b9f6a308f00"
+    "sha256_command": "sha256sum pearl-wallet-android-v1.133.05015-release-signed.apk",
+    "expected_sha256": "aead15c0649b34908853b5a150830fef1e3ef25faeec05c9089246e7bd474ddf"
   },
   "features": [
     {
@@ -95,17 +95,17 @@
   "changelog": {
     "entries": [
       {
-        "version": "1.132.04992",
-        "date": "2026-08-12T01:55:20Z",
+        "version": "1.133.05015",
+        "date": "2026-08-12T02:17:21Z",
         "notes": [
-          "# Release Notes — v1.132.04992"
+          "# Release Notes — v1.133.05015"
           "**MANDATORY UPGRADE — Salted Noise-seed hardfork (mainnet block 99,000).**"
           "At build time the chain stood at height 98,999: the fork activates at the very next block."
           "Older releases (engine pearl-wallet-v2.0.0) cannot validate V3 certificates and stop following"
           "the chain at height 99,000 — balances and transactions freeze at the fork until upgraded."
           "This build installs as a normal upgrade over v1.124 and earlier (same production signing key)."
           "## What's new"
-          "- Splash engine identity corrected: now reports "oyster engine 2.0.5" (v1.131 and earlier claimed 2.0.0 on every load; both hardcode sites bumped — GLM-4.7 crush-coded)."
+          "- Splash engine identity now DERIVED from the vendor lock at build time (no hardcodes anywhere): Gradle reads the newest UPSTREAM-VENDOR.lock tag into BuildConfig.ENGINE_VERSION, and the Go bridge var is stamped via -ldflags from the same lock (GLM-4.7 crush-coded). Splash renders "oyster engine 2.0.5"."
           "- **Engine upgraded to upstream `pearl-wallet-v2.0.5`** (commit `950adc85`, published"
           "  2026-08-11) — 46 upstream commits over the previous v2.0.0 base:"
           "  - **Salted noise-seed hardfork support (V3 certificates)** — the wallet keeps validating and"
@@ -131,7 +131,7 @@
           "  (CHECKLIST Phase 12)."
           "## Known issues"
           "- Device verification of a live sync across the 99,000 boundary is pending; install"
-          "  `pearl-wallet-android-v1.132.04992-release-signed.apk` and confirm header sync passes 99,000."
+          "  `pearl-wallet-android-v1.133.05015-release-signed.apk` and confirm header sync passes 99,000."
           "- Release builds are signed with the same production key; in-place upgrades work. If switching"
           "  from a debug/dev build, uninstall first."
         ]
